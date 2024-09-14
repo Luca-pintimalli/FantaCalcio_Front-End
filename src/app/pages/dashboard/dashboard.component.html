@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<div class="user-profile" *ngIf="user">
+    <h2>{{ user.nome }} {{ user.cognome }}</h2>
+  
+    <!-- Visualizza l'immagine dell'utente solo se l'utente è loggato -->
+    <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" *ngIf="user.foto" />
+  
+    <!-- Altre informazioni dell'utente -->
+    <p>Email: {{ user.email }}</p>
+    <p>Registrato il: {{ user.dataRegistrazione | date }}</p>
+  </div>
+  

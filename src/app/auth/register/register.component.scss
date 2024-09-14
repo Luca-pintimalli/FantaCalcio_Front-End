@@ -1,0 +1,32 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altezza al 100% della viewport */
+    background-color: #f7f9fc;
+  }
+  
+  .register-box {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-control,
+  .form-control-file {
+    margin-bottom: 1rem;
+  }
+  
+  .btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  

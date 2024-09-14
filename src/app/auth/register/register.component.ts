@@ -1,72 +1,59 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';  // Importa il Router
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';  // Importa il Router per il reindirizzamento
+import { iUser } from '../../Models/i-user';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
-  registrationForm: FormGroup;
-  selectedFile: File | null = null;
-  errorMessage: string = '';  // Variabile per memorizzare il messaggio di errore
+  newUser: Partial<iUser> = {};
+  selectedFile: File | null = null; // Variabile per gestire il file
+  errorMessage: string | null = null;  // Variabile per gestire il messaggio di errore
 
-  constructor(
-    private fb: FormBuilder,
-    private http: HttpClient,
-    private router: Router  // Inietta il Router
-  ) {
-    this.registrationForm = this.fb.group({
-      nome: ['', Validators.required],
-      cognome: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+  constructor(private authSvc: AuthService, private router: Router) {}
+
+  // Metodo per gestire la selezione del file
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
   }
 
-  // Funzione per gestire il file selezionato
-  onFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      this.selectedFile = input.files[0];
+  // Modifica del metodo register per inviare un FormData
+  register() {
+    // Prima di eseguire la registrazione, resetta l'errore
+    this.errorMessage = null;
+
+    const formData = new FormData();
+
+    // Aggiunge i campi utente al FormData
+    formData.append('nome', this.newUser.nome || '');
+    formData.append('cognome', this.newUser.cognome || '');
+    formData.append('email', this.newUser.email || '');
+    formData.append('password', this.newUser.password || '');
+
+    // Aggiunge il file foto se esiste
+    if (this.selectedFile) {
+      formData.append('foto', this.selectedFile);
     }
-  }
 
-  // Funzione per gestire la submit del form
-  onSubmit() {
-    if (this.registrationForm.valid) {
-      const formData = new FormData();
-
-      // Aggiungi i campi del form
-      formData.append('nome', this.registrationForm.get('nome')?.value);
-      formData.append('cognome', this.registrationForm.get('cognome')?.value);
-      formData.append('email', this.registrationForm.get('email')?.value);
-      formData.append('password', this.registrationForm.get('password')?.value);
-
-      // Se è stato selezionato un file, aggiungilo
-      if (this.selectedFile) {
-        formData.append('foto', this.selectedFile);
+    // Chiama il servizio di registrazione
+    this.authSvc.register(formData).subscribe(
+      response => {
+        console.log('Registrazione avvenuta con successo', response);
+        // Reindirizza alla pagina di login o dashboard dopo la registrazione
+        this.router.navigate(['/login']);
+      },
+      error => {
+        // Gestisci l'errore in base allo stato e messaggio
+        if (error.status === 400 && error.error.message === 'Email già in uso.') {
+          this.errorMessage = 'L\'email è già in uso. Per favore, usa un\'altra email.';
+        } else {
+          // Messaggio di errore generico se non è legato all'email già in uso
+          this.errorMessage = 'Errore durante la registrazione. Riprova più tardi.';
+        }
+        console.error('Errore durante la registrazione', error);
       }
-
-      // Esegui la richiesta HTTP
-      this.http.post('https://localhost:7260/api/auth/register', formData)
-        .subscribe(
-          response => {
-            console.log('Registrazione completata:', response);
-            // Reindirizza alla pagina di login dopo la registrazione
-            this.router.navigate(['/login']);  // Modifica questa linea per il percorso del login
-          },
-          error => {
-            console.error('Errore nella registrazione', error);
-            // Se c'è un errore (come l'email già esistente), mostra il messaggio
-            if (error.status === 400) {
-              this.errorMessage = error.error.Message || 'Registrazione fallita. Email già in uso.';
-            } else {
-              this.errorMessage = 'Errore nella registrazione. Riprova più tardi.';
-            }
-          }
-        );
-    }
+    );
   }
 }
