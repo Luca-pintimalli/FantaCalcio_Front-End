@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { iUser } from '../Models/i-user';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -17,7 +17,11 @@ export class AuthService {
 
   authSubject = new BehaviorSubject<null | iUser>(null);
 
+  syncIsLoggedIn:boolean=false ;
+
   user$ = this.authSubject.asObservable();
+  isLoggedIn$=this.user$.pipe(map (user=> !!user),
+  tap(user => this.syncIsLoggedIn=user))
 
   loginUrl: string = 'https://localhost:7260/api/auth/login';
   registerUrl: string = 'https://localhost:7260/api/auth/register';
@@ -42,10 +46,10 @@ export class AuthService {
           cognome: data.cognome,
           email: data.email,
           foto: data.foto,
-          dataRegistrazione: new Date(data.dataRegistrazione) // Trasforma la stringa in un oggetto Date
+          dataRegistrazione: new Date(data.dataRegistrazione)
         };
   
-        // Aggiorna lo stato dell'utente nel BehaviorSubject
+        // Salva i dati dell'utente nel BehaviorSubject
         this.authSubject.next(user);
   
         // Salva i dati dell'accesso nel localStorage
@@ -60,11 +64,12 @@ export class AuthService {
   
   
   
+  
 
   logout() {
     this.authSubject.next(null);
     localStorage.removeItem('accessData');
-    this.router.navigate(['/login']); // Aggiunto reindirizzamento dopo il logout
+    this.router.navigate(['/auth']); // Aggiunto reindirizzamento dopo il logout
   }
 
   autoLogout() {
@@ -114,21 +119,29 @@ export class AuthService {
   restoreUser() {
     const accessData = this.getAccessData();
   
+    // Se non ci sono dati salvati, esci
     if (!accessData) return;
   
-    if (this.jwtHelper.isTokenExpired(accessData.token)) return;
+    // Verifica se il token è scaduto
+    if (this.jwtHelper.isTokenExpired(accessData.token)) {
+      console.error('Il token è scaduto.');
+      return;
+    }
   
+    // Ricostruisci l'oggetto utente usando i dati salvati
     const user: iUser = {
-      id: 0,  // Se non hai l'ID, puoi lasciare un valore predefinito
-      nome: accessData.userName, // Recuperato dal localStorage
-      cognome: '', // Puoi aggiungere il supporto per restituire il cognome
-      email: '',  // Potresti estendere il backend per restituire questo dato
-      password: '',  // La password non è necessaria
-      foto: '',  // Gestione della foto opzionale
-      dataRegistrazione: undefined  // Lasciamo facoltativo per ora
+      id: accessData.id,
+      nome: accessData.userName,
+      cognome: accessData.cognome,
+      email: accessData.email,
+      foto: accessData.foto,
+      dataRegistrazione: new Date(accessData.dataRegistrazione)  // Trasforma la stringa in un oggetto Date
     };
   
+    // Ripopola lo stato dell'utente
     this.authSubject.next(user);
+  
+    // Avvia il logout automatico
     this.autoLogout();
   }
   

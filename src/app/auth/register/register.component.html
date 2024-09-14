@@ -1,71 +1,51 @@
-<div class="register-container">
-  <div class="register-box">
-    <h2>Registrazione</h2>
-
-    <form (ngSubmit)="register()" enctype="multipart/form-data">
-      <div class="form-group">
-        <label for="nome">Nome</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="nome" 
-          [(ngModel)]="newUser.nome" 
-          name="nome"
-          required
-          placeholder="Inserisci il tuo nome" />
-      </div>
-
-      <div class="form-group">
-        <label for="cognome">Cognome</label>
-        <input 
-          type="text" 
-          class="form-control" 
-          id="cognome" 
-          [(ngModel)]="newUser.cognome" 
-          name="cognome"
-          required
-          placeholder="Inserisci il tuo cognome" />
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input 
-          type="email" 
-          class="form-control" 
-          id="email" 
-          [(ngModel)]="newUser.email" 
-          name="email"
-          required
-          placeholder="Inserisci la tua email" />
-      </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input 
-          type="password" 
-          class="form-control" 
-          id="password" 
-          [(ngModel)]="newUser.password" 
-          name="password"
-          required
-          placeholder="Inserisci una password sicura" />
-      </div>
-
-      <div class="form-group">
-        <label for="foto">Carica una Foto (opzionale)</label>
-        <input 
-          type="file" 
-          class="form-control-file" 
-          id="foto" 
-          (change)="onFileSelected($event)" />
-      </div>
-
-      <!-- Mostra il messaggio di errore se presente -->
-      <div *ngIf="errorMessage" class="alert alert-danger">
-        {{ errorMessage }}
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-block">Registrati</button>
-    </form>
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <!-- Campo nome -->
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input formControlName="nome" id="nome" class="form-control" placeholder="Inserisci il tuo nome">
+    <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" class="alert alert-danger">
+      Il nome è obbligatorio.
+    </div>
   </div>
-</div>
+
+  <!-- Campo cognome -->
+  <div class="form-group">
+    <label for="cognome">Cognome</label>
+    <input formControlName="cognome" id="cognome" class="form-control" placeholder="Inserisci il tuo cognome">
+    <div *ngIf="registerForm.get('cognome')?.invalid && registerForm.get('cognome')?.touched" class="alert alert-danger">
+      Il cognome è obbligatorio.
+    </div>
+  </div>
+
+  <!-- Campo email -->
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input formControlName="email" id="email" class="form-control" placeholder="Inserisci la tua email">
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="alert alert-danger">
+      Inserisci un'email valida.
+    </div>
+  </div>
+
+  <!-- Campo password -->
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" id="password" class="form-control" placeholder="Inserisci la tua password">
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="alert alert-danger">
+      La password è obbligatoria.
+    </div>
+  </div>
+
+  <!-- Campo foto (opzionale) -->
+  <div class="form-group">
+    <label for="foto">Carica una Foto (opzionale)</label>
+    <input type="file" (change)="onFileSelected($event)" id="foto" class="form-control">
+  </div>
+
+  <!-- Messaggio di errore generale -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Pulsante di invio -->
+  <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Registrati</button>
+</form>

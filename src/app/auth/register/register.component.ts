@@ -1,55 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';  // Importa le classi necessarie
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';  // Importa il Router per il reindirizzamento
-import { iUser } from '../../Models/i-user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html'
 })
-export class RegisterComponent {
-  newUser: Partial<iUser> = {};
-  selectedFile: File | null = null; // Variabile per gestire il file
-  errorMessage: string | null = null;  // Variabile per gestire il messaggio di errore
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;  // Definisci un FormGroup per il form
+  selectedFile: File | null = null;
+  errorMessage: string | null = null;
 
-  constructor(private authSvc: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,  // Usa il FormBuilder per creare il form
+    private authSvc: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    // Inizializza il form con le validazioni
+    this.registerForm = this.fb.group({
+      nome: ['', Validators.required],  // Campo obbligatorio
+      cognome: ['', Validators.required],  // Campo obbligatorio
+      email: ['', [Validators.required, Validators.email]],  // Campo obbligatorio e deve essere un'email valida
+      password: ['', Validators.required],  // Campo obbligatorio
+    });
+  }
 
   // Metodo per gestire la selezione del file
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
-  // Modifica del metodo register per inviare un FormData
+  // Metodo per registrare l'utente
   register() {
-    // Prima di eseguire la registrazione, resetta l'errore
+    if (this.registerForm.invalid) {
+      // Se il form non è valido, mostra un messaggio di errore
+      this.errorMessage = 'Per favore, inserisci tutti i dati richiesti.';
+      return;
+    }
+
+    // Reset dell'errore
     this.errorMessage = null;
 
     const formData = new FormData();
-
-    // Aggiunge i campi utente al FormData
-    formData.append('nome', this.newUser.nome || '');
-    formData.append('cognome', this.newUser.cognome || '');
-    formData.append('email', this.newUser.email || '');
-    formData.append('password', this.newUser.password || '');
+    formData.append('nome', this.registerForm.get('nome')?.value);
+    formData.append('cognome', this.registerForm.get('cognome')?.value);
+    formData.append('email', this.registerForm.get('email')?.value);
+    formData.append('password', this.registerForm.get('password')?.value);
 
     // Aggiunge il file foto se esiste
     if (this.selectedFile) {
       formData.append('foto', this.selectedFile);
     }
 
-    // Chiama il servizio di registrazione
     this.authSvc.register(formData).subscribe(
       response => {
         console.log('Registrazione avvenuta con successo', response);
-        // Reindirizza alla pagina di login o dashboard dopo la registrazione
         this.router.navigate(['/login']);
       },
       error => {
-        // Gestisci l'errore in base allo stato e messaggio
         if (error.status === 400 && error.error.message === 'Email già in uso.') {
           this.errorMessage = 'L\'email è già in uso. Per favore, usa un\'altra email.';
         } else {
-          // Messaggio di errore generico se non è legato all'email già in uso
           this.errorMessage = 'Errore durante la registrazione. Riprova più tardi.';
         }
         console.error('Errore durante la registrazione', error);

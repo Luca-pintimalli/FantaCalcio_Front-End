@@ -1,36 +1,28 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">Navbar</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Il Mio Sito</a>
+  
+  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" aria-controls="navbarSupportedContent" aria-expanded="!isCollapsed" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
+  <div [ngClass]="{ 'collapse': isCollapsed }" class="navbar-collapse">
+    <ul class="navbar-nav ml-auto">
       
+      <!-- Se l'utente è loggato, mostra il link alla Dashboard -->
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+      </li>
+      
+      <!-- Se l'utente non è loggato, mostra il link "Accedi" -->
+      <li class="nav-item" *ngIf="!isLoggedIn">
+        <a class="nav-link" routerLink="/auth">Accedi</a>
+      </li>
 
-      <button
-      type="button"
-      class="btn btn-outline-primary navbar-toggler "
-      (click)="collapse.toggle()"
-      [attr.aria-expanded]="!isCollapsed"
-      aria-controls="collapseExample"
-  >
-  <span class="navbar-toggler-icon"></span>
-</button>
+      <!-- Se l'utente è loggato, mostra il pulsante di logout -->
+      <li class="nav-item" *ngIf="isLoggedIn">
+        <button class="nav-link" (click)="logout()">Logout</button>
+      </li>
 
-      <div class="navbar-collapse"  #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/auth">Accedi</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-          </li>
-        </ul>
-       
-      </div>
-    </div>
-  </nav>
-
-
-
+    </ul>
+  </div>
+</nav>
