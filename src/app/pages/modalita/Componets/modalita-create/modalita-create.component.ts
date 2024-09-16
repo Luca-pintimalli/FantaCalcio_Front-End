@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { iModalita } from '../../i-modalita';
-import { ModalitaService } from '../../modalita.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalitaService } from '../../modalita.service';
 
 @Component({
   selector: 'app-modalita-create',
   templateUrl: './modalita-create.component.html'
 })
 export class ModalitaCreateComponent {
-  // Definiamo il form per l'inserimento dei dati
   modalitaForm: FormGroup;
 
   constructor(
@@ -17,24 +15,20 @@ export class ModalitaCreateComponent {
     private fb: FormBuilder,
     private router: Router
   ) {
-    // Inizializziamo il form con i controlli e le validazioni
     this.modalitaForm = this.fb.group({
-      tipoModalita: ['', Validators.required] // Il tipoModalita è obbligatorio
+      tipoModalita: ['', Validators.required]
     });
   }
 
-  // Metodo per gestire la creazione della nuova modalità
   addModalita(): void {
     if (this.modalitaForm.valid) {
-      const newModalita: iModalita = {
-        iD_Modalita: 0, // L'ID sarà generato automaticamente dal backend
-        tipoModalita: this.modalitaForm.get('tipoModalita')?.value // Prendi il valore dal form
+      const newModalita = {
+        iD_Modalita: 0,
+        tipoModalita: this.modalitaForm.get('tipoModalita')?.value
       };
 
-      // Chiama il servizio per aggiungere la nuova modalità
       this.modalitaService.addModalita(newModalita).subscribe(() => {
-        // Naviga alla lista delle modalità dopo il successo
-        this.router.navigate(['/modalita/list']);
+        this.router.navigate(['/modalita']);  // Torna alla lista dopo la creazione
       });
     }
   }

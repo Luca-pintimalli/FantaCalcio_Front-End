@@ -7,31 +7,31 @@ import { iModalita } from './i-modalita';
   providedIn: 'root'
 })
 export class ModalitaService {
-  private apiUrl = 'https://localhost:7260/api/Modalita';  // URL del controller Modalita nel backend
+  private apiUrl = 'https://localhost:7260/api/modalita';  // Endpoint API
 
   constructor(private http: HttpClient) {}
 
-  // GET: Recupera tutte le modalità
+  // Ottenere tutte le modalità
   getAllModalita(): Observable<iModalita[]> {
-    return this.http.get<iModalita[]>(`${this.apiUrl}`);
+    return this.http.get<iModalita[]>(this.apiUrl);
   }
 
-  // GET: Recupera una modalità per ID
+  // Ottenere una modalità per ID
   getModalitaById(id: number): Observable<iModalita> {
     return this.http.get<iModalita>(`${this.apiUrl}/${id}`);
   }
 
-  // POST: Aggiungi una nuova modalità
+  // Creare una nuova modalità
   addModalita(modalita: iModalita): Observable<iModalita> {
-    return this.http.post<iModalita>(`${this.apiUrl}`, modalita);
+    return this.http.post<iModalita>(this.apiUrl, modalita);
   }
 
-  // PUT: Aggiorna una modalità esistente
+  // Aggiornare una modalità
   updateModalita(id: number, modalita: iModalita): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, modalita);
   }
 
-  // DELETE: Elimina una modalità
+  // Eliminare una modalità
   deleteModalita(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

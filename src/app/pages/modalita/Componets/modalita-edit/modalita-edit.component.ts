@@ -10,14 +10,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ModalitaEditComponent implements OnInit {
   modalitaForm: FormGroup;
-  
-  // Inizializzazione delle proprietà
-  id: number = 0;  // Inizializzazione a 0 o null
-  modalita: iModalita | undefined;  // Inizializzazione a undefined o un oggetto vuoto
+  id!: number;
+  modalita!: iModalita;
 
   constructor(
     private route: ActivatedRoute,
-    public router: Router,
+    public router: Router,  // Router per la navigazione
     private modalitaService: ModalitaService,
     private fb: FormBuilder
   ) {
@@ -28,7 +26,7 @@ export class ModalitaEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;  // Recupera l'ID dalla rotta e conferma che non è null
+    this.id = +this.route.snapshot.paramMap.get('id')!;
     this.modalitaService.getModalitaById(this.id).subscribe(data => {
       this.modalita = data;
       this.modalitaForm.patchValue({
@@ -39,14 +37,16 @@ export class ModalitaEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.modalitaForm.valid && this.modalita) {  // Aggiunta di un controllo per assicurarsi che modalita non sia null o undefined
+    if (this.modalitaForm.valid) {
       const updatedModalita: iModalita = {
         iD_Modalita: this.modalita.iD_Modalita,
         tipoModalita: this.modalitaForm.get('tipoModalita')?.value
       };
 
+      // Aggiornamento della modalità tramite il servizio
       this.modalitaService.updateModalita(this.id, updatedModalita).subscribe(() => {
-        this.router.navigate(['/modalita/list']);
+        // Naviga indietro alla lista delle modalità dopo l'aggiornamento
+        this.router.navigate(['/modalita']);  // Assicurati di navigare alla route corretta
       });
     }
   }

@@ -1,17 +1,24 @@
 <div class="container">
-    <h2>Gestione Modalità</h2>
-    
-    <nav>
-      <ul>
-        <li><a routerLink="list">Visualizza Modalità</a></li>
-        <li><a routerLink="create">Crea Nuova Modalità</a></li>
-      </ul>
-    </nav>
-  
-    <div>
-      <h2>Gestione Modalità</h2>
-      <router-outlet></router-outlet>  <!-- Questo gestirà i componenti figli come lista, create, ecc. -->
-    </div>
-    
+  <h2>Gestione Modalità</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tipo Modalità</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let modalita of modalitaList">
+        <td>{{ modalita.iD_Modalita }}</td>
+        <td>{{ modalita.tipoModalita }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editModalita(modalita.iD_Modalita)">Modifica</button>
+          <button class="btn btn-danger" (click)="deleteModalita(modalita.iD_Modalita)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="createModalita()">Crea Nuova Modalità</button>
 </div>
-  
