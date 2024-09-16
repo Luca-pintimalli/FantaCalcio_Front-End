@@ -1,0 +1,20 @@
+<div class="container" *ngIf="giocatore">
+    <h2>Modifica Giocatore</h2>
+    <form (ngSubmit)="updateGiocatore()">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="giocatore.nome" name="nome" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input id="cognome" [(ngModel)]="giocatore.cognome" name="cognome" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="squadra">Squadra Attuale</label>
+        <input id="squadra" [(ngModel)]="giocatore.squadraAttuale" name="squadraAttuale" class="form-control" required />
+      </div>
+      <!-- Aggiungi qui gli altri campi necessari -->
+      <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+    </form>
+  </div>
+  

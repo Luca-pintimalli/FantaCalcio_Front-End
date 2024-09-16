@@ -1,11 +1,16 @@
-<div class="user-profile" *ngIf="user">
-    <h2>{{ user.nome }} {{ user.cognome }}</h2>
-  
-    <!-- Visualizza l'immagine dell'utente solo se l'utente è loggato -->
-    <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" *ngIf="user.foto" />
-  
-    <!-- Altre informazioni dell'utente -->
-    <p>Email: {{ user.email }}</p>
-    <p>Registrato il: {{ user.dataRegistrazione | date }}</p>
-  </div>
-  
+<div class="user-profile">
+  <h2>{{ user.nome }} {{ user.cognome }}</h2>
+
+  <!-- Visualizza l'immagine dell'utente -->
+  <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" />
+
+  <!-- Input per caricare una nuova immagine -->
+  <input type="file" (change)="onFileSelected($event)" />
+
+  <!-- Bottone per aggiornare l'immagine -->
+  <button (click)="onSubmit()">Aggiorna Immagine</button>
+
+  <!-- Altre informazioni dell'utente -->
+  <p>Email: {{ user.email }}</p>
+  <p>Registrato il: {{ user.dataRegistrazione | date }}</p>
+</div>

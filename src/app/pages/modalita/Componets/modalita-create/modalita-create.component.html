@@ -1,0 +1,26 @@
+<div class="container">
+    <h2>Crea Nuova Modalità</h2>
+  
+    <!-- Form per creare una nuova modalità -->
+    <form [formGroup]="modalitaForm" (ngSubmit)="addModalita()">
+      <div class="form-group">
+        <label for="tipoModalita">Tipo Modalità</label>
+        <input
+          type="text"
+          id="tipoModalita"
+          formControlName="tipoModalita"
+          class="form-control"
+          required
+        />
+        <!-- Mostra un messaggio di errore se il campo non è valido -->
+        <div *ngIf="modalitaForm.get('tipoModalita')?.invalid && modalitaForm.get('tipoModalita')?.touched" class="text-danger">
+          Il campo Tipo Modalità è obbligatorio.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="modalitaForm.invalid">
+        Crea Modalità
+      </button>
+    </form>
+  </div>
+  

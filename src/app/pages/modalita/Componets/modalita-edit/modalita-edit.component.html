@@ -1,0 +1,35 @@
+<div class="container">
+    <h2>Modifica Modalità</h2>
+  
+    <form [formGroup]="modalitaForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="iD_Modalita">ID Modalità</label>
+            <input
+              type="text"
+              id="iD_Modalita"
+              formControlName="iD_Modalita"
+              class="form-control"
+              [disabled]="true" 
+            />
+          </div>
+  
+      <div class="form-group">
+        <label for="tipoModalita">Tipo Modalità</label>
+        <input
+          type="text"
+          id="tipoModalita"
+          formControlName="tipoModalita"
+          class="form-control"
+          required
+        />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="modalitaForm.invalid">
+        Salva Modifiche
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="router.navigate(['/modalita/list'])">
+        Annulla
+      </button>
+    </form>
+  </div>
+  
