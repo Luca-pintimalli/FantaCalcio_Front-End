@@ -27,7 +27,7 @@ export class RuoliService {
   }
 
   // PUT: aggiorna un ruolo esistente
-  updateRuolo(id: number, ruolo: iRuolo): Observable<void> {
+  editRuolo(id: number, ruolo: iRuolo): Observable<void> {
     return this.http.put<void>(`${this.apiUrl}/${id}`, ruolo);
   }
 

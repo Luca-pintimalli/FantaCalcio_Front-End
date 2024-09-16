@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TipoAstaRoutingModule } from './tipo-asta-routing.module';
 import { TipoAstaComponent } from './tipo-asta.component';
 import { TipoAstaCreateComponent } from './Components/tipo-asta-create/tipo-asta-create.component';
-import { TipoAstaEditComponent } from './Components/tipo-asta-edit/tipo-asta-edit.component';
+import { TipoAstaEditComponent } from './tipo-asta-edit/tipo-asta-edit.component';
 
 @NgModule({
   declarations: [

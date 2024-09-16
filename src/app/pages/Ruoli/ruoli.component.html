@@ -1,1 +1,26 @@
-<p>ruoli works!</p>
+<div class="container">
+  <h2>Gestione Ruoli</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome Ruolo</th>
+        <th>Tipo Modalità</th> <!-- Visualizza il tipo di modalità -->
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ruolo of ruoloList">
+        <td>{{ ruolo.iD_Ruolo }}</td>
+        <td>{{ ruolo.nomeRuolo }}</td>
+        <td>{{ getTipoModalita(ruolo.iD_Modalita) }}</td> <!-- Mostra il tipoModalita -->
+        <td>
+          <button class="btn btn-primary" (click)="editRuolo(ruolo.iD_Ruolo)">Modifica</button>
+          <button class="btn btn-danger" (click)="deleteRuolo(ruolo.iD_Ruolo)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="createRuolo()">Crea Nuovo Ruolo</button>
+</div>

@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Modifica Ruolo</h2>
+  
+    <form [formGroup]="ruoloForm" (ngSubmit)="updateRuolo()">
+      <div class="form-group">
+        <label for="iD_Ruolo">ID Ruolo</label>
+        <input
+          type="text"
+          id="iD_Ruolo"
+          formControlName="iD_Ruolo"
+          class="form-control"
+          
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="nomeRuolo">Nome Ruolo</label>
+        <input
+          type="text"
+          id="nomeRuolo"
+          formControlName="nomeRuolo"
+          class="form-control"
+          required
+        />
+        <div *ngIf="ruoloForm.get('nomeRuolo')?.invalid && ruoloForm.get('nomeRuolo')?.touched" class="text-danger">
+          Il campo Nome Ruolo è obbligatorio.
+        </div>
+      </div>
+  
+  
+  
+      <button type="submit" class="btn btn-primary" [disabled]="ruoloForm.invalid">
+        Salva Modifiche
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Annulla
+      </button>
+    </form>
+  </div>
+  

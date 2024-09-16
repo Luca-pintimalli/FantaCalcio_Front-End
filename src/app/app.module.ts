@@ -9,18 +9,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { CreateRuoloMantraComponent } from './pages/Ruoli/Components/create-ruolo-mantra/create-ruolo-mantra.component';
-import { EditRuoloMantraComponent } from './pages/Ruoli/Components/edit-ruolo-mantra/edit-ruolo-mantra.component';
 import { ModalitaModule } from './pages/modalita/modalita.module';
-import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module'; // Importa il modulo TipoAsta
+import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module';
+import { RuoliCreateComponent } from './pages/Ruoli/Components/ruoli-create/ruoli-create.component';
+import { RuoliEditComponent } from './pages/Ruoli/Components/ruoli-edit/ruoli-edit.component'; // Importa il modulo TipoAsta
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
-    CreateRuoloMantraComponent,
-    EditRuoloMantraComponent
+    RuoliCreateComponent,
+    RuoliEditComponent,
+    
   ],
   imports: [
     BrowserModule,

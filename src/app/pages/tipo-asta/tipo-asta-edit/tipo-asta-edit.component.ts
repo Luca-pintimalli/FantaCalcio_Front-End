@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TipoAstaService } from '../../tipo-asta.service';
+import { TipoAstaService } from '../tipo-asta.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { iTipoAsta } from '../../i-tipo-asta';
+import { iTipoAsta } from '../i-tipo-asta';
 
 @Component({
   selector: 'app-tipo-asta-edit',
