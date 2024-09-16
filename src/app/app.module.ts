@@ -12,6 +12,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { CreateRuoloMantraComponent } from './pages/Ruoli/Components/create-ruolo-mantra/create-ruolo-mantra.component';
 import { EditRuoloMantraComponent } from './pages/Ruoli/Components/edit-ruolo-mantra/edit-ruolo-mantra.component';
 import { ModalitaModule } from './pages/modalita/modalita.module';
+import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module'; // Importa il modulo TipoAsta
 
 @NgModule({
   declarations: [
@@ -23,13 +24,14 @@ import { ModalitaModule } from './pages/modalita/modalita.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, // Solo una volta
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
     AuthModule,
-    ModalitaModule // Import del modulo Modalita con il suo routing
+    ModalitaModule,  // Modulo Modalita importato correttamente
+    TipoAstaModule  // Modulo TipoAsta importato correttamente
   ],
   providers: [
     {

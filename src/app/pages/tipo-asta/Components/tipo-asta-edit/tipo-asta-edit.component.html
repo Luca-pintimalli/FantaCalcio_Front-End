@@ -1,0 +1,34 @@
+<div class="container">
+    <h2>Modifica Tipo di Asta</h2>
+  
+    <form [formGroup]="tipoAstaForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="ID_tipoAasta">ID Tipo Asta</label>
+        <input
+          type="text"
+          id="ID_tipoAasta"
+          formControlName="ID_tipoAasta"
+          class="form-control"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="NomeTipoAsta">Nome Tipo Asta</label>
+        <input
+          type="text"
+          id="NomeTipoAsta"
+          formControlName="NomeTipoAsta"
+          class="form-control"
+          required
+        />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="tipoAstaForm.invalid">
+        Salva Modifiche
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Annulla
+      </button>
+    </form>
+  </div>
+  

@@ -34,6 +34,10 @@ canActivateChild: [AuthGuard]
   loadChildren: () => import('./pages/modalita/modalita.module').then(m => m.ModalitaModule),
   canActivate: [AuthGuard],  // Aggiunta protezione AuthGuard
   canActivateChild: [AuthGuard] 
+},
+ { path: 'TipoAsta', loadChildren: () => import('./pages/tipo-asta/tipo-asta.module').then(m => m.TipoAstaModule),
+ canActivate: [AuthGuard],  // Aggiunta protezione AuthGuard
+ canActivateChild: [AuthGuard] 
 }
 
 ];

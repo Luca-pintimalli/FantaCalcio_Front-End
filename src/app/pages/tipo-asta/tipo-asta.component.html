@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Gestione Tipi di Asta</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome Tipo Asta</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tipoAsta of tipoAstaList">
+        <td>{{ tipoAsta.iD_TipoAsta }}</td>  <!-- Usa iD_TipoAsta esattamente come è nell'oggetto -->
+        <td>{{ tipoAsta.nomeTipoAsta }}</td> <!-- Usa nomeTipoAsta esattamente come è nell'oggetto -->
+        <td>
+          <button class="btn btn-primary" (click)="editTipoAsta(tipoAsta.iD_TipoAsta)">Modifica</button>
+          <button class="btn btn-danger" (click)="deleteTipoAsta(tipoAsta.iD_TipoAsta)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="createTipoAsta()">Crea Nuovo Tipo di Asta</button>
+</div>

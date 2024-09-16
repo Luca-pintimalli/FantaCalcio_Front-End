@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Crea Nuovo Tipo di Asta</h2>
+
+  <!-- Form per creare un nuovo tipo di asta -->
+  <form [formGroup]="tipoAstaForm" (ngSubmit)="addTipoAsta()">
+    <div class="form-group">
+      <label for="nomeTipoAsta">Nome Tipo Asta</label>
+      <input
+        type="text"
+        id="nomeTipoAsta"
+        formControlName="nomeTipoAsta" 
+        class="form-control"
+        required
+      />
+      <!-- Mostra un messaggio di errore se il campo non è valido -->
+      <div *ngIf="tipoAstaForm.get('nomeTipoAsta')?.invalid && tipoAstaForm.get('nomeTipoAsta')?.touched" class="text-danger">
+        Il campo Nome Tipo Asta è obbligatorio.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="tipoAstaForm.invalid">
+      Crea Tipo di Asta
+    </button>
+  </form>
+</div>
