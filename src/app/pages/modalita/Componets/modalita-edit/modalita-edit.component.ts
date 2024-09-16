@@ -15,12 +15,13 @@ export class ModalitaEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public router: Router,  // Router per la navigazione
+    private router: Router,
     private modalitaService: ModalitaService,
     private fb: FormBuilder
   ) {
+    // Inizializza il form e imposta iD_Modalita come disabilitato direttamente nel TypeScript
     this.modalitaForm = this.fb.group({
-      iD_Modalita: [{ value: '', disabled: true }, Validators.required],
+      iD_Modalita: [{ value: '', disabled: true }, Validators.required],  // Imposta il controllo come disabilitato
       tipoModalita: ['', Validators.required]
     });
   }
@@ -43,11 +44,14 @@ export class ModalitaEditComponent implements OnInit {
         tipoModalita: this.modalitaForm.get('tipoModalita')?.value
       };
 
-      // Aggiornamento della modalità tramite il servizio
       this.modalitaService.updateModalita(this.id, updatedModalita).subscribe(() => {
-        // Naviga indietro alla lista delle modalità dopo l'aggiornamento
-        this.router.navigate(['/modalita']);  // Assicurati di navigare alla route corretta
+        this.router.navigate(['/modalita']);
       });
     }
   }
+
+    // Metodo  per gestire la navigazione
+    onCancel(): void {
+      this.router.navigate(['/modalita']);
+    }
 }
