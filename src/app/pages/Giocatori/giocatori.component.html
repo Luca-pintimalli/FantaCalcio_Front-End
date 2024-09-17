@@ -24,6 +24,7 @@
         <th>Assist</th>
         <th>Partite Giocate</th>
         <th>Ruolo Classic</th>
+        <th>Ruoli Mantra</th> <!-- Aggiunta colonna per i Ruoli Mantra -->
         <th>Azioni</th>
       </tr>
     </thead>
@@ -38,6 +39,14 @@
         <td>{{ giocatore.assist }}</td>
         <td>{{ giocatore.partiteGiocate }}</td>
         <td>{{ giocatore.ruoloClassic }}</td>
+
+        <!-- Visualizza i ruoli Mantra associati -->
+        <td>
+          <span *ngFor="let ruolo of giocatore.ruoliMantra">
+            {{ ruolo.nomeRuolo }}<br>
+          </span>
+        </td>
+
         <td>
           <button class="btn btn-primary" (click)="editGiocatore(giocatore.iD_Giocatore)">Modifica</button>
           <button class="btn btn-danger" (click)="deleteGiocatore(giocatore.iD_Giocatore)">Elimina</button>

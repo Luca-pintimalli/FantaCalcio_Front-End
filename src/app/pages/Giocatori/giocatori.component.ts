@@ -55,7 +55,8 @@ export class GiocatoreComponent implements OnInit {
   }
 
   // Naviga alla pagina di gestione dei ruoli Mantra per il giocatore
-  associateRuoloMantra(id_Giocatore: number): void {
-    this.router.navigate(['/ruoli/ruolo-mantra'], { queryParams: { id_Giocatore } });
+  associateRuoloMantra(idGiocatore: number) {
+    console.log('ID Giocatore:', idGiocatore);  // Aggiungi un log per verificare l'ID
+    this.router.navigate(['/ruolo-mantra', idGiocatore]);  // Naviga verso la route con l'ID
   }
 }

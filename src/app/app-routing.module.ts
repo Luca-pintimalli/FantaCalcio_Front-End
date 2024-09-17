@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GuestGuard } from './auth/guest.guard';
 import { AuthGuard } from './auth/auth.guard';
+import { RuoloMantraComponent } from './pages/Ruoli/Components/ruolo-mantra/ruolo-mantra.component';
 
 const routes: Routes = [
   { path: '', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
@@ -40,6 +41,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tipo-asta/tipo-asta.module').then(m => m.TipoAstaModule),
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard] 
+  },
+  {
+    path: 'ruolo-mantra/:id',
+    component: RuoloMantraComponent,  // Il componente per l'associazione ruoli
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard]  // Se vuoi proteggere la route con l'autenticazione
   }
 ];
 

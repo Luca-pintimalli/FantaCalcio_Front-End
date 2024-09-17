@@ -1,5 +1,5 @@
 <div class="container">
-  <h2>Associa Ruoli Mantra a {{ giocatore.nome }} {{ giocatore.cognome }}</h2>
+  <h2>Associa Ruoli Mantra a {{ giocatore?.nome }} {{ giocatore?.cognome }}</h2>
 
   <!-- Visualizza i ruoli disponibili con checkbox per la selezione -->
   <div *ngFor="let ruolo of ruoli">
@@ -11,4 +11,13 @@
 
   <!-- Bottone per associare i ruoli selezionati -->
   <button (click)="addRuoloMantra()" type="button" class="btn btn-primary">Associa Ruoli</button>
+
+  <button (click)="tornaAiGiocatori()" type="button" class="btn btn-secondary mt-3">Torna ai Giocatori</button>
+
+
+  <!-- Messaggio di successo -->
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <!-- Errore se presente -->
+  <div *ngIf="errore" class="alert alert-danger">{{ errore }}</div>
 </div>

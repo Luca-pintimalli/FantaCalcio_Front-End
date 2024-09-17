@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { iGiocatore } from '../../i-giocatore';
-import { RuoloMantraService } from '../../../Ruoli/ruoloMantra/ruoli-mantra.service'; // Correggi il percorso se necessario
-import { GiocatoriService } from '../../giocatori.service'; // Servizio per i giocatori
+import { ActivatedRoute } from '@angular/router';
+import { iGiocatore } from '../../../Giocatori/i-giocatore';
+import { GiocatoriService } from '../../../Giocatori/giocatori.service';
+import { RuoliService } from '../../../Ruoli/ruoli.service';
 
 @Component({
   selector: 'app-giocatori-edit',
@@ -11,59 +11,49 @@ import { GiocatoriService } from '../../giocatori.service'; // Servizio per i gi
 })
 export class GiocatoriEditComponent implements OnInit {
   giocatore: iGiocatore | undefined;
-  errore: string | null = null;
-  availableRuoliMantra: any[] = [];  // Lista di ruoli Mantra disponibili
+  iD_Giocatore: number = 0; // Correzione del nome del campo in base alla tua interfaccia
+  ruoli: any[] = []; // Aggiunta di un array per gestire i ruoli
 
   constructor(
-    private giocatoreService: GiocatoriService,
-    private ruoloMantraService: RuoloMantraService,
-    private route: ActivatedRoute,
-    private router: Router
+    private giocatoriService: GiocatoriService,
+    private ruoliService: RuoliService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.giocatoreService.getGiocatoreById(id).subscribe({
-      next: (data) => {
-        this.giocatore = data;
-      },
-      error: (err) => {
-        this.errore = 'Errore durante il caricamento del giocatore';
-        console.error(err);
-      }
-    });
-
-    // Carica i ruoli Mantra
-    this.loadRuoliMantra();
-  }
-
-  // Metodo per caricare i ruoli Mantra
-  loadRuoliMantra(): void {
-    this.ruoloMantraService.getRuoliMantra().subscribe({
-      next: (data) => {
-        this.availableRuoliMantra = data;
-      },
-      error: (err) => {
-        this.errore = 'Errore durante il caricamento dei ruoli Mantra';
-        console.error(err);
-      }
-    });
-  }
-
-  // Metodo per aggiornare il giocatore
-  updateGiocatore(): void {
-    if (this.giocatore) {
-      this.giocatoreService.updateGiocatore(this.giocatore.iD_Giocatore, this.giocatore).subscribe({
-        next: () => {
-          console.log('Giocatore aggiornato con successo');
-          this.router.navigate(['/giocatori']);
-        },
-        error: (err) => {
-          this.errore = 'Errore durante l\'aggiornamento del giocatore';
-          console.error(err);
-        }
-      });
+    if (id && id > 0) {
+      this.iD_Giocatore = id; // Usando iD_Giocatore come per la tua interfaccia
+      this.caricaGiocatore();
+      this.loadRuoli();
+    } else {
+      console.error('ID giocatore non valido:', id);
     }
+  }
+
+  // Metodo per caricare i dettagli del giocatore
+  caricaGiocatore(): void {
+    this.giocatoriService.getGiocatoreById(this.iD_Giocatore).subscribe({
+      next: (data: iGiocatore) => {
+        this.giocatore = data;
+        console.log('Giocatore caricato:', this.giocatore);
+      },
+      error: (err) => {
+        console.error('Errore nel caricamento del giocatore:', err);
+      }
+    });
+  }
+
+  // Metodo per caricare i ruoli
+  loadRuoli(): void {
+    this.ruoliService.getAllRuoli().subscribe({
+      next: (ruoli) => {
+        this.ruoli = ruoli;
+        console.log('Ruoli caricati:', ruoli);
+      },
+      error: (err) => {
+        console.error('Errore nel caricamento dei ruoli:', err);
+      }
+    });
   }
 }

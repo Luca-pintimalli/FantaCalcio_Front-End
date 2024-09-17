@@ -9,8 +9,9 @@ const routes: Routes = [
   { path: '', component: RuoliComponent },  // Lista dei ruoli
   { path: 'create', component: RuoliCreateComponent },  // Creazione di un nuovo ruolo
   { path: 'edit/:id', component: RuoliEditComponent },  // Modifica di un ruolo esistente
-  { path: 'ruolo-mantra', component: RuoloMantraComponent },  // Gestione delle associazioni RuoloMantra
+  { path: 'ruolo-mantra/:id', component: RuoloMantraComponent },  // Route con parametro ID
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
