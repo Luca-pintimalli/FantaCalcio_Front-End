@@ -31,4 +31,16 @@ export class GiocatoriService {
     return this.http.delete<void>(`${this.apiUrl}/${id_Giocatore}`);
   }
   
+
+
+
+  getGiocatoriByRuolo(ruolo: string, search: string = ''): Observable<iGiocatore[]> {
+    let url = `https://localhost:7260/api/Giocatori?ruolo=${ruolo}`;
+    if (search) {
+      url += `&search=${search}`;
+    }
+    return this.http.get<iGiocatore[]>(url);
+  }
+  
+  
 }

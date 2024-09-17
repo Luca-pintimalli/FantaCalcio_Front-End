@@ -1,18 +1,32 @@
 <div class="container">
   <h2>Gestione Giocatori</h2>
 
+  <!-- Barra di ricerca -->
+  <input type="text" [(ngModel)]="searchTerm" (input)="onSearchTermChange($event)" placeholder="Cerca giocatore" class="form-control" />
+
+  <div class="container">
+    <h2>Filtro:</h2>
+  
+    <!-- Pulsanti di filtro -->
+    <button class="btn btn-primary" (click)="loadGiocatori()">Tutti</button>
+    <button class="btn btn-primary" (click)="filterGiocatori('PORTIERE')">Portieri</button>
+    <button class="btn btn-primary" (click)="filterGiocatori('DIFESA')">Difensori</button>
+    <button class="btn btn-primary" (click)="filterGiocatori('CENTROCAMPO')">Centrocampisti</button>
+    <button class="btn btn-primary" (click)="filterGiocatori('ATTACCO')">Attaccanti</button> <!-- Corretto 'Attaccante' in 'ATTACCO' -->
+  </div>
+
   <!-- Visualizza un messaggio se c'è un errore -->
   <div *ngIf="errore" class="alert alert-danger">
     {{ errore }}
   </div>
 
   <!-- Controlla se la lista di giocatori è vuota -->
-  <div *ngIf="giocatoreList.length === 0">
+  <div *ngIf="giocatoreList?.length === 0">
     <p>Nessun giocatore trovato.</p>
   </div>
 
   <!-- Tabella per visualizzare la lista dei giocatori -->
-  <table class="table" *ngIf="giocatoreList.length > 0">
+  <table class="table" *ngIf="giocatoreList && giocatoreList.length > 0">
     <thead>
       <tr>
         <th>ID</th>
