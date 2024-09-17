@@ -5,4 +5,5 @@ export interface iRuoloMantra {
     id: number;
     iD_Giocatore: number;
     iD_Ruolo: number;
+    nomeRuolo: string; 
 }
