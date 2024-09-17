@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { iGiocatore } from '../../../Giocatori/i-giocatore';
-import { iRuoloMantra } from '../../ruoloMantra/i-ruolo-mantra';
-import { RuoliMantraService } from '../../ruoloMantra/ruoli-mantra.service';
-
+import { ActivatedRoute } from '@angular/router'; // Per ottenere l'ID del giocatore dalla route
+import { iRuolo } from '../../i-ruolo';
+import { RuoliService } from '../../ruoli.service';
+import { RuoloMantraService } from '../../ruoloMantra/ruoli-mantra.service';
+import { GiocatoriService } from '../../../Giocatori/giocatori.service';
 
 @Component({
   selector: 'app-ruolo-mantra',
@@ -11,54 +11,77 @@ import { RuoliMantraService } from '../../ruoloMantra/ruoli-mantra.service';
   styleUrls: ['./ruolo-mantra.component.scss']
 })
 export class RuoloMantraComponent implements OnInit {
-  id_Giocatore!: number;  // ID del giocatore passato tramite queryParams
-  ruoliMantra: iRuoloMantra[] = [];  // Lista delle associazioni RuoloMantra
-  giocatori: iGiocatore[] = [];  // Lista dei giocatori
+  ruoli: iRuolo[] = [];  // Lista dei ruoli da caricare
+  selectedRuoli: number[] = [];  // Ruoli selezionati
+  errore: string | null = null;
+  giocatore: any = { nome: '', cognome: '' };  // Informazioni del giocatore
+  idGiocatore: number = 0;  // ID del giocatore ottenuto dalla route
 
   constructor(
-    private route: ActivatedRoute,
-    private ruoliMantraService: RuoliMantraService
+    private ruoliService: RuoliService,  // Usa il RuoliService per caricare i ruoli
+    private ruoloMantraService: RuoloMantraService,  // Servizio per RuoloMantra
+    private giocatoreService: GiocatoriService,  // Servizio per i giocatori
+    private route: ActivatedRoute  // Per ottenere l'ID dalla URL
   ) {}
 
   ngOnInit(): void {
-    // Ottenere l'ID del giocatore dai queryParams
-    this.route.queryParams.subscribe(params => {
-      this.id_Giocatore = +params['id_Giocatore'];
-      console.log('ID Giocatore:', this.id_Giocatore);
-      this.loadRuoliMantra();
-    });
-  }
+    const id = Number(this.route.snapshot.paramMap.get('id'));  // Ottieni l'ID del giocatore dalla route
+    this.idGiocatore = id;
 
-  // Carica tutte le associazioni RuoloMantra
-  loadRuoliMantra(): void {
-    this.ruoliMantraService.getRuoliMantra().subscribe({
+    // Carica i dettagli del giocatore
+    this.giocatoreService.getGiocatoreById(id).subscribe({
       next: (data) => {
-        this.ruoliMantra = data;
+        this.giocatore = data;  // Imposta il giocatore
       },
-      error: (err) => console.error('Errore nel caricamento dei ruoli Mantra', err)
+      error: (err) => {
+        this.errore = 'Errore durante il caricamento del giocatore';
+        console.error('Errore caricamento giocatore:', err);
+      }
+    });
+
+    // Carica la lista dei ruoli
+    this.loadRuoli();
+  }
+
+  // Carica i ruoli disponibili usando RuoliService
+  loadRuoli(): void {
+    this.ruoliService.getAllRuoli().subscribe({
+      next: (data: iRuolo[]) => {
+        this.ruoli = data;  // Assegna la lista dei ruoli
+      },
+      error: (err: any) => {
+        this.errore = 'Errore nel caricamento dei ruoli';
+        console.error('Errore nel caricamento dei ruoli:', err);
+      }
     });
   }
 
-  // Metodo per ottenere il nome del giocatore tramite il suo ID
-  getGiocatoreNome(idGiocatore: number): string {
-    const giocatore = this.giocatori.find(g => g.iD_Giocatore === idGiocatore);
-    return giocatore ? `${giocatore.nome} ${giocatore.cognome}` : 'Giocatore non trovato';
+  // Gestisci la selezione dei ruoli
+  onRuoloSelected(idRuolo: number, event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const isChecked = inputElement.checked;
+
+    if (isChecked) {
+      this.selectedRuoli.push(idRuolo);  // Aggiungi il ruolo selezionato
+    } else {
+      this.selectedRuoli = this.selectedRuoli.filter(ruolo => ruolo !== idRuolo);  // Rimuovi il ruolo deselezionato
+    }
   }
 
-  // Metodo per ottenere il nome del ruolo tramite l'ID del ruolo
-  getRuoloNome(idRuolo: number): string {
-    // Qui dovresti ottenere il nome del ruolo dal servizio o da un elenco di ruoli
-    return 'Nome del Ruolo';  // Modifica questa parte in base alla tua logica
-  }
+  // Aggiungi un'associazione RuoloMantra al giocatore
+  addRuoloMantra(): void {
+    const ruoloMantraData = {
+      idGiocatore: this.idGiocatore,  // Usa l'ID del giocatore
+      ruoli: this.selectedRuoli  // Ruoli selezionati
+    };
 
-  // Elimina un'associazione RuoloMantra
-  deleteRuoloMantra(id: number): void {
-    this.ruoliMantraService.deleteRuoloMantra(id).subscribe({
-      next: () => {
-        this.ruoliMantra = this.ruoliMantra.filter(rm => rm.id !== id);  // Rimuove l'associazione dalla lista
-        console.log('Associazione RuoloMantra eliminata');
+    this.ruoloMantraService.addRuoloMantra(ruoloMantraData).subscribe({
+      next: (res: any) => {
+        console.log('Associazione RuoloMantra aggiunta con successo');
       },
-      error: (err) => console.error('Errore durante l\'eliminazione del ruolo Mantra', err)
+      error: (err: any) => {
+        console.error('Errore durante l\'aggiunta dell\'associazione RuoloMantra:', err);
+      }
     });
   }
 }

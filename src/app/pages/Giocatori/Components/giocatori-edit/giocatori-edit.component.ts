@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { iGiocatore } from '../../i-giocatore';
-import { iRuoloMantra } from '../../../Ruoli/ruoloMantra/i-ruolo-mantra';
-import { GiocatoriService } from '../../giocatori.service';
-import { RuoliMantraService } from '../../../Ruoli/ruoloMantra/ruoli-mantra.service';
+import { RuoloMantraService } from '../../../Ruoli/ruoloMantra/ruoli-mantra.service'; // Correggi il percorso se necessario
+import { GiocatoriService } from '../../giocatori.service'; // Servizio per i giocatori
 
 @Component({
   selector: 'app-giocatori-edit',
@@ -13,18 +12,18 @@ import { RuoliMantraService } from '../../../Ruoli/ruoloMantra/ruoli-mantra.serv
 export class GiocatoriEditComponent implements OnInit {
   giocatore: iGiocatore | undefined;
   errore: string | null = null;
-  availableRuoliMantra: iRuoloMantra[] = [];  // Lista di ruoli Mantra disponibili
+  availableRuoliMantra: any[] = [];  // Lista di ruoli Mantra disponibili
 
   constructor(
     private giocatoreService: GiocatoriService,
+    private ruoloMantraService: RuoloMantraService,
     private route: ActivatedRoute,
-    private router: Router,
-    private ruoliMantraService: RuoliMantraService  // Aggiungi il servizio RuoliMantra
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    
+
     this.giocatoreService.getGiocatoreById(id).subscribe({
       next: (data) => {
         this.giocatore = data;
@@ -35,18 +34,19 @@ export class GiocatoriEditComponent implements OnInit {
       }
     });
 
-    // Carica i ruoli Mantra disponibili
+    // Carica i ruoli Mantra
     this.loadRuoliMantra();
   }
 
   // Metodo per caricare i ruoli Mantra
   loadRuoliMantra(): void {
-    this.ruoliMantraService.getRuoliMantra().subscribe({
+    this.ruoloMantraService.getRuoliMantra().subscribe({
       next: (data) => {
-        this.availableRuoliMantra = data;  // Assegna i ruoli Mantra disponibili
+        this.availableRuoliMantra = data;
       },
       error: (err) => {
-        console.error('Errore nel caricamento dei ruoli Mantra', err);
+        this.errore = 'Errore durante il caricamento dei ruoli Mantra';
+        console.error(err);
       }
     });
   }

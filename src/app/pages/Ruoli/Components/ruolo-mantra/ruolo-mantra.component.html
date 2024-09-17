@@ -1,22 +1,14 @@
 <div class="container">
-  <h2>Gestione Ruolo Mantra per il Giocatore ID: {{ id_Giocatore }}</h2>
+  <h2>Associa Ruoli Mantra a {{ giocatore.nome }} {{ giocatore.cognome }}</h2>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Giocatore</th>
-        <th>Ruolo</th>
-        <th>Azioni</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ruoloMantra of ruoliMantra">
-        <td>{{ getGiocatoreNome(ruoloMantra.iD_Giocatore) }}</td>
-        <td>{{ getRuoloNome(ruoloMantra.iD_Ruolo) }}</td>
-        <td>
-          <button (click)="deleteRuoloMantra(ruoloMantra.id)" class="btn btn-danger">Elimina</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Visualizza i ruoli disponibili con checkbox per la selezione -->
+  <div *ngFor="let ruolo of ruoli">
+    <label>
+      <input type="checkbox" (change)="onRuoloSelected(ruolo.iD_Ruolo, $event)">
+      {{ ruolo.nomeRuolo }}
+    </label>
+  </div>
+
+  <!-- Bottone per associare i ruoli selezionati -->
+  <button (click)="addRuoloMantra()" type="button" class="btn btn-primary">Associa Ruoli</button>
 </div>

@@ -1,41 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { iRuoloMantra } from './i-ruolo-mantra';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RuoliMantraService {
+export class RuoloMantraService {
+  private apiUrl = 'https://localhost:7260/api/RuoloMantra';  // Endpoint per RuoloMantra
 
-  private apiUrl = 'http://localhost:7260/api/RuoloMantra';  // URL dell'API per RuoloMantra
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  // Ottenere tutte le associazioni RuoloMantra
-  getRuoliMantra(): Observable<iRuoloMantra[]> {
-    return this.http.get<iRuoloMantra[]>(this.apiUrl);
+  // Metodo per aggiungere un'associazione RuoloMantra
+  addRuoloMantra(ruoloMantraData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/aggiungi`, ruoloMantraData);
   }
 
-  // Ottenere una singola associazione RuoloMantra tramite ID
-  getRuoloMantraById(id: number): Observable<iRuoloMantra> {
-    return this.http.get<iRuoloMantra>(`${this.apiUrl}/${id}`);
+  // Metodo per ottenere tutti i ruoli Mantra
+  getRuoliMantra(): Observable<any> {
+    return this.http.get(`${this.apiUrl}`);
   }
 
-  // Creare una nuova associazione RuoloMantra
-  createRuoloMantra(ruoloMantra: iRuoloMantra): Observable<iRuoloMantra> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<iRuoloMantra>(this.apiUrl, ruoloMantra, { headers });
-  }
-
-  // Aggiornare un'associazione RuoloMantra esistente
-  updateRuoloMantra(id: number, ruoloMantra: iRuoloMantra): Observable<iRuoloMantra> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.put<iRuoloMantra>(`${this.apiUrl}/${id}`, ruoloMantra, { headers });
-  }
-
-  // Eliminare un'associazione RuoloMantra tramite ID
-  deleteRuoloMantra(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // Metodo per ottenere i ruoli Mantra associati a uno specifico giocatore
+  getRuoliMantraByGiocatore(idGiocatore: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/giocatore/${idGiocatore}`);
   }
 }
