@@ -11,17 +11,14 @@ import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { ModalitaModule } from './pages/modalita/modalita.module';
 import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module';
-import { RuoliCreateComponent } from './pages/Ruoli/Components/ruoli-create/ruoli-create.component';
-import { RuoliEditComponent } from './pages/Ruoli/Components/ruoli-edit/ruoli-edit.component'; // Importa il modulo TipoAsta
+import { GiocatoriModule } from './pages/Giocatori/giocatori.module';
+// Rimuovi i componenti già gestiti dai moduli specifici, come Ruoli, Giocatori, ecc.
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
-    RuoliCreateComponent,
-    RuoliEditComponent,
-    
   ],
   imports: [
     BrowserModule,
@@ -32,7 +29,8 @@ import { RuoliEditComponent } from './pages/Ruoli/Components/ruoli-edit/ruoli-ed
     NgbModule,
     AuthModule,
     ModalitaModule,  // Modulo Modalita importato correttamente
-    TipoAstaModule  // Modulo TipoAsta importato correttamente
+    TipoAstaModule ,
+    GiocatoriModule  // Modulo TipoAsta importato correttamente
   ],
   providers: [
     {

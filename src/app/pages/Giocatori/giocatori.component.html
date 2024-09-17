@@ -1,1 +1,50 @@
-<p>giocatori works!</p>
+<div class="container">
+  <h2>Gestione Giocatori</h2>
+
+  <!-- Visualizza un messaggio se c'è un errore -->
+  <div *ngIf="errore" class="alert alert-danger">
+    {{ errore }}
+  </div>
+
+  <!-- Controlla se la lista di giocatori è vuota -->
+  <div *ngIf="giocatoreList.length === 0">
+    <p>Nessun giocatore trovato.</p>
+  </div>
+
+  <!-- Tabella per visualizzare la lista dei giocatori -->
+  <table class="table" *ngIf="giocatoreList.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Squadra Attuale</th>
+        <th>Goal Fatti</th>
+        <th>Goal Subiti</th>
+        <th>Assist</th>
+        <th>Partite Giocate</th>
+        <th>Ruolo Classic</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let giocatore of giocatoreList">
+        <td>{{ giocatore.iD_Giocatore }}</td>
+        <td>{{ giocatore.nome }}</td>
+        <td>{{ giocatore.cognome }}</td>
+        <td>{{ giocatore.squadraAttuale }}</td>
+        <td>{{ giocatore.goalFatti }}</td>
+        <td>{{ giocatore.goalSubiti }}</td>
+        <td>{{ giocatore.assist }}</td>
+        <td>{{ giocatore.partiteGiocate }}</td>
+        <td>{{ giocatore.ruoloClassic }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editGiocatore(giocatore.iD_Giocatore)">Modifica</button>
+          <button class="btn btn-danger" (click)="deleteGiocatore(giocatore.iD_Giocatore)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success" (click)="createGiocatore()">Crea Nuovo Giocatore</button>
+</div>

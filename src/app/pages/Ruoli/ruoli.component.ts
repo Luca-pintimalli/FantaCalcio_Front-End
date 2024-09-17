@@ -62,4 +62,11 @@ export class RuoliComponent implements OnInit {
   createRuolo(): void {
     this.router.navigate(['/ruoli/create']);
   }
+
+
+  // Metodo per navigare alla pagina dei calciatori
+  goToGiocatoriList(): void {
+    this.router.navigate(['/giocatori']);  // Naviga alla lista dei calciatori
+  }
+
 }

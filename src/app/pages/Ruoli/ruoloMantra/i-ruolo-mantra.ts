@@ -2,7 +2,7 @@ import { iGiocatore } from "../../Giocatori/i-giocatore";
 import { iRuolo } from "../i-ruolo";
 
 export interface iRuoloMantra {
-    ID: number;
-    ID_Giocatore: number;
-    ID_Ruolo: number;
+    id: number;
+    iD_Giocatore: number;
+    iD_Ruolo: number;
 }

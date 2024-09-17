@@ -11,7 +11,7 @@ export class GiocatoriService {
 
   constructor(private http: HttpClient) {}
 
-  getGiocatori(): Observable<iGiocatore[]> {
+  getAllGiocatori(): Observable<iGiocatore[]> {
     return this.http.get<iGiocatore[]>(this.apiUrl);
   }
 
@@ -27,7 +27,8 @@ export class GiocatoriService {
     return this.http.put<iGiocatore>(`${this.apiUrl}/${id}`, giocatore);
   }
 
-  deleteGiocatore(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  deleteGiocatore(id_Giocatore: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id_Giocatore}`);
   }
+  
 }

@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GiocatoriComponent } from './giocatori.component';
-import { ListaComponent } from './Components/lista/lista.component';
-import { DettagliComponent } from './Components/dettagli/dettagli.component';
-import { AggiungiComponent } from './Components/aggiungi/aggiungi.component';
-import { ModificaComponent } from './Components/modifica/modifica.component';
+import { GiocatoreComponent } from './giocatori.component';
+import { GiocatoriListPublicComponent } from './Components/giocatori-list-public/giocatori-list-public.component';
+import { GiocatoriEditComponent } from './Components/giocatori-edit/giocatori-edit.component';
+import { GiocatoriCreateComponent } from './Components/giocatori-create/giocatori-create.component';
 
 const routes: Routes = [
-  { path: 'giocatori', component: ListaComponent },
-  { path: 'giocatori/:id', component: DettagliComponent },
-  { path: 'giocatori/aggiungi', component: AggiungiComponent },
-  { path: 'giocatori/modifica/:id', component: ModificaComponent }
+  { path: '', component: GiocatoreComponent },  // Lista giocatori amministrativa
+  { path: 'create', component: GiocatoriCreateComponent },  // Creazione giocatore
+  { path: 'edit/:id', component: GiocatoriEditComponent },  // Modifica giocatore
+  { path: 'public', component: GiocatoriListPublicComponent },  // Lista giocatori pubblica
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
