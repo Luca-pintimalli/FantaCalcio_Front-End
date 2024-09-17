@@ -1,20 +1,22 @@
-<h2>Gestione Associazioni Ruolo Mantra</h2>
+<div class="container">
+  <h2>Gestione Ruolo Mantra per il Giocatore ID: {{ id_Giocatore }}</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Giocatore</th>
-      <th>Ruolo Mantra</th>
-      <th>Azioni</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let ruoloMantra of ruoliMantra">
-      <td>{{ getGiocatoreNome(ruoloMantra.iD_Giocatore) }}</td>
-      <td>{{ getRuoloNome(ruoloMantra.iD_Ruolo) }}</td>
-      <td>
-        <button (click)="deleteRuoloMantra(ruoloMantra.id)">Elimina</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Giocatore</th>
+        <th>Ruolo</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ruoloMantra of ruoliMantra">
+        <td>{{ getGiocatoreNome(ruoloMantra.iD_Giocatore) }}</td>
+        <td>{{ getRuoloNome(ruoloMantra.iD_Ruolo) }}</td>
+        <td>
+          <button (click)="deleteRuoloMantra(ruoloMantra.id)" class="btn btn-danger">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

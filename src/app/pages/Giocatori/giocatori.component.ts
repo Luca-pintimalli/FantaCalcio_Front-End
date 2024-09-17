@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GiocatoriService } from './giocatori.service';
 import { iGiocatore } from './i-giocatore';
 import { Router } from '@angular/router';
+import { GiocatoriService } from './giocatori.service';
 
 @Component({
   selector: 'app-giocatore',
@@ -9,42 +9,41 @@ import { Router } from '@angular/router';
   styleUrls: ['./giocatori.component.scss']
 })
 export class GiocatoreComponent implements OnInit {
-  giocatoreList: iGiocatore[] = [];  // Lista dei giocatori
-  errore: string | null = null;  // Per gestire gli errori
+  giocatoreList: iGiocatore[] = [];  // La proprietà è correttamente nominata
+  errore: string | null = null;  // Per la gestione degli errori
 
-  constructor(private giocatoriService: GiocatoriService, private router: Router) {}
+  constructor(private giocatoreService: GiocatoriService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadGiocatori();
   }
 
-  // Metodo per caricare i giocatori
+  // Carica la lista dei giocatori dal servizio
   loadGiocatori(): void {
-    this.giocatoriService.getAllGiocatori().subscribe({
-      next: (data) => this.giocatoreList = data,
-      error: (err) => {
-        console.error('Errore nel caricamento dei giocatori', err);
-        this.errore = 'Errore nel caricamento dei giocatori';  // Imposta il messaggio di errore
-      }
+    this.giocatoreService.getAllGiocatori().subscribe(data => {
+      this.giocatoreList = data;
     });
   }
 
-  // Metodo per navigare alla pagina di modifica di un giocatore
+  // Naviga alla pagina di modifica per un giocatore
   editGiocatore(id: number): void {
     this.router.navigate(['/giocatori/edit', id]);
   }
 
-  // Metodo per eliminare un giocatore
-  deleteGiocatore(iD_Giocatore: number): void {
+  // Elimina un giocatore con conferma
+  deleteGiocatore(iD_Giocatore: number | undefined): void {
+    if (!iD_Giocatore) {
+      this.errore = 'ID giocatore non valido';
+      return;
+    }
+
     if (confirm('Sei sicuro di voler eliminare questo giocatore?')) {
-      this.giocatoriService.deleteGiocatore(iD_Giocatore).subscribe({
+      this.giocatoreService.deleteGiocatore(iD_Giocatore).subscribe({
         next: () => {
-          console.log('Giocatore eliminato correttamente');
           this.loadGiocatori();  // Ricarica la lista dopo l'eliminazione
         },
         error: (err) => {
-          console.error('Errore durante l\'eliminazione del giocatore', err);
-          this.errore = 'Errore durante l\'eliminazione del giocatore';  // Imposta il messaggio di errore
+          this.errore = 'Errore durante l\'eliminazione del giocatore';
         }
       });
     }
@@ -53,5 +52,10 @@ export class GiocatoreComponent implements OnInit {
   // Metodo per navigare alla pagina di creazione di un nuovo giocatore
   createGiocatore(): void {
     this.router.navigate(['/giocatori/create']);
+  }
+
+  // Naviga alla pagina di gestione dei ruoli Mantra per il giocatore
+  associateRuoloMantra(id_Giocatore: number): void {
+    this.router.navigate(['/ruoli/ruolo-mantra'], { queryParams: { id_Giocatore } });
   }
 }

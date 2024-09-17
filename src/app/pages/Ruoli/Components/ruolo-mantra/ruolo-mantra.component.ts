@@ -1,35 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { iGiocatore } from '../../../Giocatori/i-giocatore';
 import { iRuoloMantra } from '../../ruoloMantra/i-ruolo-mantra';
 import { RuoliMantraService } from '../../ruoloMantra/ruoli-mantra.service';
-import { GiocatoriService } from '../../../Giocatori/giocatori.service';
+
 
 @Component({
   selector: 'app-ruolo-mantra',
   templateUrl: './ruolo-mantra.component.html',
-  styleUrls: ['./ruolo-mantra.component.scss']  // Corretto qui: styleUrls con "s"
+  styleUrls: ['./ruolo-mantra.component.scss']
 })
 export class RuoloMantraComponent implements OnInit {
-  giocatori: iGiocatore[] = [];  // Lista di giocatori
-  ruoliMantra: iRuoloMantra[] = [];  // Associazioni RuoloMantra
+  id_Giocatore!: number;  // ID del giocatore passato tramite queryParams
+  ruoliMantra: iRuoloMantra[] = [];  // Lista delle associazioni RuoloMantra
+  giocatori: iGiocatore[] = [];  // Lista dei giocatori
 
   constructor(
-    private ruoliMantraService: RuoliMantraService, // Servizio per RuoloMantra
-    private giocatoriService: GiocatoriService  // Servizio per i giocatori
+    private route: ActivatedRoute,
+    private ruoliMantraService: RuoliMantraService
   ) {}
 
   ngOnInit(): void {
-    this.loadGiocatori();  // Carica i giocatori
-    this.loadRuoliMantra();  // Carica le associazioni RuoloMantra
-  }
-
-  // Carica tutti i giocatori
-  loadGiocatori(): void {
-    this.giocatoriService.getAllGiocatori().subscribe({
-      next: (data) => {
-        this.giocatori = data;  // Popola la lista dei giocatori
-      },
-      error: (err) => console.error('Errore nel caricamento dei giocatori', err)
+    // Ottenere l'ID del giocatore dai queryParams
+    this.route.queryParams.subscribe(params => {
+      this.id_Giocatore = +params['id_Giocatore'];
+      console.log('ID Giocatore:', this.id_Giocatore);
+      this.loadRuoliMantra();
     });
   }
 
@@ -37,10 +33,22 @@ export class RuoloMantraComponent implements OnInit {
   loadRuoliMantra(): void {
     this.ruoliMantraService.getRuoliMantra().subscribe({
       next: (data) => {
-        this.ruoliMantra = data;  // Popola la lista delle associazioni RuoloMantra
+        this.ruoliMantra = data;
       },
       error: (err) => console.error('Errore nel caricamento dei ruoli Mantra', err)
     });
+  }
+
+  // Metodo per ottenere il nome del giocatore tramite il suo ID
+  getGiocatoreNome(idGiocatore: number): string {
+    const giocatore = this.giocatori.find(g => g.iD_Giocatore === idGiocatore);
+    return giocatore ? `${giocatore.nome} ${giocatore.cognome}` : 'Giocatore non trovato';
+  }
+
+  // Metodo per ottenere il nome del ruolo tramite l'ID del ruolo
+  getRuoloNome(idRuolo: number): string {
+    // Qui dovresti ottenere il nome del ruolo dal servizio o da un elenco di ruoli
+    return 'Nome del Ruolo';  // Modifica questa parte in base alla tua logica
   }
 
   // Elimina un'associazione RuoloMantra
@@ -52,17 +60,5 @@ export class RuoloMantraComponent implements OnInit {
       },
       error: (err) => console.error('Errore durante l\'eliminazione del ruolo Mantra', err)
     });
-  }
-
-  // Metodo per ottenere il nome del giocatore tramite il suo ID
-  getGiocatoreNome(idGiocatore: number): string {
-    const giocatore = this.giocatori.find(g => g.iD_Giocatore === idGiocatore);
-    return giocatore ? `${giocatore.nome} ${giocatore.cognome}` : 'Giocatore non trovato';
-  }
-
-  // Metodo per ottenere il nome del ruolo tramite l'ID del ruolo (questo dipende da come gestisci i ruoli)
-  getRuoloNome(idRuolo: number): string {
-    // Dovresti aggiungere la logica per ottenere il nome del ruolo
-    return 'Nome del Ruolo';  // Modifica questo in base alla tua logica di ruoli
   }
 }
