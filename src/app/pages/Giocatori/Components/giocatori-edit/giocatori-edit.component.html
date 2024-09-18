@@ -1,1 +1,57 @@
-<p>giocatori-edit works!</p>
+<div class="container">
+    <h2>Modifica Giocatore</h2>
+  
+    <!-- Mostra un messaggio di errore se presente -->
+    <div *ngIf="errore" class="alert alert-danger">
+      {{ errore }}
+    </div>
+  
+    <!-- Form per modificare il giocatore -->
+    <form (ngSubmit)="onSubmit()" *ngIf="giocatore">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input id="nome" [(ngModel)]="giocatore.nome" name="nome" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input id="cognome" [(ngModel)]="giocatore.cognome" name="cognome" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="squadraAttuale">Squadra Attuale</label>
+        <input id="squadraAttuale" [(ngModel)]="giocatore.squadraAttuale" name="squadraAttuale" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="goalFatti">Goal Fatti</label>
+        <input id="goalFatti" [(ngModel)]="giocatore.goalFatti" name="goalFatti" type="number" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="goalSubiti">Goal Subiti</label>
+        <input id="goalSubiti" [(ngModel)]="giocatore.goalSubiti" name="goalSubiti" type="number" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="assist">Assist</label>
+        <input id="assist" [(ngModel)]="giocatore.assist" name="assist" type="number" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="partiteGiocate">Partite Giocate</label>
+        <input id="partiteGiocate" [(ngModel)]="giocatore.partiteGiocate" name="partiteGiocate" type="number" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="ruoloClassic">Ruolo Classic</label>
+        <select id="ruoloClassic" [(ngModel)]="giocatore.ruoloClassic" name="ruoloClassic" class="form-control">
+          <option *ngFor="let ruolo of ruoliClassic" [value]="ruolo">{{ ruolo }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Salva</button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">Annulla</button>
+    </form>
+  </div>
+  

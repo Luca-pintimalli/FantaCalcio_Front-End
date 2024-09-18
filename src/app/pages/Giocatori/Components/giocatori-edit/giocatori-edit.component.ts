@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { iGiocatore } from '../../../Giocatori/i-giocatore';
 import { GiocatoriService } from '../../../Giocatori/giocatori.service';
-import { RuoliService } from '../../../Ruoli/ruoli.service';
 
 @Component({
   selector: 'app-giocatori-edit',
@@ -10,50 +9,85 @@ import { RuoliService } from '../../../Ruoli/ruoli.service';
   styleUrls: ['./giocatori-edit.component.scss']
 })
 export class GiocatoriEditComponent implements OnInit {
-  giocatore: iGiocatore | undefined;
-  iD_Giocatore: number = 0; // Correzione del nome del campo in base alla tua interfaccia
-  ruoli: any[] = []; // Aggiunta di un array per gestire i ruoli
+  giocatore: iGiocatore = {
+    iD_Giocatore: 0,
+    nome: '',
+    cognome: '',
+    foto: '',
+    squadraAttuale: '',
+    goalFatti: 0,
+    goalSubiti: 0,
+    assist: 0,
+    partiteGiocate: 0,
+    ruoloClassic: ''
+  }; // Inizializzazione dell'oggetto giocatore
+  errore: string | null = null;  // Per la gestione degli errori
+
+  // Ruoli Classic hardcoded
+  ruoliClassic: string[] = ['Portiere', 'Difensore', 'Centrocampista', 'Attaccante'];
 
   constructor(
     private giocatoriService: GiocatoriService,
-    private ruoliService: RuoliService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id && id > 0) {
-      this.iD_Giocatore = id; // Usando iD_Giocatore come per la tua interfaccia
-      this.caricaGiocatore();
-      this.loadRuoli();
+      this.caricaGiocatore(id);
     } else {
-      console.error('ID giocatore non valido:', id);
+      this.errore = 'ID giocatore non valido';
     }
   }
 
   // Metodo per caricare i dettagli del giocatore
-  caricaGiocatore(): void {
-    this.giocatoriService.getGiocatoreById(this.iD_Giocatore).subscribe({
+  caricaGiocatore(id: number): void {
+    this.giocatoriService.getGiocatoreById(id).subscribe({
       next: (data: iGiocatore) => {
         this.giocatore = data;
         console.log('Giocatore caricato:', this.giocatore);
       },
       error: (err) => {
+        this.errore = 'Errore nel caricamento del giocatore';
         console.error('Errore nel caricamento del giocatore:', err);
       }
     });
   }
 
-  // Metodo per caricare i ruoli
-  loadRuoli(): void {
-    this.ruoliService.getAllRuoli().subscribe({
-      next: (ruoli) => {
-        this.ruoli = ruoli;
-        console.log('Ruoli caricati:', ruoli);
-      },
-      error: (err) => {
-        console.error('Errore nel caricamento dei ruoli:', err);
-      }
-    });
+  // Metodo per aggiornare il giocatore
+  onSubmit(): void {
+    if (this.giocatore) {
+      const giocatorePayload = {
+        nome: this.giocatore.nome,
+        cognome: this.giocatore.cognome,
+        foto: this.giocatore.foto || "", // Assicurati che il campo foto non sia null o undefined
+        squadraAttuale: this.giocatore.squadraAttuale,
+        goalFatti: this.giocatore.goalFatti,
+        goalSubiti: this.giocatore.goalSubiti,
+        assist: this.giocatore.assist,
+        partiteGiocate: this.giocatore.partiteGiocate,
+        ruoloClassic: this.giocatore.ruoloClassic
+      };
+  
+      console.log('Dati inviati per l\'aggiornamento:', giocatorePayload); // Log per verificare il payload
+  
+      this.giocatoriService.updateGiocatore(this.giocatore.iD_Giocatore, giocatorePayload).subscribe({
+        next: (res) => {
+          console.log('Giocatore aggiornato con successo');
+          this.router.navigate(['/giocatori']);
+        },
+        error: (err) => {
+          this.errore = 'Errore durante l\'aggiornamento del giocatore';
+          console.error('Errore durante l\'aggiornamento del giocatore:', err);
+        }
+      });
+    }
+  }
+  
+
+  // Metodo per tornare alla lista dei giocatori
+  goBack(): void {
+    this.router.navigate(['/giocatori']);
   }
 }

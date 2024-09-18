@@ -23,9 +23,10 @@ export class GiocatoriService {
     return this.http.post<iGiocatore>(this.apiUrl, giocatore);
   }
 
-  updateGiocatore(id: number, giocatore: iGiocatore): Observable<iGiocatore> {
-    return this.http.put<iGiocatore>(`${this.apiUrl}/${id}`, giocatore);
+  updateGiocatore(id: number, giocatore: Partial<iGiocatore>): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, giocatore);
   }
+  
 
   deleteGiocatore(id_Giocatore: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id_Giocatore}`);
