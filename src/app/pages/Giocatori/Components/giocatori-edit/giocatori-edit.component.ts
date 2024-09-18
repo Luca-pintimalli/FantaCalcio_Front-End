@@ -9,18 +9,7 @@ import { GiocatoriService } from '../../../Giocatori/giocatori.service';
   styleUrls: ['./giocatori-edit.component.scss']
 })
 export class GiocatoriEditComponent implements OnInit {
-  giocatore: iGiocatore = {
-    iD_Giocatore: 0,
-    nome: '',
-    cognome: '',
-    foto: '',
-    squadraAttuale: '',
-    goalFatti: 0,
-    goalSubiti: 0,
-    assist: 0,
-    partiteGiocate: 0,
-    ruoloClassic: ''
-  }; // Inizializzazione dell'oggetto giocatore
+  giocatore: iGiocatore | null = null;  // Inizializzato come null finché non carichiamo i dati
   errore: string | null = null;  // Per la gestione degli errori
 
   // Ruoli Classic hardcoded
@@ -55,37 +44,44 @@ export class GiocatoriEditComponent implements OnInit {
     });
   }
 
-  // Metodo per aggiornare il giocatore
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result) {
+          this.giocatore!.foto = reader.result as string;
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.giocatore!.foto = null;  // Assicurati che "foto" possa accettare "null"
+    }
+  }
+  
+  
   onSubmit(): void {
     if (this.giocatore) {
-      const giocatorePayload = {
-        nome: this.giocatore.nome,
-        cognome: this.giocatore.cognome,
-        foto: this.giocatore.foto || "", // Assicurati che il campo foto non sia null o undefined
-        squadraAttuale: this.giocatore.squadraAttuale,
-        goalFatti: this.giocatore.goalFatti,
-        goalSubiti: this.giocatore.goalSubiti,
-        assist: this.giocatore.assist,
-        partiteGiocate: this.giocatore.partiteGiocate,
-        ruoloClassic: this.giocatore.ruoloClassic
-      };
-  
-      console.log('Dati inviati per l\'aggiornamento:', giocatorePayload); // Log per verificare il payload
-  
-      this.giocatoriService.updateGiocatore(this.giocatore.iD_Giocatore, giocatorePayload).subscribe({
-        next: (res) => {
-          console.log('Giocatore aggiornato con successo');
+      // Assicuriamoci che foto sia una stringa vuota se è null o undefined
+      this.giocatore.foto = this.giocatore.foto ?? ''; 
+      
+      console.log('Dati inviati per l\'aggiornamento:', this.giocatore);  // Log dei dati inviati
+      this.giocatoriService.updateGiocatore(this.giocatore.iD_Giocatore, this.giocatore).subscribe({
+        next: () => {
           this.router.navigate(['/giocatori']);
         },
         error: (err) => {
           this.errore = 'Errore durante l\'aggiornamento del giocatore';
-          console.error('Errore durante l\'aggiornamento del giocatore:', err);
+          console.error(err);
         }
       });
     }
   }
   
-
+  
+  
+  
+  
   // Metodo per tornare alla lista dei giocatori
   goBack(): void {
     this.router.navigate(['/giocatori']);

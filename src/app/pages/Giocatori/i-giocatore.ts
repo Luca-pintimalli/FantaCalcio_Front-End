@@ -5,7 +5,7 @@ export interface iGiocatore {
   iD_Giocatore: number;
   nome: string;
   cognome: string;
-  foto?: string; // opzionale
+  foto?: string| null; // opzionale
   squadraAttuale: string; 
   goalFatti: number;
   goalSubiti: number;
