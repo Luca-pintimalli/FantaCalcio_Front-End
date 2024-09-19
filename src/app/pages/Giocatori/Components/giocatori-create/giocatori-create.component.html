@@ -1,1 +1,133 @@
-<p>giocatori-create works!</p>
+<div class="container mt-4">
+    <h2>Crea un nuovo Giocatore</h2>
+  
+    <!-- Mostra un messaggio di errore se presente -->
+    <div *ngIf="errore" class="alert alert-danger">
+      {{ errore }}
+    </div>
+  
+    <!-- Form per la creazione di un nuovo giocatore -->
+    <form [formGroup]="giocatoreForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nome">Nome</label>
+        <input
+          type="text"
+          id="nome"
+          class="form-control"
+          formControlName="nome"
+          [ngClass]="{ 'is-invalid': giocatoreForm.get('nome')?.invalid && giocatoreForm.get('nome')?.touched }"
+        />
+        <div *ngIf="giocatoreForm.get('nome')?.invalid && giocatoreForm.get('nome')?.touched" class="invalid-feedback">
+          Il nome è richiesto.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="cognome">Cognome</label>
+        <input
+          type="text"
+          id="cognome"
+          class="form-control"
+          formControlName="cognome"
+          [ngClass]="{ 'is-invalid': giocatoreForm.get('cognome')?.invalid && giocatoreForm.get('cognome')?.touched }"
+        />
+        <div *ngIf="giocatoreForm.get('cognome')?.invalid && giocatoreForm.get('cognome')?.touched" class="invalid-feedback">
+          Il cognome è richiesto.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="squadraAttuale">Squadra Attuale</label>
+        <input
+          type="text"
+          id="squadraAttuale"
+          class="form-control"
+          formControlName="squadraAttuale"
+          [ngClass]="{ 'is-invalid': giocatoreForm.get('squadraAttuale')?.invalid && giocatoreForm.get('squadraAttuale')?.touched }"
+        />
+        <div *ngIf="giocatoreForm.get('squadraAttuale')?.invalid && giocatoreForm.get('squadraAttuale')?.touched" class="invalid-feedback">
+          La squadra attuale è richiesta.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="goalFatti">Goal Fatti</label>
+        <input
+          type="number"
+          id="goalFatti"
+          class="form-control"
+          formControlName="goalFatti"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="goalSubiti">Goal Subiti</label>
+        <input
+          type="number"
+          id="goalSubiti"
+          class="form-control"
+          formControlName="goalSubiti"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="assist">Assist</label>
+        <input
+          type="number"
+          id="assist"
+          class="form-control"
+          formControlName="assist"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="partiteGiocate">Partite Giocate</label>
+        <input
+          type="number"
+          id="partiteGiocate"
+          class="form-control"
+          formControlName="partiteGiocate"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="ruoloClassic">Ruolo Classic</label>
+        <select
+          id="ruoloClassic"
+          class="form-control"
+          formControlName="ruoloClassic"
+          [ngClass]="{ 'is-invalid': giocatoreForm.get('ruoloClassic')?.invalid && giocatoreForm.get('ruoloClassic')?.touched }"
+        >
+          <option value="" disabled>Seleziona un ruolo</option>
+          <option *ngFor="let ruolo of ruoliClassic" [value]="ruolo">
+            {{ ruolo }}
+          </option>
+        </select>
+        <div *ngIf="giocatoreForm.get('ruoloClassic')?.invalid && giocatoreForm.get('ruoloClassic')?.touched" class="invalid-feedback">
+          Il ruolo è richiesto.
+        </div>
+      </div>
+  
+      <!-- Caricamento foto -->
+      <div class="form-group">
+        <label for="foto">Foto</label>
+        <input type="file" (change)="onFileSelected($event)" name="file" />
+    </div>
+  
+      <!-- Anteprima della foto -->
+      <div *ngIf="selectedFile" class="mt-3">
+        <h5>Anteprima Foto:</h5>
+        <img [src]="previewUrl" alt="Anteprima Immagine" class="img-thumbnail" style="max-width: 200px;" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="giocatoreForm.invalid || loading">
+        Crea Giocatore
+      </button>
+      
+  
+      <button type="button" class="btn btn-secondary ml-2" (click)="goBack()">
+        Annulla
+      </button>
+    </form>
+  </div>
+  

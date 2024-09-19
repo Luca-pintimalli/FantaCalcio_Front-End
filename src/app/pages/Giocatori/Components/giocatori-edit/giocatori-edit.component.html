@@ -21,11 +21,14 @@
       </div>
   
       <!-- Foto -->
-      <div class="form-group">
-        <label for="foto">Foto (opzionale)</label>
-        <input type="file" id="foto" (change)="onFileSelected($event)" />
-        <img *ngIf="giocatore.foto" [src]="giocatore.foto" alt="Foto del giocatore" width="150">
-      </div>
+      <!-- Se la foto è disponibile, mostra l'immagine, altrimenti mostra un testo -->
+<div class="form-group">
+    <label for="foto">Foto (opzionale)</label>
+    <input type="file" id="foto" (change)="onFileSelected($event)" />
+    <img *ngIf="giocatore?.foto && giocatore.foto !== 'Nessuna foto disponibile'" [src]="giocatore.foto" alt="Foto del giocatore" width="150">
+    <div *ngIf="giocatore?.foto === 'Nessuna foto disponibile'">Nessuna foto disponibile</div>
+  </div>
+  
   
       <!-- Ruolo Classic -->
       <div class="form-group">

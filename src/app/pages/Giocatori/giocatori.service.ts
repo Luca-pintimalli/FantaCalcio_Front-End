@@ -18,15 +18,17 @@ export class GiocatoriService {
   getGiocatoreById(id: number): Observable<iGiocatore> {
     return this.http.get<iGiocatore>(`${this.apiUrl}/${id}`);
   }
+  addGiocatore(giocatoreData: any): Observable<any> {
+    return this.http.post<any>('https://localhost:7260/api/Giocatori', giocatoreData, {
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
 
-  addGiocatore(giocatore: iGiocatore): Observable<iGiocatore> {
-    return this.http.post<iGiocatore>(this.apiUrl, giocatore);
-  }
 
-  updateGiocatore(id: number, giocatore: Partial<iGiocatore>): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, giocatore);
-  }
-  
+updateGiocatoreWithImage(id: number, formData: FormData): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}/${id}`, formData);
+}
+
 
   deleteGiocatore(id_Giocatore: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id_Giocatore}`);
@@ -43,5 +45,8 @@ export class GiocatoriService {
     return this.http.get<iGiocatore[]>(url);
   }
   
+  addGiocatoreWithImage(formData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, formData);
+  }
   
 }
