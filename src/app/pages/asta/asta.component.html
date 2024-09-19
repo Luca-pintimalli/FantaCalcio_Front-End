@@ -1,5 +1,7 @@
 <div class="container">
-  <h2>Lista di tutte le aste create</h2>
+  <h2>Lista di tutte le aste</h2>
+
+  <button routerLink="/Asta/create" class="btn btn-primary mb-3">Crea Nuova Asta</button>
 
   <table class="table table-striped">
     <thead>
@@ -10,7 +12,7 @@
         <th>Numero Squadre</th>
         <th>Crediti Disponibili</th>
         <th>Modalità</th>
-        <th>Dettagli</th> <!-- Colonna per il link ai dettagli -->
+        <th>Dettagli</th>
       </tr>
     </thead>
     <tbody>
@@ -22,7 +24,7 @@
         <td>{{ asta.creditiDisponibili }}</td>
         <td>{{ asta.nomeModalita }}</td>
         <td>
-          <a [routerLink]="['/dettagli', asta.iD_Asta]" class="btn btn-info">Dettagli</a> <!-- Link ai dettagli -->
+          <a [routerLink]="['/Asta/dettagli', asta.iD_Asta]" class="btn btn-info">Dettagli</a>
         </td>
       </tr>
     </tbody>

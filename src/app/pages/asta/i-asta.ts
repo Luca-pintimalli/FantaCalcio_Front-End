@@ -12,7 +12,7 @@ export interface iAsta {
   maxCentrocampisti: number; // Limite massimo di centrocampisti per squadra
   maxAttaccanti: number; // Limite massimo di attaccanti per squadra
 
-  nomeUtente: string;
-  nomeModalita: string; // (Classic o Mantra)
-  tipoAstaDescrizione: string; // (random o chiamata)
+  nomeUtente?: string;
+  nomeModalita?: string; // (Classic o Mantra)
+  tipoAstaDescrizione?: string; // (random o chiamata)
 }

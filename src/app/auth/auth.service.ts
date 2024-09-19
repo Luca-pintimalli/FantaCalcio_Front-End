@@ -37,22 +37,28 @@ export class AuthService {
 
   // Metodo di login
   login(authData: iAuthData): Observable<iAuthResponse> {
-    return this.http.post<iAuthResponse>(this.loginUrl, authData).pipe(tap(data => {
-      const user: iUser = {
-        id: data.id,
-        nome: data.userName,
-        cognome: data.cognome,
-        email: data.email,
-        foto: data.foto,
-        dataRegistrazione: new Date(data.dataRegistrazione)
-      };
+    return this.http.post<iAuthResponse>(this.loginUrl, authData).pipe(
+      tap(data => {
+        const user: iUser = {
+          id: data.id,
+          nome: data.userName,
+          cognome: data.cognome,
+          email: data.email,
+          foto: data.foto,
+          dataRegistrazione: new Date(data.dataRegistrazione)
+        };
   
-      this.authSubject.next(user); 
-      localStorage.setItem('accessData', JSON.stringify(data)); 
-      this.autoLogout();
-    }));
+        this.authSubject.next(user);  // Aggiorna l'utente nel BehaviorSubject
+        console.log('Utente loggato e salvato nel authSubject:', user);  // Log dell'utente loggato
+        
+        localStorage.setItem('accessData', JSON.stringify(data));  // Salva i dati di accesso nel localStorage
+        console.log('Dati di accesso salvati nel localStorage:', data);  // Verifica i dati salvati
+  
+        this.autoLogout();
+      })
+    );
   }
-
+  
   // Metodo di logout
   logout() {
     this.authSubject.next(null);
@@ -82,7 +88,12 @@ export class AuthService {
   // Ottenere i dati di accesso dal localStorage
   getAccessData(): iAuthResponse | null {
     const accessDataJson = localStorage.getItem('accessData');
-    if (!accessDataJson) return null;
+    console.log('Dati di accesso dal localStorage:', accessDataJson);  // Verifica cosa c'è in localStorage
+  
+    if (!accessDataJson) {
+      console.log('Nessun dato di accesso trovato nel localStorage.');
+      return null;
+    }
   
     try {
       return JSON.parse(accessDataJson);
@@ -92,13 +103,22 @@ export class AuthService {
     }
   }
   
+  
 
   // Ripristinare l'utente dal token nel localStorage
   restoreUser() {
     const accessData = this.getAccessData();
-    if (!accessData) return;
+    console.log('Dati di accesso ripristinati dal localStorage:', accessData);  // Log per verificare i dati di accesso
   
-    if (this.jwtHelper.isTokenExpired(accessData.token)) return;
+    if (!accessData) {
+      console.log('Nessun dato di accesso trovato.');
+      return;
+    }
+  
+    if (this.jwtHelper.isTokenExpired(accessData.token)) {
+      console.log('Token scaduto.');
+      return;
+    }
   
     const user: iUser = {
       id: accessData.id,
@@ -109,8 +129,10 @@ export class AuthService {
       dataRegistrazione: new Date(accessData.dataRegistrazione)
     };
   
-    this.authSubject.next(user);
+    this.authSubject.next(user);  // Aggiorna l'utente nel BehaviorSubject
+    console.log('Utente ripristinato:', user);  // Log dell'utente ripristinato
   }
+  
 
   // Aggiornare l'immagine del profilo
   updateProfilePicture(userId: number, file: File): Observable<any> {

@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AstaComponent } from './asta.component';
 import { DettagliAstaComponent } from './Components/dettagli-asta/dettagli-asta.component';
+import { AstaCreateComponent } from './Components/asta-create/asta-create.component';
 
 const routes: Routes = [
-  { path: '', component: AstaComponent }, // Lista di tutte le aste
-  { path: 'dettagli/:id', component: DettagliAstaComponent } // Rotta per i dettagli dell'asta
+  { path: '', component: AstaComponent },
+  { path: 'dettagli/:id', component: DettagliAstaComponent },
+  { path: 'create', component: AstaCreateComponent }  // Nuova rotta per la creazione dell'asta
 ];
 
 @NgModule({
