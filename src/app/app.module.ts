@@ -12,13 +12,16 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { ModalitaModule } from './pages/modalita/modalita.module';
 import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module';
 import { GiocatoriModule } from './pages/Giocatori/giocatori.module';
-// Rimuovi i componenti già gestiti dai moduli specifici, come Ruoli, Giocatori, ecc.
+import { DettagliAstaComponent } from './pages/asta/Components/dettagli-asta/dettagli-asta.component';
+import { AstaModule } from './pages/asta/asta.module';
+import { AstaCreateComponent } from './pages/asta/Components/asta-create/asta-create.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
+    AstaCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { GiocatoriModule } from './pages/Giocatori/giocatori.module';
     AuthModule,
     ModalitaModule,  // Modulo Modalita importato correttamente
     TipoAstaModule ,
-    GiocatoriModule  // Modulo TipoAsta importato correttamente
+    GiocatoriModule , // Modulo TipoAsta importato correttamente
+    AstaModule
   ],
   providers: [
     {

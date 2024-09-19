@@ -47,7 +47,12 @@ const routes: Routes = [
     component: RuoloMantraComponent,  // Il componente per l'associazione ruoli
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard]  // Se vuoi proteggere la route con l'autenticazione
-  }
+  },
+  { path: 'Asta', 
+  loadChildren: () => import('./pages/asta/asta.module').then(m => m.AstaModule),
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard] 
+ }
 ];
 
 @NgModule({

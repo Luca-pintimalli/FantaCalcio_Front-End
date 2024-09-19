@@ -1,0 +1,30 @@
+<div class="container">
+  <h2>Lista di tutte le aste create</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID Asta</th>
+        <th>Nome Utente</th>
+        <th>Tipo Asta</th>
+        <th>Numero Squadre</th>
+        <th>Crediti Disponibili</th>
+        <th>Modalità</th>
+        <th>Dettagli</th> <!-- Colonna per il link ai dettagli -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asta of aste">
+        <td>{{ asta.iD_Asta }}</td>
+        <td>{{ asta.nomeUtente }}</td>
+        <td>{{ asta.tipoAstaDescrizione }}</td>
+        <td>{{ asta.numeroSquadre }}</td>
+        <td>{{ asta.creditiDisponibili }}</td>
+        <td>{{ asta.nomeModalita }}</td>
+        <td>
+          <a [routerLink]="['/dettagli', asta.iD_Asta]" class="btn btn-info">Dettagli</a> <!-- Link ai dettagli -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

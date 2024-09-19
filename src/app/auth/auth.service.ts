@@ -6,161 +6,141 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { iAuthData } from '../Models/i-auth-data';
 import { iAuthResponse } from '../Models/i-auth-response';
-import { iAuthenticatedUser } from '../Models/i-authenticated-user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  jwtHelper = new JwtHelperService(); // Inizializzato correttamente
-
+  jwtHelper = new JwtHelperService(); 
   authSubject = new BehaviorSubject<null | iUser>(null);
-
-  syncIsLoggedIn:boolean=false ;
+  syncIsLoggedIn: boolean = false;
 
   user$ = this.authSubject.asObservable();
-  isLoggedIn$=this.user$.pipe(map (user=> !!user),
-  tap(user => this.syncIsLoggedIn=user))
+  isLoggedIn$ = this.user$.pipe(
+    map(user => !!user),
+    tap(user => this.syncIsLoggedIn = user)
+  );
 
   loginUrl: string = 'https://localhost:7260/api/auth/login';
   registerUrl: string = 'https://localhost:7260/api/auth/register';
-  updateImgUrl:string='https://localhost:7260/api/auth/update-profile-picture'
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) { 
+  updateImgUrl: string = 'https://localhost:7260/api/auth/update-profile-picture';
+  usersUrl: string = 'https://localhost:7260/api/users'; // Endpoint per gli utenti
+
+  constructor(private http: HttpClient, private router: Router) {
     this.restoreUser();
   }
 
+  // Metodo di registrazione
   register(newUser: FormData): Observable<iAuthResponse> {
     return this.http.post<iAuthResponse>(this.registerUrl, newUser);
   }
 
+  // Metodo di login
   login(authData: iAuthData): Observable<iAuthResponse> {
-    return this.http.post<iAuthResponse>(this.loginUrl, authData)
-      .pipe(tap(data => {
-        const user: iUser = {
-          id: data.id,  // Assicurati che 'id' sia popolato correttamente
-          nome: data.userName,
-          cognome: data.cognome,
-          email: data.email,
-          foto: data.foto,
-          dataRegistrazione: new Date(data.dataRegistrazione)
-        };
+    return this.http.post<iAuthResponse>(this.loginUrl, authData).pipe(tap(data => {
+      const user: iUser = {
+        id: data.id,
+        nome: data.userName,
+        cognome: data.cognome,
+        email: data.email,
+        foto: data.foto,
+        dataRegistrazione: new Date(data.dataRegistrazione)
+      };
   
-        console.log('User ID al login:', user.id); // Log per controllare l'ID
-  
-        this.authSubject.next(user);  // Salva l'utente con l'ID corretto
-  
-        localStorage.setItem('accessData', JSON.stringify(data));  // Salva anche l'ID nel localStorage
-  
-        this.autoLogout();
-      }));
+      this.authSubject.next(user); 
+      localStorage.setItem('accessData', JSON.stringify(data)); 
+      this.autoLogout();
+    }));
   }
-  
-  
-  
-  
-  
-  
-  
 
+  // Metodo di logout
   logout() {
     this.authSubject.next(null);
     localStorage.removeItem('accessData');
-    this.router.navigate(['/auth']); // Aggiunto reindirizzamento dopo il logout
+    this.router.navigate(['/auth']);
   }
 
+  // Logout automatico quando il token scade
   autoLogout() {
     const accessData = this.getAccessData();
-
-    if (!accessData) {
-      console.error('Token non presente o non valido');
-      return;
-    }
-
+    if (!accessData) return;
+  
     const token = accessData.token;
-
-    if (!token) {
-      console.error('Token assente');
-      return;
-    }
-
     const expDate = this.jwtHelper.getTokenExpirationDate(token);
-
-    if (!expDate) {
-      console.error('Impossibile determinare la data di scadenza del token.');
-      return;
-    }
-
+    if (!expDate) return;
+  
     const expMs = expDate.getTime() - new Date().getTime();
-    setTimeout(() => this.logout(), expMs);  // Corretto `this.logout` per mantenere il contesto
+    
+    if (expMs <= 0) {
+      this.logout(); // Se il token è già scaduto, effettua il logout immediato
+    } else {
+      setTimeout(() => this.logout(), expMs);
+    }
   }
+  
 
+  // Ottenere i dati di accesso dal localStorage
   getAccessData(): iAuthResponse | null {
     const accessDataJson = localStorage.getItem('accessData');
-
-    if (!accessDataJson) {
-      console.error('Nessun dato di accesso trovato');
-      return null;
-    }
-
+    if (!accessDataJson) return null;
+  
     try {
-      const accessData: iAuthResponse = JSON.parse(accessDataJson);
-
-      console.log('Access token recuperato:', accessData.token);
-      return accessData;
+      return JSON.parse(accessDataJson);
     } catch (error) {
-      console.error('Errore nel parsing del token', error);
+      console.error('Errore nel parsing dei dati di accesso:', error);
       return null;
     }
   }
+  
+
+  // Ripristinare l'utente dal token nel localStorage
   restoreUser() {
     const accessData = this.getAccessData();
-    
     if (!accessData) return;
   
     if (this.jwtHelper.isTokenExpired(accessData.token)) return;
   
-    // Ricostruisci l'oggetto utente usando i dati salvati, inclusa la foto aggiornata
     const user: iUser = {
       id: accessData.id,
       nome: accessData.userName,
       cognome: accessData.cognome,
       email: accessData.email,
-      foto: accessData.foto,  // Assicurati che questo sia il percorso aggiornato
+      foto: accessData.foto,
       dataRegistrazione: new Date(accessData.dataRegistrazione)
     };
   
     this.authSubject.next(user);
   }
-  
-  
-  
-  
+
+  // Aggiornare l'immagine del profilo
   updateProfilePicture(userId: number, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('foto', file);
   
     return this.http.put(`${this.updateImgUrl}/${userId}`, formData)
       .pipe(tap((response: any) => {
-        console.log('Foto aggiornata con successo, percorso immagine aggiornato:', response.foto);
-        
-        // Aggiorna l'oggetto utente con il nuovo percorso dell'immagine
         const currentUser = this.authSubject.value;
         if (currentUser) {
-          currentUser.foto = response.foto;  // Aggiorna la foto nell'oggetto utente
-          this.authSubject.next({ ...currentUser });  // Aggiorna il BehaviorSubject
+          currentUser.foto = response.foto;
+          this.authSubject.next({ ...currentUser });
           
-          // Aggiorna anche il localStorage con i nuovi dati dell'utente
           const storedAccessData = JSON.parse(localStorage.getItem('accessData') || '{}');
           storedAccessData.foto = response.foto;
           localStorage.setItem('accessData', JSON.stringify(storedAccessData));
         }
       }));
   }
-  
-  
 
+  // Metodo per ottenere un utente per ID
+  getUserById(userId: number): Observable<iUser> {
+    return this.http.get<iUser>(`${this.usersUrl}/${userId}`);
+  }
+
+  // Aggiungi questo metodo per ottenere l'utente loggato
+  getUser(): iUser | null {
+    const currentUser = this.authSubject.value;
+    console.log('Utente loggato:', currentUser);  // Aggiungi questo log per verificare l'utente loggato
+    return currentUser;
+  }
+  
 }

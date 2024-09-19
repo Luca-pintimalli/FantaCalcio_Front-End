@@ -1,1 +1,57 @@
-<p>giocatori-list-public works!</p>
+<div class="container">
+  <h2>Lista dei Giocatori</h2>
+
+  <!-- Barra di ricerca -->
+  <div class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Cerca giocatore..."
+      (input)="onSearchTermChange($event)"
+    />
+  </div>
+
+  <!-- Pulsanti di filtro -->
+  <button class="btn btn-primary" (click)="loadGiocatori()">Tutti</button>
+  <button class="btn btn-primary" (click)="filterGiocatori('Portiere')">Portieri</button>
+  <button class="btn btn-primary" (click)="filterGiocatori('Difensore')">Difensori</button>
+  <button class="btn btn-primary" (click)="filterGiocatori('Centrocampista')">Centrocampisti</button>
+  <button class="btn btn-primary" (click)="filterGiocatori('Attaccante')">Attaccanti</button>
+
+  <!-- Tabella dei giocatori -->
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Squadra Attuale</th>
+        <th>Goal Fatti</th>
+        <th>Assist</th>
+        <th>Partite Giocate</th>
+        <th>Ruolo Classic</th>
+        <th>Ruoli Mantra</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let giocatore of giocatoreList">
+        <td>
+          <img *ngIf="giocatore.foto" [src]="giocatore.foto" alt="{{ giocatore.nome }}" width="100" />
+          <span *ngIf="!giocatore.foto">Nessuna foto</span>
+        </td>
+        <td>{{ giocatore.nome }}</td>
+        <td>{{ giocatore.cognome }}</td>
+        <td>{{ giocatore.squadraAttuale }}</td>
+        <td>{{ giocatore.goalFatti }}</td>
+        <td>{{ giocatore.assist }}</td>
+        <td>{{ giocatore.partiteGiocate }}</td>
+        <td>{{ giocatore.ruoloClassic }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let ruolo of giocatore.ruoliMantra">{{ ruolo.nomeRuolo }}</li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div> <!-- Questo chiude correttamente il container principale -->
