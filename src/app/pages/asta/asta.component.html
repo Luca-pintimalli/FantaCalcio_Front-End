@@ -13,6 +13,8 @@
         <th>Crediti Disponibili</th>
         <th>Modalità</th>
         <th>Dettagli</th>
+        <th>Modifica</th>
+        <th>Elimina</th> 
       </tr>
     </thead>
     <tbody>
@@ -25,6 +27,12 @@
         <td>{{ asta.nomeModalita }}</td>
         <td>
           <a [routerLink]="['/Asta/dettagli', asta.iD_Asta]" class="btn btn-info">Dettagli</a>
+        </td>
+        <td>
+          <a [routerLink]="['/Asta/update', asta.iD_Asta]" class="btn btn-warning">Modifica</a>
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="onDeleteAsta(asta.iD_Asta)">Elimina</button> 
         </td>
       </tr>
     </tbody>

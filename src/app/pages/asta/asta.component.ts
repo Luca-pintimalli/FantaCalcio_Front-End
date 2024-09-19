@@ -27,4 +27,13 @@ export class AstaComponent implements OnInit {
       }
     });
   }
+
+
+  onDeleteAsta(id: number): void {
+    if (confirm('Sei sicuro di voler eliminare questa asta?')) { // Finestra di conferma
+      this.astaService.deleteAsta(id).subscribe(() => {
+        this.aste = this.aste.filter(asta => asta.iD_Asta !== id); // Rimuove l'asta dalla lista
+      });
+    }
+  }
 }

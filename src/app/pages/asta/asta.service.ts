@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { iAsta } from './i-asta';  // Assicurati che il percorso di iAsta sia corretto
+import { iAsta } from './i-asta';  
 
 @Injectable({
   providedIn: 'root'

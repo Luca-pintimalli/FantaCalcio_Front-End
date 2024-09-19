@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Modifica Asta</h2>
+    <form [formGroup]="astaForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="iD_TipoAsta">Tipo di Asta</label>
+            <select formControlName="iD_TipoAsta" id="iD_TipoAsta" class="form-control">
+              <option [value]="1">Chiamata</option>
+              <option [value]="2">Random</option>
+            </select>
+          </div>
+          
+  
+      <div class="form-group">
+        <label for="numeroSquadre">Numero di Squadre</label>
+        <input type="number" formControlName="numeroSquadre" id="numeroSquadre" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="creditiDisponibili">Crediti Disponibili</label>
+        <input type="number" formControlName="creditiDisponibili" id="creditiDisponibili" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="iD_Modalita">Modalità</label>
+        <select formControlName="iD_Modalita" id="iD_Modalita" class="form-control">
+          <option value="1">Classic</option>
+          <option value="2">Mantra</option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="maxPortieri">Max Portieri</label>
+        <input type="number" formControlName="maxPortieri" id="maxPortieri" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="maxDifensori">Max Difensori</label>
+        <input type="number" formControlName="maxDifensori" id="maxDifensori" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="maxCentrocampisti">Max Centrocampisti</label>
+        <input type="number" formControlName="maxCentrocampisti" id="maxCentrocampisti" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="maxAttaccanti">Max Attaccanti</label>
+        <input type="number" formControlName="maxAttaccanti" id="maxAttaccanti" class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="astaForm.invalid">Aggiorna Asta</button>
+    </form>
+  </div>
+  

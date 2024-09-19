@@ -1,17 +1,18 @@
 <div *ngIf="asta">
   <h2>Dettagli dell'Asta #{{ asta.iD_Asta }}</h2>
   
-    <ul>
-      <li><strong>Nome Utente:</strong> {{ asta.nomeUtente }}</li>
-      <li><strong>Tipo Asta:</strong> {{ asta.tipoAstaDescrizione }}</li>
-      <li><strong>Numero Squadre:</strong> {{ asta.numeroSquadre }}</li>
-      <li><strong>Crediti Disponibili:</strong> {{ asta.creditiDisponibili }}</li>
-      <li><strong>Modalità:</strong> {{ asta.nomeModalita }}</li>
-      <li><strong>Numero Portieri:</strong> {{ asta.maxPortieri }}</li>
-      <li><strong>Numero Difensori:</strong> {{ asta.maxDifensori }}</li>
-      <li><strong>Numero Centrocampisti:</strong> {{ asta.maxCentrocampisti }}</li>
-      <li><strong>Numero Attaccanti:</strong> {{ asta.maxAttaccanti }}</li>
-    </ul>
-  
-    <a routerLink="/Asta" class="btn btn-secondary">Torna alla lista</a>
+  <ul>
+    <li><strong>Nome Utente:</strong> {{ asta.nomeUtente }}</li>
+    <li><strong>Tipo Asta:</strong> {{ asta.tipoAstaDescrizione }}</li>
+    <li><strong>Numero Squadre:</strong> {{ asta.numeroSquadre }}</li>
+    <li><strong>Crediti Disponibili:</strong> {{ asta.creditiDisponibili }}</li>
+    <li><strong>Modalità:</strong> {{ asta.nomeModalita }}</li>
+    <li><strong>Numero Portieri:</strong> {{ asta.maxPortieri }}</li>
+    <li><strong>Numero Difensori:</strong> {{ asta.maxDifensori }}</li>
+    <li><strong>Numero Centrocampisti:</strong> {{ asta.maxCentrocampisti }}</li>
+    <li><strong>Numero Attaccanti:</strong> {{ asta.maxAttaccanti }}</li>
+  </ul>
+
+  <a routerLink="/Asta" class="btn btn-secondary">Torna alla lista</a>
+  <a [routerLink]="['/Asta/update', asta.iD_Asta]" class="btn btn-warning">Modifica Asta</a>
 </div>

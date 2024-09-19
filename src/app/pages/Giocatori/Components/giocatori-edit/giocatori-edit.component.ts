@@ -13,7 +13,7 @@ export class GiocatoriEditComponent implements OnInit {
   errore: string | null = null;  // Per la gestione degli errori
   selectedFile: File | null = null;  // Aggiunta di selectedFile
 
-  // Ruoli Classic hardcoded
+  // Ruoli Classic 
   ruoliClassic: string[] = ['Portiere', 'Difensore', 'Centrocampista', 'Attaccante'];
 
   constructor(
