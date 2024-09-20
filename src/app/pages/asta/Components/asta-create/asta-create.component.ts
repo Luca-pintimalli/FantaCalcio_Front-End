@@ -7,6 +7,7 @@ import { AstaService } from '../../asta.service';
 import { ModalitaService } from '../../../modalita/modalita.service';
 import { TipoAstaService } from '../../../tipo-asta/tipo-asta.service';
 import { AuthService } from '../../../../auth/auth.service';
+import { iAstaCreate } from '../../i-asta-create';
 
 @Component({
   selector: 'app-asta-create',
@@ -73,12 +74,24 @@ export class AstaCreateComponent implements OnInit {
     });
   }
   creaAsta(): void {
-    // Converti iD_TipoAsta e iD_Modalita a numeri
-    this.asta.iD_TipoAsta = +this.asta.iD_TipoAsta;  // Conversione a numero
-    this.asta.iD_Modalita = +this.asta.iD_Modalita;  // Conversione a numero
+    // Conversione di ID_TipoAsta e ID_Modalita in numeri
+    this.asta.iD_TipoAsta = +this.asta.iD_TipoAsta;
+    this.asta.iD_Modalita = +this.asta.iD_Modalita;
+  
+    // Usa l'interfaccia iAstaCreate per inviare i dati corretti al server
+    const astaData: iAstaCreate = {
+      iD_TipoAsta: this.asta.iD_TipoAsta,
+      numeroSquadre: this.asta.numeroSquadre,
+      creditiDisponibili: this.asta.creditiDisponibili,
+      iD_Modalita: this.asta.iD_Modalita,
+      maxPortieri: this.asta.maxPortieri,
+      maxDifensori: this.asta.maxDifensori,
+      maxCentrocampisti: this.asta.maxCentrocampisti,
+      maxAttaccanti: this.asta.maxAttaccanti
+    };
   
     // Chiamata al servizio per creare l'asta
-    this.astaService.createAsta(this.asta).subscribe({
+    this.astaService.createAsta(astaData).subscribe({
       next: (response) => {
         console.log('Asta creata con successo');
         this.router.navigate(['/Asta']);
@@ -88,5 +101,8 @@ export class AstaCreateComponent implements OnInit {
       }
     });
   }
+  
+  
+  
   
 }

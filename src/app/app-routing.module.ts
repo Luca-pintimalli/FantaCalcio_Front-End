@@ -52,7 +52,11 @@ const routes: Routes = [
   loadChildren: () => import('./pages/asta/asta.module').then(m => m.AstaModule),
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard] 
- }
+ },
+  { path: 'Squadra', loadChildren: () => import('./pages/squadra/squadra.module').then(m => m.SquadraModule),
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard] 
+}
 ];
 
 @NgModule({

@@ -1,0 +1,46 @@
+<div class="container mt-4">
+    <h2>Crea una Nuova Squadra</h2>
+  
+    <!-- Mostra un messaggio di errore se presente -->
+    <div *ngIf="errore" class="alert alert-danger">
+      {{ errore }}
+    </div>
+  
+    <!-- Form per la creazione di una nuova squadra -->
+    <form [formGroup]="squadraForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nome">Nome della squadra</label>
+        <input
+          type="text"
+          id="nome"
+          class="form-control"
+          formControlName="nome"
+          [ngClass]="{ 'is-invalid': squadraForm.get('nome')?.invalid && squadraForm.get('nome')?.touched }"
+        />
+        <div *ngIf="squadraForm.get('nome')?.invalid && squadraForm.get('nome')?.touched" class="invalid-feedback">
+          Il nome della squadra è richiesto.
+        </div>
+      </div>
+  
+      <!-- Caricamento foto -->
+      <div class="form-group">
+        <label for="foto">Carica Foto</label>
+        <input type="file" (change)="onFileSelected($event)" name="file" />
+      </div>
+  
+      <!-- Anteprima della foto -->
+      <div *ngIf="selectedFile" class="mt-3">
+        <h5>Anteprima Foto:</h5>
+        <img [src]="previewUrl" alt="Anteprima Immagine" class="img-thumbnail" style="max-width: 200px;" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="squadraForm.invalid || loading">
+        Crea Squadra
+      </button>
+  
+      <button type="button" class="btn btn-secondary ml-2" (click)="goBack()">
+        Annulla
+      </button>
+    </form>
+  </div>
+  

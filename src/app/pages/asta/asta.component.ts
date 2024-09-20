@@ -31,9 +31,16 @@ export class AstaComponent implements OnInit {
 
   onDeleteAsta(id: number): void {
     if (confirm('Sei sicuro di voler eliminare questa asta?')) { // Finestra di conferma
-      this.astaService.deleteAsta(id).subscribe(() => {
-        this.aste = this.aste.filter(asta => asta.iD_Asta !== id); // Rimuove l'asta dalla lista
+      this.astaService.deleteAsta(id).subscribe({
+        next: () => {
+          this.aste = this.aste.filter(asta => asta.iD_Asta !== id); // Rimuove l'asta dalla lista
+        },
+        error: (err) => {
+          console.error('Errore durante la cancellazione dell\'asta:', err);
+          alert('Errore durante la cancellazione dell\'asta.');
+        }
       });
     }
   }
+  
 }

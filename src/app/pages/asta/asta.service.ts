@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { iAsta } from './i-asta';  
+import { iAstaCreate } from './i-asta-create';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,8 @@ export class AstaService {
   
 
   // Metodo per creare una nuova asta
-  createAsta(asta: iAsta): Observable<iAsta> {
-    return this.http.post<iAsta>(this.apiUrl, asta);
+  createAsta(asta: iAstaCreate): Observable<iAstaCreate> {
+    return this.http.post<iAstaCreate>(this.apiUrl, asta);
   }
 
   // Metodo per aggiornare un'asta esistente
