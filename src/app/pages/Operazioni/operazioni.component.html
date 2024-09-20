@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Elenco delle Operazioni</h2>
+    <button class="btn btn-primary mb-3" (click)="navigateToCreate()">Crea Nuova Operazione</button>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID Operazione</th>
+          <th>ID Giocatore</th>
+          <th>ID Squadra</th>
+          <th>Crediti Spesi</th>
+          <th>Stato Operazione</th>
+          <th>Data Operazione</th>
+          <th>Azioni</th> <!-- Colonna per le azioni -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operazione of operazioni">
+          <td>{{ operazione.iD_Operazione }}</td>
+          <td>{{ operazione.iD_Giocatore }}</td>
+          <td>{{ operazione.iD_Squadra }}</td>
+          <td>{{ operazione.creditiSpesi }}</td>
+          <td>{{ operazione.statoOperazione }}</td>
+          <td>{{ operazione.dataOperazione | date: 'short' }}</td>
+          <td>
+            <!-- Bottone Modifica -->
+            <button class="btn btn-secondary" (click)="navigateToEdit(operazione.iD_Operazione)">
+              Modifica
+            </button>
+            <!-- Bottone Elimina -->
+            <button class="btn btn-danger ml-2" (click)="deleteOperazione(operazione.iD_Operazione, operazione.iD_Squadra, operazione.creditiSpesi)">
+              Elimina
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

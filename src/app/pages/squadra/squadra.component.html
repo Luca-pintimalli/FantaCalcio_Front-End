@@ -1,42 +1,51 @@
 <div class="d-flex justify-content-end mb-3">
-    <button class="btn btn-success" routerLink="create">Crea Nuova Squadra</button>
+  <button class="btn btn-success" routerLink="create">Crea Nuova Squadra</button>
 </div>
-  
-  <div *ngIf="isLoading" class="alert alert-info text-center" role="alert">
-    Caricamento delle squadre...
-  </div>
-  
-  <div *ngIf="!isLoading && squadre.length > 0">
-    <table class="table table-striped table-bordered table-hover">
+
+<div *ngIf="isLoading" class="alert alert-info text-center" role="alert">
+  Caricamento delle squadre...
+</div>
+
+<div *ngIf="!isLoading && squadre.length > 0">
+  <table class="table table-striped table-bordered table-hover">
       <thead class="thead-dark">
-        <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Stemma</th>
-          <th scope="col">Crediti Totali</th>
-          <th scope="col">Crediti Spesi</th>
-          <th scope="col">Azioni</th>
-        </tr>
+          <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Stemma</th>
+              <th scope="col">Crediti Totali</th>
+              <th scope="col">Crediti Spesi</th>
+              <th scope="col">ID Asta</th> <!-- Aggiunta della colonna ID Asta -->
+              <th scope="col">Azioni</th>
+          </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let squadra of squadre">
-          <td>{{ squadra.nome }}</td>
-          <td><img [src]="squadra.stemma" alt="{{ squadra.nome }}" class="img-thumbnail" width="50"></td>
-          <td>{{ squadra.creditiTotali }}</td>
-          <td>{{ squadra.creditiSpesi }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm" (click)="editSquadra(squadra.iD_Squadra)">Modifica</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteSquadra(squadra.iD_Squadra)">Elimina</button>
-          </td>
-        </tr>
+          <tr *ngFor="let squadra of squadre">
+              <td>{{ squadra.nome }}</td>
+              <td>
+                <img [src]="squadra.stemma ? 'https://localhost:7260' + squadra.stemma : 'https://localhost:7260/uploads/default-stemma.png'" 
+                     alt="{{ squadra.nome }}" 
+                     class="img-thumbnail" 
+                     width="50">
+              </td>
+              
+              
+              
+              <td>{{ squadra.creditiTotali }}</td>
+              <td>{{ squadra.creditiSpesi }}</td>
+              <td>{{ squadra.iD_Asta }}</td> <!-- Mostra l'ID Asta -->
+              <td>
+                  <button class="btn btn-primary btn-sm" (click)="editSquadra(squadra.iD_Squadra)">Modifica</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteSquadra(squadra.iD_Squadra)">Elimina</button>
+              </td>
+          </tr>
       </tbody>
-    </table>
-  </div>
-  
-  <div *ngIf="!isLoading && squadre.length === 0" class="alert alert-warning text-center" role="alert">
-    Nessuna squadra trovata.
-  </div>
-  
-  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
-    {{ errorMessage }}
-  </div>
-  
+  </table>
+</div>
+
+<div *ngIf="!isLoading && squadre.length === 0" class="alert alert-warning text-center" role="alert">
+  Nessuna squadra trovata.
+</div>
+
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>

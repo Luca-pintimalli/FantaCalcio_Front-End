@@ -14,8 +14,6 @@ import { TipoAstaModule } from './pages/tipo-asta/tipo-asta.module';
 import { GiocatoriModule } from './pages/Giocatori/giocatori.module';
 import { AstaModule } from './pages/asta/asta.module';
 import { AstaCreateComponent } from './pages/asta/Components/asta-create/asta-create.component';
-import { SquadraCreateComponent } from './pages/squadra/Components/squadra-create/squadra-create.component';
-import { SquadraEditComponent } from './pages/squadra/Components/squadra-create/squadra-edit/squadra-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +21,6 @@ import { SquadraEditComponent } from './pages/squadra/Components/squadra-create/
     NavBarComponent,
     FooterComponent,
     AstaCreateComponent,
-    SquadraEditComponent,
   ],
   imports: [
     BrowserModule,

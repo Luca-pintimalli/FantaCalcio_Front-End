@@ -1,0 +1,76 @@
+<div class="container">
+    <h2>Modifica Operazione</h2>
+    
+    <!-- Messaggio di errore -->
+    <div *ngIf="messaggioErrore" class="text-danger">
+      {{ messaggioErrore }}
+    </div>
+  
+    <form (ngSubmit)="onSubmit()" #operazioneForm="ngForm">
+      <!-- Selezione del Giocatore -->
+      <div class="form-group">
+        <label for="iD_Giocatore">Giocatore</label>
+        <input
+          type="number"
+          id="iD_Giocatore"
+          class="form-control"
+          [(ngModel)]="operazione.iD_Giocatore"
+          name="iD_Giocatore"
+        />
+      </div>
+  
+      <!-- Selezione della Squadra -->
+      <div class="form-group">
+        <label for="iD_Squadra">Squadra</label>
+        <input
+          type="number"
+          id="iD_Squadra"
+          class="form-control"
+          [(ngModel)]="operazione.iD_Squadra"
+          name="iD_Squadra"
+        />
+      </div>
+  
+      <!-- Crediti Spesi -->
+    <div class="form-group">
+        <label for="creditiSpesi">Crediti Spesi</label>
+        <input
+          type="number"
+          id="creditiSpesi"
+          class="form-control"
+          required
+          [(ngModel)]="operazione.creditiSpesi"
+          name="creditiSpesi"
+        />
+      </div>
+      <!-- Stato Operazione -->
+      <div class="form-group">
+        <label for="statoOperazione">Stato Operazione</label>
+        <input
+          type="text"
+          id="statoOperazione"
+          class="form-control"
+          [(ngModel)]="operazione.statoOperazione"
+          name="statoOperazione"
+        />
+      </div>
+  
+      <!-- Data Operazione -->
+      <div class="form-group">
+        <label for="dataOperazione">Data Operazione</label>
+        <input
+          type="date"
+          id="dataOperazione"
+          class="form-control"
+          [(ngModel)]="operazione.dataOperazione"
+          name="dataOperazione"
+        />
+      </div>
+  
+      <!-- Bottone di submit -->
+      <button type="submit" class="btn btn-primary" [disabled]="operazioneForm.invalid">
+        Salva Modifiche
+      </button>
+    </form>
+  </div>
+  

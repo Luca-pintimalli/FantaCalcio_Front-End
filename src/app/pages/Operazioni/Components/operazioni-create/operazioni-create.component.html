@@ -1,0 +1,93 @@
+<div class="container">
+    <h2>Crea una Nuova Operazione</h2>
+  
+    <form (ngSubmit)="onSubmit()" #operazioneForm="ngForm">
+      <!-- Selezione del Giocatore -->
+      <div class="form-group">
+        <label for="iD_Giocatore">Giocatore</label>
+        <select
+          id="iD_Giocatore"
+          class="form-control"
+          required
+          [(ngModel)]="operazione.iD_Giocatore"
+          name="iD_Giocatore"
+          #iD_Giocatore="ngModel"
+        >
+          <option *ngFor="let giocatore of giocatori" [value]="giocatore.iD_Giocatore">
+            {{ giocatore.nome }} {{ giocatore.cognome }}
+          </option>
+        </select>
+        <div *ngIf="iD_Giocatore.invalid && iD_Giocatore.touched" class="text-danger">
+          Seleziona un giocatore.
+        </div>
+      </div>
+  
+      <!-- Selezione della Squadra -->
+  <!-- Selezione della Squadra -->
+<div class="form-group">
+    <label for="iD_Squadra">Squadra</label>
+    <select
+      id="iD_Squadra"
+      class="form-control"
+      required
+      [(ngModel)]="operazione.iD_Squadra"
+      name="iD_Squadra"
+      #iD_Squadra="ngModel"
+    >
+      <option *ngFor="let squadra of squadre" [value]="squadra.iD_Squadra">
+        {{ squadra.nome }}
+      </option>
+    </select>
+    <div *ngIf="iD_Squadra.invalid && iD_Squadra.touched" class="text-danger">
+      Seleziona una squadra.
+    </div>
+  </div>
+  
+  
+      <!-- Crediti Spesi -->
+      <div class="form-group">
+        <label for="creditiSpesi">Crediti Spesi</label>
+        <input
+          type="number"
+          id="creditiSpesi"
+          class="form-control"
+          required
+          min="1"
+          [(ngModel)]="operazione.creditiSpesi"
+          name="creditiSpesi"
+          #creditiSpesi="ngModel"
+        />
+        <div *ngIf="creditiSpesi.invalid && creditiSpesi.touched" class="text-danger">
+          Inserisci un numero valido di crediti spesi.
+        </div>
+      </div>
+  
+      <!-- Data Operazione -->
+      <div class="form-group">
+        <label for="dataOperazione">Data Operazione</label>
+        <input
+          type="date"
+          id="dataOperazione"
+          class="form-control"
+          required
+          [(ngModel)]="operazione.dataOperazione"
+          name="dataOperazione"
+          #dataOperazione="ngModel"
+        />
+        <div *ngIf="dataOperazione.invalid && dataOperazione.touched" class="text-danger">
+          Inserisci una data valida.
+        </div>
+      </div>
+  
+      <!-- Bottone di submit -->
+      <button type="submit" class="btn btn-primary" [disabled]="operazioneForm.invalid">
+        Crea Operazione
+      </button>
+  
+      <!-- Messaggio di errore -->
+      <div *ngIf="messaggioErrore" class="text-danger mt-2">
+        {{ messaggioErrore }}
+      </div>
+    </form>
+  </div>
+  

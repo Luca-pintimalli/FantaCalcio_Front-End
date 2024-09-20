@@ -56,6 +56,11 @@ const routes: Routes = [
   { path: 'Squadra', loadChildren: () => import('./pages/squadra/squadra.module').then(m => m.SquadraModule),
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard] 
+},
+  { path: 'operazioni', loadChildren: () => import('./pages/Operazioni/operazioni.module').then(m => m.OperazioniModule),
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard] 
+
 }
 ];
 

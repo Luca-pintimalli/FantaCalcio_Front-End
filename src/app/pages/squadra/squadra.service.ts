@@ -28,15 +28,23 @@ export class SquadraService {
     return this.http.post<iSquadra>(this.apiUrl, formData);
   }
 
-  // Metodo per aggiornare una squadra esistente
-  updateSquadra(id: number, squadra: iSquadra): Observable<iSquadra> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.put<iSquadra>(url, squadra);
-  }
+// Metodo per aggiornare una squadra con FormData
+updateSquadra(id: number, formData: FormData): Observable<any> {
+  const url = `${this.apiUrl}/${id}`;
+  return this.http.put(url, formData);
+}
 
   // Metodo per eliminare una squadra
   deleteSquadra(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
   }
+
+
+  // Metodo per aggiornare una squadra esistente con immagine
+  updateAstaWithImage(id: number, formData: FormData): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put(url, formData);
+  }
+  
 }
