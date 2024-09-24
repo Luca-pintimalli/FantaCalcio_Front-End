@@ -15,7 +15,8 @@ export class OperazioniEditComponent implements OnInit {
     iD_Squadra: 0,
     creditiSpesi: 0,
     statoOperazione: '',
-    dataOperazione: new Date()
+    dataOperazione: new Date(),
+    iD_Asta: 1 
   };
   
   messaggioErrore: string = '';

@@ -14,4 +14,6 @@ export interface iGiocatore {
   ruoloClassic: string;
   id_Squadra?: number; // opzionale, potrebbe non essere sempre presente
   ruoliMantra?: iRuoloMantra[]; // relazione con i ruoli Mantra
+  statoGiocatore: 'Disponibile' | 'Svincolato';
+
 }

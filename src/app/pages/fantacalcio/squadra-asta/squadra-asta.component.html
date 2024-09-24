@@ -1,0 +1,19 @@
+<div class="container" *ngIf="squadre.length > 0">
+  <div class="row">
+    <div *ngFor="let squadra of squadre" class="col-md-4">
+      <div class="card">
+        <img [src]="squadra.stemma" class="card-img-top" alt="{{ squadra.nome }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ squadra.nome }}</h5>
+          <p class="card-text">Crediti Totali: {{ squadra.creditiTotali }}</p>
+          <p class="card-text">Crediti Spesi: {{ squadra.creditiSpesi }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let item of operazioniSquadra[squadra.iD_Squadra]">
+            {{ item.giocatore.cognome }} - Ruolo Classic: {{ item.giocatore.ruoloClassic }} - Crediti Spesi: {{ item.operazione.creditiSpesi }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

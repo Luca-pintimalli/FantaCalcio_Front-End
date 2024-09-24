@@ -5,5 +5,6 @@ export interface iOperazione {
     creditiSpesi: number;
     statoOperazione?: string;
     dataOperazione: Date;
+    iD_Asta:number;
   }
   

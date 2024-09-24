@@ -6,12 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { DettagliAstaComponent } from './Components/dettagli-asta/dettagli-asta.component';
 import { AstaUpdateComponent } from './Components/asta-update/asta-update.component'; 
+import { AstaImpostazioniComponent } from '../../asta-impostazioni/asta-impostazioni.component';
 
 @NgModule({
   declarations: [
     AstaComponent,
     DettagliAstaComponent,
-    AstaUpdateComponent 
+    AstaUpdateComponent ,
+    AstaImpostazioniComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,9 @@ import { AstaUpdateComponent } from './Components/asta-update/asta-update.compon
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule 
+  ],
+  exports:[
+    AstaImpostazioniComponent
   ]
 })
 export class AstaModule { }

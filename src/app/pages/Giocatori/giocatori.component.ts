@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { iGiocatore } from './i-giocatore';
 import { Router } from '@angular/router';

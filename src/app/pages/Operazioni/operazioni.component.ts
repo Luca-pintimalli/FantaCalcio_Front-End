@@ -52,4 +52,7 @@ export class OperazioniComponent implements OnInit {
       );
     }
   }
+
+
+
 }

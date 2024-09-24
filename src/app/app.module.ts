@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -30,10 +30,11 @@ import { AstaCreateComponent } from './pages/asta/Components/asta-create/asta-cr
     HttpClientModule,
     NgbModule,
     AuthModule,
-    ModalitaModule,  // Modulo Modalita importato correttamente
+    ModalitaModule, 
     TipoAstaModule ,
-    GiocatoriModule , // Modulo TipoAsta importato correttamente
-    AstaModule
+    GiocatoriModule , 
+    AstaModule,
+    
   ],
   providers: [
     {

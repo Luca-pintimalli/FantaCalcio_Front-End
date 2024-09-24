@@ -26,10 +26,11 @@ export class AstaService {
   
   
 
-  // Metodo per creare una nuova asta
-  createAsta(asta: iAstaCreate): Observable<iAstaCreate> {
-    return this.http.post<iAstaCreate>(this.apiUrl, asta);
-  }
+// Metodo per creare una nuova asta
+createAsta(asta: iAstaCreate): Observable<iAsta> {
+  return this.http.post<iAsta>(this.apiUrl, asta);  // Cambiato il tipo di ritorno in iAsta
+}
+
 
   // Metodo per aggiornare un'asta esistente
   updateAsta(id: number, asta: iAsta): Observable<iAsta> {

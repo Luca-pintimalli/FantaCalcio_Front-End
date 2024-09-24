@@ -44,9 +44,9 @@ const routes: Routes = [
   },
   {
     path: 'ruolo-mantra/:id',
-    component: RuoloMantraComponent,  // Il componente per l'associazione ruoli
+    component: RuoloMantraComponent,  
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard]  // Se vuoi proteggere la route con l'autenticazione
+    canActivateChild: [AuthGuard]  
   },
   { path: 'Asta', 
   loadChildren: () => import('./pages/asta/asta.module').then(m => m.AstaModule),
@@ -58,6 +58,11 @@ const routes: Routes = [
   canActivateChild: [AuthGuard] 
 },
   { path: 'operazioni', loadChildren: () => import('./pages/Operazioni/operazioni.module').then(m => m.OperazioniModule),
+  canActivate: [AuthGuard],
+  canActivateChild: [AuthGuard] 
+
+},
+  { path: 'Fantacalcio', loadChildren: () => import('./pages/fantacalcio/fantacalcio.module').then(m => m.FantacalcioModule),
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard] 
 

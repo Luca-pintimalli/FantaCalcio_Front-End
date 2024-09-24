@@ -1,0 +1,27 @@
+<!-- Fase delle impostazioni dell'asta -->
+<div *ngIf="isAstaImpostazioni && !astaInCorso">
+  <h2>Impostazioni Asta</h2>
+  <app-asta-impostazioni (impostazioniComplete)="onImpostazioniComplete($event)"></app-asta-impostazioni>
+</div>
+
+<!-- Fase di gestione dell'asta (operazioni e squadre) -->
+<div *ngIf="astaInCorso && !isAstaImpostazioni">
+  <h2>Gestione Asta</h2>
+  
+  <!-- Componente Operazioni -->
+  <app-operazioni-create [idAsta]="idAstaCorrente"></app-operazioni-create>
+
+  <!-- Componente SquadraAsta -->
+  <app-squadra-asta *ngIf="idAstaCorrente !== null" [idAstaCorrente]="idAstaCorrente"></app-squadra-asta>
+
+  <!-- Pulsante per terminare l'asta -->
+  <button (click)="terminaAsta()" class="btn btn-danger mt-3">Termina Asta</button>
+</div>
+
+<!-- Schermata per una nuova asta quando l'asta corrente è terminata -->
+<div *ngIf="!astaInCorso && isAstaImpostazioni">
+  <h2>Asta Terminata</h2>
+  <button (click)="iniziaNuovaAsta()" class="btn btn-primary">Inizia Nuova Asta</button>
+</div>
+
+

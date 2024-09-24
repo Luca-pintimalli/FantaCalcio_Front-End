@@ -1,93 +1,93 @@
 <div class="container">
-    <h2>Crea una Nuova Operazione</h2>
-  
-    <form (ngSubmit)="onSubmit()" #operazioneForm="ngForm">
-      <!-- Selezione del Giocatore -->
-      <div class="form-group">
-        <label for="iD_Giocatore">Giocatore</label>
-        <select
-          id="iD_Giocatore"
-          class="form-control"
-          required
-          [(ngModel)]="operazione.iD_Giocatore"
-          name="iD_Giocatore"
-          #iD_Giocatore="ngModel"
-        >
-          <option *ngFor="let giocatore of giocatori" [value]="giocatore.iD_Giocatore">
-            {{ giocatore.nome }} {{ giocatore.cognome }}
-          </option>
-        </select>
-        <div *ngIf="iD_Giocatore.invalid && iD_Giocatore.touched" class="text-danger">
-          Seleziona un giocatore.
-        </div>
+  <h2>Crea una Nuova Operazione</h2>
+
+
+
+  <form (ngSubmit)="onSubmit(operazioneForm)" #operazioneForm="ngForm">
+
+    <!-- Modalità A Chiamata -->
+    <div class="form-group" *ngIf="!tipoAstaRandom">
+      <label for="searchGiocatore">Cerca Giocatore</label>
+      <input type="text" class="form-control" placeholder="Cerca giocatore..." name="searchGiocatore" [(ngModel)]="searchText" (input)="filterGiocatori()">
+
+      <!-- Lista dei giocatori disponibile solo se c'è testo nella barra di ricerca e nessun giocatore è selezionato -->
+      <ul class="list-group" *ngIf="searchText && giocatoriFiltrati.length > 0 && !giocatoreSelezionato">
+        <li class="list-group-item" *ngFor="let giocatore of giocatoriFiltrati" (click)="selezionaGiocatore(giocatore)">
+          {{ giocatore.nome }} {{ giocatore.cognome }}
+        </li>
+      </ul>
+
+      <!-- Mostra il giocatore selezionato con statistiche -->
+      <div *ngIf="giocatoreSelezionato">
+        <h4>Giocatore Selezionato:</h4>
+        <p><strong>Nome:</strong> {{ giocatoreSelezionato.nome }} {{ giocatoreSelezionato.cognome }}</p>
+        <p><strong>Squadra Attuale:</strong> {{ giocatoreSelezionato.squadraAttuale }}</p>
+        <p><strong>Goal Fatti:</strong> {{ giocatoreSelezionato.goalFatti }}</p>
+        <p><strong>Goal Subiti:</strong> {{ giocatoreSelezionato.goalSubiti }}</p>
+        <p><strong>Assist:</strong> {{ giocatoreSelezionato.assist }}</p>
+        <p><strong>Partite Giocate:</strong> {{ giocatoreSelezionato.partiteGiocate }}</p>
+        <p><strong>Ruolo Classic:</strong> {{ giocatoreSelezionato.ruoloClassic }}</p>
+
+        <!-- Pulsante per svincolare il giocatore -->
+        <button type="button" class="btn btn-warning mt-2" (click)="svincolaGiocatore()">Svincola Giocatore</button>
+
+        <!-- Pulsante per annullare la selezione del giocatore -->
+        <button type="button" class="btn btn-danger mt-2" (click)="annullaSelezioneGiocatore()">Annulla Chiamata</button>
       </div>
-  
-      <!-- Selezione della Squadra -->
-  <!-- Selezione della Squadra -->
-<div class="form-group">
-    <label for="iD_Squadra">Squadra</label>
-    <select
-      id="iD_Squadra"
-      class="form-control"
-      required
-      [(ngModel)]="operazione.iD_Squadra"
-      name="iD_Squadra"
-      #iD_Squadra="ngModel"
-    >
-      <option *ngFor="let squadra of squadre" [value]="squadra.iD_Squadra">
-        {{ squadra.nome }}
-      </option>
-    </select>
-    <div *ngIf="iD_Squadra.invalid && iD_Squadra.touched" class="text-danger">
-      Seleziona una squadra.
     </div>
-  </div>
-  
-  
-      <!-- Crediti Spesi -->
-      <div class="form-group">
-        <label for="creditiSpesi">Crediti Spesi</label>
-        <input
-          type="number"
-          id="creditiSpesi"
-          class="form-control"
-          required
-          min="1"
-          [(ngModel)]="operazione.creditiSpesi"
-          name="creditiSpesi"
-          #creditiSpesi="ngModel"
-        />
-        <div *ngIf="creditiSpesi.invalid && creditiSpesi.touched" class="text-danger">
-          Inserisci un numero valido di crediti spesi.
-        </div>
+
+    <!-- Modalità Random -->
+    <div class="form-group" *ngIf="tipoAstaRandom">
+      <button type="button" class="btn btn-primary" (click)="getRandomGiocatore()" *ngIf="!giocatoreSelezionato">Randomizza Giocatore</button>
+
+      <!-- Mostra il giocatore randomizzato con statistiche -->
+      <div *ngIf="giocatoreSelezionato">
+        <h4>Giocatore Randomizzato:</h4>
+        <p><strong>Nome:</strong> {{ giocatoreSelezionato.nome }} {{ giocatoreSelezionato.cognome }}</p>
+        <p><strong>Squadra Attuale:</strong> {{ giocatoreSelezionato.squadraAttuale }}</p>
+        <p><strong>Goal Fatti:</strong> {{ giocatoreSelezionato.goalFatti }}</p>
+        <p><strong>Goal Subiti:</strong> {{ giocatoreSelezionato.goalSubiti }}</p>
+        <p><strong>Assist:</strong> {{ giocatoreSelezionato.assist }}</p>
+        <p><strong>Partite Giocate:</strong> {{ giocatoreSelezionato.partiteGiocate }}</p>
+        <p><strong>Ruolo Classic:</strong> {{ giocatoreSelezionato.ruoloClassic }}</p>
+
+        <!-- Pulsante per svincolare il giocatore -->
+        <button type="button" class="btn btn-warning mt-2" (click)="svincolaGiocatore()">Svincola Giocatore</button>
+
+        <!-- Pulsante per annullare la selezione del giocatore -->
+        <button type="button" class="btn btn-danger mt-2" (click)="annullaSelezioneGiocatore()">Annulla Selezione</button>
       </div>
-  
-      <!-- Data Operazione -->
-      <div class="form-group">
-        <label for="dataOperazione">Data Operazione</label>
-        <input
-          type="date"
-          id="dataOperazione"
-          class="form-control"
-          required
-          [(ngModel)]="operazione.dataOperazione"
-          name="dataOperazione"
-          #dataOperazione="ngModel"
-        />
-        <div *ngIf="dataOperazione.invalid && dataOperazione.touched" class="text-danger">
-          Inserisci una data valida.
-        </div>
-      </div>
-  
-      <!-- Bottone di submit -->
-      <button type="submit" class="btn btn-primary" [disabled]="operazioneForm.invalid">
-        Crea Operazione
-      </button>
-  
-      <!-- Messaggio di errore -->
-      <div *ngIf="messaggioErrore" class="text-danger mt-2">
-        {{ messaggioErrore }}
-      </div>
-    </form>
-  </div>
-  
+    </div>
+
+    <!-- Messaggio di errore -->
+    <ngb-alert *ngIf="mostraMessaggioErrore" type="danger" (close)="mostraMessaggioErrore = false">
+      {{ messaggioErrore }}
+    </ngb-alert>
+
+    <!-- Selezione della Squadra -->
+    <div class="form-group">
+      <label for="iD_Squadra">Squadra</label>
+      <select id="iD_Squadra" class="form-control" required [(ngModel)]="operazione.iD_Squadra" name="iD_Squadra" #iD_Squadra="ngModel">
+        <option *ngFor="let squadra of squadre" [value]="squadra.iD_Squadra">{{ squadra.nome }}</option>
+      </select>
+      <div *ngIf="iD_Squadra.invalid && iD_Squadra.touched" class="text-danger">Seleziona una squadra.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="creditiSpesi">Crediti Spesi</label>
+      <input type="number" id="creditiSpesi" class="form-control" required min="1" [(ngModel)]="operazione.creditiSpesi" name="creditiSpesi" #creditiSpesi="ngModel" />
+      <div *ngIf="creditiSpesi.invalid && creditiSpesi.touched" class="text-danger">Inserisci un numero valido di crediti spesi.</div>
+    </div>
+    
+    <!-- Data Operazione -->
+    <div class="form-group">
+      <label for="dataOperazione">Data Operazione</label>
+      <input type="date" id="dataOperazione" class="form-control" required [(ngModel)]="operazione.dataOperazione" name="dataOperazione" #dataOperazione="ngModel" />
+      <div *ngIf="dataOperazione.invalid && dataOperazione.touched" class="text-danger">Inserisci una data valida.</div>
+    </div>
+
+    <!-- Bottone di submit -->
+    <button type="submit" class="btn btn-primary" [disabled]="operazioneForm.invalid || !giocatoreSelezionato">Crea Operazione</button>
+
+  </form>
+</div>

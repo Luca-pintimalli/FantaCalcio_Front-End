@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { iAsta } from '../../i-asta';
 import { iTipoAsta } from '../../../tipo-asta/i-tipo-asta';
@@ -15,6 +15,8 @@ import { iAstaCreate } from '../../i-asta-create';
   styleUrls: ['./asta-create.component.scss']
 })
 export class AstaCreateComponent implements OnInit {
+  @Output() impostazioniComplete = new EventEmitter<number>();  // Aggiungi l'Output
+
   asta: iAsta = {
     iD_TipoAsta: 0,
     numeroSquadre: 0,
@@ -74,11 +76,9 @@ export class AstaCreateComponent implements OnInit {
     });
   }
   creaAsta(): void {
-    // Conversione di ID_TipoAsta e ID_Modalita in numeri
     this.asta.iD_TipoAsta = +this.asta.iD_TipoAsta;
     this.asta.iD_Modalita = +this.asta.iD_Modalita;
   
-    // Usa l'interfaccia iAstaCreate per inviare i dati corretti al server
     const astaData: iAstaCreate = {
       iD_TipoAsta: this.asta.iD_TipoAsta,
       numeroSquadre: this.asta.numeroSquadre,
@@ -92,15 +92,19 @@ export class AstaCreateComponent implements OnInit {
   
     // Chiamata al servizio per creare l'asta
     this.astaService.createAsta(astaData).subscribe({
-      next: (response) => {
-        console.log('Asta creata con successo');
-        this.router.navigate(['/Asta']);
+      next: (response: iAsta) => {  // Cambiato il tipo della risposta a iAsta
+        if (response && response.iD_Asta) {
+          this.impostazioniComplete.emit(response.iD_Asta);  // Emissione dell'ID Asta
+        } else {
+          console.error('Errore: Nessun ID Asta restituito');
+        }
       },
       error: (error) => {
         console.error('Errore nella creazione dell\'asta', error.message || error);
       }
     });
   }
+  
   
   
   

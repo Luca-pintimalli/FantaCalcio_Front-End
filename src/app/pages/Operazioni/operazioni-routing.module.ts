@@ -7,14 +7,10 @@ import { OperazioniEditComponent } from './Components/operazioni-edit/operazioni
 
 const routes: Routes = [
   { path: '', component: OperazioniComponent },
-  { path: 'operazione-create', component: OperazioniCreateComponent },  
+  { path: 'operazione-create/:idAsta', component: OperazioniCreateComponent },  // Aggiungi l'ID dell'asta come parametro
   { path: 'edit/:id', component: OperazioniEditComponent }
-
-
-
-
-
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

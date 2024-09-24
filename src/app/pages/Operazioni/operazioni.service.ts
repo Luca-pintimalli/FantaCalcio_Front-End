@@ -10,8 +10,7 @@ export class OperazioniService {
 
   private apiUrl = 'https://localhost:7260/api/Operazione';  
 
-  constructor(private http: HttpClient
-    ) { }
+  constructor(private http: HttpClient) { }
 
   // Metodo per ottenere tutte le operazioni
   getOperazioni(): Observable<iOperazione[]> {
@@ -43,25 +42,34 @@ export class OperazioniService {
     );
   }
   
-
-   // Metodo per eliminare un'operazione
-   deleteOperazione(idOperazione: number, idSquadra: number, creditiSpesi: number): Observable<void> {
+  // Metodo per eliminare un'operazione
+  deleteOperazione(idOperazione: number, idSquadra: number, creditiSpesi: number): Observable<void> {
     const params = new HttpParams()
       .set('idSquadra', idSquadra.toString())
       .set('creditiSpesi', creditiSpesi.toString());
 
     return this.http.delete<void>(`${this.apiUrl}/${idOperazione}`, { params }).pipe(
-      catchError((error) => {
-        console.error('Errore durante l\'eliminazione dell\'operazione', error);
-        throw error;
-      })
+      catchError(this.handleError)
     );
   }
 
   // Metodo per ottenere tutte le operazioni relative a una specifica asta (usando l'ID squadra)
   getOperazioniByAsta(idSquadra: number): Observable<iOperazione[]> {
-    const url = `${this.apiUrl}/asta/${idSquadra}`;  // Assicurati che il backend gestisca correttamente questa rotta
+    const url = `${this.apiUrl}/asta/${idSquadra}`;
     return this.http.get<iOperazione[]>(url).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+// Metodo per svincolare un giocatore (con ID asta)
+svincolaGiocatore(idGiocatore: number, idAsta: number): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/svincola/${idGiocatore}?idAsta=${idAsta}`, {}).pipe(
+    catchError(this.handleError)
+  );
+}
+  // Metodo per ripristinare un giocatore (con ID asta)
+  ripristinaGiocatore(idGiocatore: number, idAsta: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/ripristina/${idGiocatore}`, { idAsta }).pipe(
       catchError(this.handleError)
     );
   }
@@ -77,6 +85,4 @@ export class OperazioniService {
     console.error(errorMsg);
     return throwError(errorMsg);
   }
-
-  
 }

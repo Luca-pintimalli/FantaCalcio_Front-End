@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 import { iSquadra } from './i-squadra';  // Importa l'interfaccia
 
 @Injectable({
@@ -46,5 +46,25 @@ updateSquadra(id: number, formData: FormData): Observable<any> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.put(url, formData);
   }
-  
+
+
+  getSquadreByAsta(idAsta: number): Observable<iSquadra[]> {
+    return this.http
+      .get<iSquadra[]>(`${this.apiUrl}/asta/${idAsta}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  // Metodo per gestire gli errori
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMsg: string;
+    if (error.error instanceof ErrorEvent) {
+      errorMsg = `Errore client: ${error.error.message}`;
+    } else {
+      errorMsg = error.error.message || 'Errore di comunicazione con il server';
+    }
+    console.error(errorMsg);
+    return throwError(errorMsg);
+  }
 }
+  
+
