@@ -29,6 +29,7 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
     statoOperazione: '',
     iD_Asta: 0
   };
+  giocatoriDisponibiliCount: number = 0;
 
   mostraMessaggioErrore = false;
   mostraGiocatoreRandomizzato = false;
@@ -53,57 +54,69 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef  // Aggiungi ChangeDetectorRef
   ) {}
-
- ngOnInit(): void {
-  if (this.idAsta) {
-    this.idAstaCorrente = this.idAsta;
-    this.operazione.iD_Asta = this.idAstaCorrente;
-    this.getSquadreByAsta();
-
-    this.astaService.getAstaById(this.idAstaCorrente).subscribe({
-      next: (asta: iAsta) => {
-        this.tipoAstaRandom = asta.iD_TipoAsta === 2;
-        if (!this.tipoAstaRandom) {
-          this.getGiocatoriDisponibili();
+  ngOnInit(): void {
+    if (this.idAsta) {
+      this.idAstaCorrente = this.idAsta;
+      this.operazione.iD_Asta = this.idAstaCorrente;
+      this.getSquadreByAsta();
+  
+      // Verifica se la modalità random è attiva
+      this.astaService.getAstaById(this.idAstaCorrente).subscribe({
+        next: (asta: iAsta) => {
+          this.tipoAstaRandom = asta.iD_TipoAsta === 2;
+          
+          // Carica i giocatori disponibili prima di fare un'operazione
+          this.getGiocatoriDisponibili(); 
+  
+          if (!this.tipoAstaRandom) {
+            this.startPolling();  // Inizia il polling per aggiornare la lista ogni 30 secondi, solo se non random
+          }
+        },
+        error: (error: any) => {
+          console.error('Errore durante il recupero delle informazioni dell\'asta', error);
+          this.messaggioErrore = 'Errore durante il recupero delle informazioni dell\'asta';
         }
-        this.startPolling();  // Inizia il polling per aggiornare la lista
-      },
-      error: (error: any) => {
-        console.error('Errore durante il recupero delle informazioni dell\'asta', error);
-        this.messaggioErrore = 'Errore durante il recupero delle informazioni dell\'asta';
-      }
-    });
+      });
+    }
   }
-}
-
-startPolling(): void {
-  setInterval(() => {
-    this.getGiocatoriDisponibili();
-  }, 30000);  // Aggiorna ogni 30 secondi
-}
+  
+  
+  
+  startPolling(): void {
+    setInterval(() => {
+      this.getGiocatoriDisponibili();  // Chiamata ricorrente per aggiornare la lista di giocatori disponibili
+    }, 30000);  // Aggiorna ogni 30 secondi
+  }
+  
 
   ngOnDestroy(): void {
     // Non abbiamo più bisogno di un polling periodico, quindi niente da disiscrivere
   }
 
-  // Recupera tutti i giocatori disponibili per l'asta corrente
   getGiocatoriDisponibili(): void {
     this.giocatoriService.getGiocatoriDisponibili(this.idAstaCorrente).subscribe({
       next: (data: iGiocatore[]) => {
         this.giocatori = data;
+        this.giocatoriDisponibiliCount = this.giocatori.length;  // Aggiorna il conteggio dei giocatori disponibili
         this.filterGiocatori();
+        this.cdr.detectChanges();  // Forza il rilevamento dei cambiamenti
       },
       error: (error) => {
         console.error('Errore durante il recupero dei giocatori disponibili', error);
       }
     });
   }
-
+  
+  
+  
   getRandomGiocatore(): void {
-    if (this.idAstaCorrente) {
+    if (this.giocatoriDisponibiliCount > 0) {
       this.fantacalcioService.getRandomGiocatore(this.idAstaCorrente).subscribe({
         next: (giocatore: iGiocatore) => {
           this.giocatoreSelezionato = giocatore;
+  
+          // Aggiorna il conteggio dei giocatori dopo che è stato scelto un giocatore
+          this.getGiocatoriDisponibili();  // Ricarica i giocatori disponibili
         },
         error: (error) => {
           console.error('Errore durante la randomizzazione del giocatore', error);
@@ -111,10 +124,11 @@ startPolling(): void {
         }
       });
     } else {
-      console.error('ID Asta non valido.');
-      this.messaggioErrore = 'ID Asta non valido.';
+      console.error('Non ci sono giocatori disponibili');
+      this.messaggioErrore = 'Non ci sono giocatori disponibili';
     }
   }
+  
 
   // Recupera le squadre associate all'asta corrente
   getSquadreByAsta(): void {
@@ -131,15 +145,16 @@ startPolling(): void {
   caricaOperazioni(): void {
     this.operazioniService.getOperazioniByAsta(this.idAstaCorrente).subscribe({
       next: (operazioni: iOperazione[]) => {
-        // Aggiorna lo stato delle operazioni tramite il servizio centralizzato
+        // Aggiorna lo stato delle operazioni
         this.fantacalcioService.aggiornaOperazioni(operazioni);
-        this.cdr.detectChanges();  // Forza il rilevamento dei cambiamenti
+        this.cdr.detectChanges();  // Forza il rilevamento dei cambiamenti per aggiornare le card
       },
       error: (error: any) => {
         console.error('Errore durante il caricamento delle operazioni', error);
       }
     });
   }
+  
   filterGiocatori(): void {
     if (this.searchText) {
       this.giocatoriFiltrati = this.giocatori.filter(giocatore =>
@@ -179,27 +194,20 @@ startPolling(): void {
       (response: iOperazione) => {
         console.log('Operazione creata:', response);
   
-        // Notifica il servizio dell'operazione appena creata
+        // Notifica il servizio centrale dell'operazione appena creata
         this.fantacalcioService.notificaOperazioneCreata(response);
   
-        // Aggiorna le operazioni
-        this.caricaOperazioni();
-  
-        // Aggiorna la lista delle squadre e dei crediti
-        this.getSquadreByAsta();
-        this.aggiornaCrediti();
-  
-        // Aggiorna la lista dei giocatori disponibili
-        this.getGiocatoriDisponibili();  // <=== AGGIUNTO
-  
-        // Forza il rilevamento dei cambiamenti
-        this.cdr.detectChanges();
+        // Aggiorna immediatamente il conteggio dei giocatori disponibili
+        this.getGiocatoriDisponibili();
   
         this.mostraMessaggioSuccesso = true;
         setTimeout(() => this.mostraMessaggioSuccesso = false, 3000);
   
-        // Reset del form
+        // Resetta il form e aggiorna i campi
         this.resetForm(operazioneForm);
+  
+        // Forza il rilevamento dei cambiamenti
+        this.cdr.detectChanges();
       },
       (error) => {
         this.messaggioErrore = 'Errore durante la creazione dell\'operazione: ' + error;
@@ -207,6 +215,7 @@ startPolling(): void {
       }
     );
   }
+  
   
   aggiornaCrediti(): void {
     this.squadraService.getSquadreByAsta(this.idAstaCorrente).subscribe({

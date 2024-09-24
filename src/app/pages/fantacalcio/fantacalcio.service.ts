@@ -18,20 +18,19 @@ export class FantacalcioService {
   private squadreSubject = new BehaviorSubject<iSquadra[]>([]);
 
   // Subject per notificare la creazione di un'operazione
-  private operazioneCreataSubject = new Subject<iOperazione>();
+  private operazioneCreataSource = new Subject<iOperazione>();
 
   // Observable pubblici
   operazioni$ = this.operazioniSubject.asObservable();
   squadre$ = this.squadreSubject.asObservable();
-  operazioneCreata$ = this.operazioneCreataSubject.asObservable();
+  operazioneCreata$ = this.operazioneCreataSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
-// Metodo per randomizzare un giocatore passando l'ID dell'asta
-getRandomGiocatore(idAsta: number): Observable<iGiocatore> {
-  return this.http.get<iGiocatore>(`${this.apiUrlRandomGiocatore}/${idAsta}`);
-}
-
+  // Metodo per randomizzare un giocatore passando l'ID dell'asta
+  getRandomGiocatore(idAsta: number): Observable<iGiocatore> {
+    return this.http.get<iGiocatore>(`${this.apiUrlRandomGiocatore}/${idAsta}`);
+  }
 
   // Metodo per ottenere tutti i giocatori (per "a chiamata")
   getAllGiocatori(): Observable<iGiocatore[]> {
@@ -59,7 +58,7 @@ getRandomGiocatore(idAsta: number): Observable<iGiocatore> {
   }
 
   // Notifica i componenti che un'operazione è stata creata, passando l'operazione creata
-  notificaOperazioneCreata(operazione: iOperazione): void {
-    this.operazioneCreataSubject.next(operazione);
+  notificaOperazioneCreata(operazione: iOperazione) {
+    this.operazioneCreataSource.next(operazione);
   }
 }

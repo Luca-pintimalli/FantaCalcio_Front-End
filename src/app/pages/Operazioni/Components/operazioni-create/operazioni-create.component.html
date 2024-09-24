@@ -4,6 +4,7 @@
 
 
   <form (ngSubmit)="onSubmit(operazioneForm)" #operazioneForm="ngForm">
+    <p>Giocatori disponibili: {{ giocatoriDisponibiliCount }}</p>
 
     <!-- Modalità A Chiamata -->
     <div class="form-group" *ngIf="!tipoAstaRandom">
