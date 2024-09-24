@@ -54,30 +54,33 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef  // Aggiungi ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-    if (this.idAsta) {
-      this.idAstaCorrente = this.idAsta;
-      this.operazione.iD_Asta = this.idAstaCorrente;
-      this.getSquadreByAsta();
+ ngOnInit(): void {
+  if (this.idAsta) {
+    this.idAstaCorrente = this.idAsta;
+    this.operazione.iD_Asta = this.idAstaCorrente;
+    this.getSquadreByAsta();
 
-      // Recupera informazioni dell'asta e tipo di asta
-      this.astaService.getAstaById(this.idAstaCorrente).subscribe({
-        next: (asta: iAsta) => {
-          this.tipoAstaRandom = asta.iD_TipoAsta === 2;
-          if (!this.tipoAstaRandom) {
-            this.getGiocatoriDisponibili();
-          }
-        },
-        error: (error: any) => {
-          console.error('Errore durante il recupero delle informazioni dell\'asta', error);
-          this.messaggioErrore = 'Errore durante il recupero delle informazioni dell\'asta';
+    this.astaService.getAstaById(this.idAstaCorrente).subscribe({
+      next: (asta: iAsta) => {
+        this.tipoAstaRandom = asta.iD_TipoAsta === 2;
+        if (!this.tipoAstaRandom) {
+          this.getGiocatoriDisponibili();
         }
-      });
-    } else {
-      console.error('ID Asta non valido o NaN.');
-      this.messaggioErrore = 'ID Asta non valido.';
-    }
+        this.startPolling();  // Inizia il polling per aggiornare la lista
+      },
+      error: (error: any) => {
+        console.error('Errore durante il recupero delle informazioni dell\'asta', error);
+        this.messaggioErrore = 'Errore durante il recupero delle informazioni dell\'asta';
+      }
+    });
   }
+}
+
+startPolling(): void {
+  setInterval(() => {
+    this.getGiocatoriDisponibili();
+  }, 30000);  // Aggiorna ogni 30 secondi
+}
 
   ngOnDestroy(): void {
     // Non abbiamo più bisogno di un polling periodico, quindi niente da disiscrivere
@@ -182,15 +185,15 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
         // Aggiorna le operazioni
         this.caricaOperazioni();
   
-        // Aggiorna la lista delle squadre, dei crediti totali e spesi
+        // Aggiorna la lista delle squadre e dei crediti
         this.getSquadreByAsta();
         this.aggiornaCrediti();
   
         // Aggiorna la lista dei giocatori disponibili
-        this.getGiocatoriDisponibili();
+        this.getGiocatoriDisponibili();  // <=== AGGIUNTO
   
         // Forza il rilevamento dei cambiamenti
-        this.cdr.detectChanges();  // Forza il rilevamento dei cambiamenti manualmente
+        this.cdr.detectChanges();
   
         this.mostraMessaggioSuccesso = true;
         setTimeout(() => this.mostraMessaggioSuccesso = false, 3000);
@@ -204,7 +207,7 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  
   aggiornaCrediti(): void {
     this.squadraService.getSquadreByAsta(this.idAstaCorrente).subscribe({
       next: (squadre: iSquadra[]) => {
@@ -260,7 +263,7 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
           this.annullaSelezioneGiocatore();
   
           // Aggiorna la lista dei giocatori disponibili
-          this.getGiocatoriDisponibili();
+          this.getGiocatoriDisponibili();  // <=== AGGIUNTO
   
           // Forza il rilevamento dei cambiamenti
           this.cdr.detectChanges();
@@ -277,6 +280,7 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
       console.error('Nessun giocatore selezionato');
     }
   }
+  
   
 
   ripristinaGiocatore(): void {
