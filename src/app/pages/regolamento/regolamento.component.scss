@@ -1,0 +1,60 @@
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: linear-gradient(83deg, rgba(255,96,0,1) 9%, rgba(31,0,255,1) 80%, rgba(0,145,255,1) 100%);
+    background-size: 200% 200%;
+    animation: gradientWave 6s ease-in-out infinite;
+  }
+  
+  @keyframes gradientWave {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  /* Stile per il titolo */
+  .regolamento-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin-bottom: 40px;
+    font-family: 'Arial', sans-serif; /* Cambia questo font con quello desiderato */
+  }
+  
+  /* Garantire che tutte le box abbiano una dimensione più lunga e meno "ciccione" */
+  .info-box {
+    min-height: 120px;
+    width: 100%;
+    transition: box-shadow 0.3s;
+    border-radius: 10px;
+  }
+  
+  /* Effetto hover */
+  .info-box:hover {
+    box-shadow: 3px 8px 16px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Colori delle card */
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: center;
+  }
+  
+  .card-body p {
+    font-size: 1.2rem;
+    margin: 0;
+    color: white;
+  }
+  

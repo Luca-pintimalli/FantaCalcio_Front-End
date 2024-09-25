@@ -1,15 +1,16 @@
-<div class="container mt-4">
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center mt-4">
+  <div class="form-container mt-4">
     <h2>Crea un nuovo Giocatore</h2>
-  
+
     <!-- Mostra un messaggio di errore se presente -->
     <div *ngIf="errore" class="alert alert-danger">
       {{ errore }}
     </div>
-  
+
     <!-- Form per la creazione di un nuovo giocatore -->
     <form [formGroup]="giocatoreForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="nome">Nome</label>
+        <label for="nome" class="form-label">Nome</label>
         <input
           type="text"
           id="nome"
@@ -21,9 +22,9 @@
           Il nome è richiesto.
         </div>
       </div>
-  
+
       <div class="form-group">
-        <label for="cognome">Cognome</label>
+        <label for="cognome" class="form-label">Cognome</label>
         <input
           type="text"
           id="cognome"
@@ -35,9 +36,9 @@
           Il cognome è richiesto.
         </div>
       </div>
-  
+
       <div class="form-group">
-        <label for="squadraAttuale">Squadra Attuale</label>
+        <label for="squadraAttuale" class="form-label">Squadra Attuale</label>
         <input
           type="text"
           id="squadraAttuale"
@@ -49,49 +50,49 @@
           La squadra attuale è richiesta.
         </div>
       </div>
-  
+
       <div class="form-group">
-        <label for="goalFatti">Goal Fatti</label>
+        <label for="goalFatti" class="form-label">Goal Fatti</label>
         <input
           type="number"
           id="goalFatti"
-          class="form-control"
+          class="form-control input-small"
           formControlName="goalFatti"
         />
       </div>
-  
+
       <div class="form-group">
-        <label for="goalSubiti">Goal Subiti</label>
+        <label for="goalSubiti" class="form-label">Goal Subiti</label>
         <input
           type="number"
           id="goalSubiti"
-          class="form-control"
+          class="form-control input-small"
           formControlName="goalSubiti"
         />
       </div>
-  
+
       <div class="form-group">
-        <label for="assist">Assist</label>
+        <label for="assist" class="form-label">Assist</label>
         <input
           type="number"
           id="assist"
-          class="form-control"
+          class="form-control input-small"
           formControlName="assist"
         />
       </div>
-  
+
       <div class="form-group">
-        <label for="partiteGiocate">Partite Giocate</label>
+        <label for="partiteGiocate" class="form-label">Partite Giocate</label>
         <input
           type="number"
           id="partiteGiocate"
-          class="form-control"
+          class="form-control input-small"
           formControlName="partiteGiocate"
         />
       </div>
-  
+
       <div class="form-group">
-        <label for="ruoloClassic">Ruolo Classic</label>
+        <label for="ruoloClassic" class="form-label">Ruolo Classic</label>
         <select
           id="ruoloClassic"
           class="form-control"
@@ -107,27 +108,29 @@
           Il ruolo è richiesto.
         </div>
       </div>
-  
+
       <!-- Caricamento foto -->
       <div class="form-group">
-        <label for="foto">Foto</label>
+        <label for="foto" class="form-label">Foto</label>
         <input type="file" (change)="onFileSelected($event)" name="file" />
-    </div>
-  
+      </div>
+
       <!-- Anteprima della foto -->
       <div *ngIf="selectedFile" class="mt-3">
         <h5>Anteprima Foto:</h5>
         <img [src]="previewUrl" alt="Anteprima Immagine" class="img-thumbnail" style="max-width: 200px;" />
       </div>
-  
-      <button type="submit" class="btn btn-primary" [disabled]="giocatoreForm.invalid || loading">
-        Crea Giocatore
-      </button>
-      
-  
-      <button type="button" class="btn btn-secondary ml-2" (click)="goBack()">
-        Annulla
-      </button>
+
+      <!-- Button container -->
+      <div class="button-container mt-4">
+        <button type="submit" class="btn btn-primary custom-btn" [disabled]="giocatoreForm.invalid || loading">
+          Crea Giocatore
+        </button>
+        
+        <button type="button" class="btn btn-secondary custom-btn ml-2" (click)="goBack()">
+          Annulla
+        </button>
+      </div>
     </form>
   </div>
-  
+</div>

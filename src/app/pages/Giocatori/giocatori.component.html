@@ -1,75 +1,107 @@
-<div class="container">
-  <h2>Gestione Giocatori</h2>
+<div class="container mt-5">
+  <h2 class="text-center text-white">Gestione Giocatori</h2>
+
+  <!-- Bottone per aggiungere un nuovo giocatore -->
+  <div class="d-flex justify-content-end mb-3">
+    <span class="icon-button" placement="left" ngbTooltip="Aggiungi Nuovo Giocatore" (click)="createGiocatore()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle mr-2" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+      </svg>
+    </span>
+  </div>
 
   <!-- Barra di ricerca -->
-  <input type="text" [(ngModel)]="searchTerm" (input)="onSearchTermChange($event)" placeholder="Cerca giocatore" class="form-control" />
+  <div class="d-flex justify-content-center">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearchTermChange($event)" placeholder="Cerca giocatore" class="form-control w-50 mb-4" />
+  </div>
 
-  <div class="container">
-    <h2>Filtro:</h2>
-  
+  <div class="text-center">
+    <h4 class="text-white">Filtro:</h4>
     <!-- Pulsanti di filtro -->
-    <button class="btn btn-primary" (click)="loadGiocatori()">Tutti</button>
-    <button class="btn btn-primary" (click)="filterGiocatori('Portiere')">Portieri</button>
-    <button class="btn btn-primary" (click)="filterGiocatori('Difensore')">Difensori</button>
-    <button class="btn btn-primary" (click)="filterGiocatori('Centrocampista')">Centrocampisti</button>
-    <button class="btn btn-primary" (click)="filterGiocatori('Attaccante')">Attaccanti</button> <!-- Corretto 'Attaccante' in 'ATTACCO' -->
-  </div>
-
-  <!-- Visualizza un messaggio se c'è un errore -->
-  <div *ngIf="errore" class="alert alert-danger">
-    {{ errore }}
-  </div>
-
-  <!-- Controlla se la lista di giocatori è vuota -->
-  <div *ngIf="giocatoreList?.length === 0">
-    <p>Nessun giocatore trovato.</p>
+    <button class="btn btn-outline-light m-1" (click)="loadGiocatori()">Tutti</button>
+    <button class="btn btn-outline-light m-1" (click)="filterGiocatori('Portiere')">Portieri</button>
+    <button class="btn btn-outline-light m-1" (click)="filterGiocatori('Difensore')">Difensori</button>
+    <button class="btn btn-outline-light m-1" (click)="filterGiocatori('Centrocampista')">Centrocampisti</button>
+    <button class="btn btn-outline-light m-1" (click)="filterGiocatori('Attaccante')">Attaccanti</button>
   </div>
 
   <!-- Tabella per visualizzare la lista dei giocatori -->
-  <table class="table" *ngIf="giocatoreList && giocatoreList.length > 0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Cognome</th>
-        <th>Squadra Attuale</th>
-        <th>Goal Fatti</th>
-        <th>Goal Subiti</th>
-        <th>Assist</th>
-        <th>Partite Giocate</th>
-        <th>Ruolo Classic</th>
-        <th>Ruoli Mantra</th> <!-- Aggiunta colonna per i Ruoli Mantra -->
-        <th>Azioni</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let giocatore of giocatoreList">
-        <td>{{ giocatore.iD_Giocatore }}</td>
-        <td>{{ giocatore.nome }}</td>
-        <td>{{ giocatore.cognome }}</td>
-        <td>{{ giocatore.squadraAttuale }}</td>
-        <td>{{ giocatore.goalFatti }}</td>
-        <td>{{ giocatore.goalSubiti }}</td>
-        <td>{{ giocatore.assist }}</td>
-        <td>{{ giocatore.partiteGiocate }}</td>
-        <td>{{ giocatore.ruoloClassic }}</td>
-
-        <!-- Visualizza i ruoli Mantra associati -->
-        <td>
-          <span *ngFor="let ruolo of giocatore.ruoliMantra">
-            {{ ruolo.nomeRuolo }}<br>
-          </span>
-        </td>
-
-        <td>
-          <button class="btn btn-primary" (click)="editGiocatore(giocatore.iD_Giocatore)">Modifica</button>
-          <button class="btn btn-danger" (click)="deleteGiocatore(giocatore.iD_Giocatore)">Elimina</button>
-          <!-- Pulsante per associare un ruolo Mantra -->
-          <button class="btn btn-info" (click)="associateRuoloMantra(giocatore.iD_Giocatore)">Associa Ruolo Mantra</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <button class="btn btn-success" (click)="createGiocatore()">Crea Nuovo Giocatore</button>
+  <div class="table-responsive bg-light p-3 rounded shadow mt-4">
+    <table class="table table-hover table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nome</th>
+          <th>Cognome</th>
+          <th>Squadra Attuale</th>
+          <th>Goal Fatti</th>
+          <th>Goal Subiti</th>
+          <th>Assist</th>
+          <th>Partite Giocate</th>
+          <th>Ruolo Classic</th>
+          <th>Ruoli Mantra</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let giocatore of giocatoreList">
+          <td>{{ giocatore.nome }}</td>
+          <td>{{ giocatore.cognome }}</td>
+          <td>{{ giocatore.squadraAttuale }}</td>
+          <td>{{ giocatore.goalFatti }}</td>
+          <td>{{ giocatore.goalSubiti }}</td>
+          <td>{{ giocatore.assist }}</td>
+          <td>{{ giocatore.partiteGiocate }}</td>
+          <td>{{ giocatore.ruoloClassic }}</td>
+          <td>
+            <span *ngFor="let ruolo of giocatore.ruoliMantra">
+              {{ ruolo.nomeRuolo }}<br>
+            </span>
+          </td>
+          <td>
+            <!-- Contenitore per le icone azioni, allineate in linea -->
+            <div class="d-flex justify-content-start align-items-center">
+              <!-- Icona Modifica -->
+              <span class="icon-button mr-3" placement="top" ngbTooltip="Modifica Giocatore" (click)="editGiocatore(giocatore.iD_Giocatore) ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+              </span>
+            
+              <!-- Icona Aggiungi Ruolo Mantra -->
+              <span class="icon-button mr-3" placement="top" ngbTooltip="Aggiungi Ruolo Mantra" (click)="associateRuoloMantra(giocatore.iD_Giocatore)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+              </span>
+            
+              <!-- Icona Elimina -->
+              <span class="icon-button mr-3" placement="top" ngbTooltip="Elimina Giocatore" (click)="deleteGiocatore(giocatore.iD_Giocatore)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5z"/>
+                </svg>
+              </span>
+            </div>
+            
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+ <!-- Footer -->
+ <footer class="mt-5">
+  <hr class="border-light" />
+  <p class="text-white text-center">
+    &copy; 2024 AstaGol
+    <!-- Icona LinkedIn -->
+    <a href="https://www.linkedin.com/in/luca-francesco-pintimalli-84b63318a/" target="_blank" class="text-white ms-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+          <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+        </svg>
+  </a>
+  </p>
+</footer>

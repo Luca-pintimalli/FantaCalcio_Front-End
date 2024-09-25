@@ -1,0 +1,81 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Disabilita lo scrolling */
+    background-color: aqua;
+  }
+  
+  .container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-container-small {
+    margin-top: 2em;
+    max-width: 300px; /* Riduci la larghezza massima del container */
+    width: 100%;
+    padding: 15px; /* Ridotto il padding per risparmiare spazio */
+    background-color: #fff;
+    border-radius: 10px; /* Arrotondamento meno pronunciato */
+    border: 2px solid rgba(255,96,0,1); /* Ridotto il bordo */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombra più leggera */
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .form-container-small:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px); /* Effetto hover più delicato */
+    border-color: rgba(0,145,255,1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.2rem; /* Riduce leggermente la dimensione del testo */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px; /* Ridotto padding */
+  }
+  
+  .form-control, .form-select, .form-label {
+    margin-top: 5px;
+    margin-bottom: 5px; /* Ridotto spazio tra gli elementi */
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem; /* Ridotto lo spazio tra i pulsanti */
+  }
+  
+  .custom-btn {
+    width: 8em; /* Ridotto leggermente la larghezza dei pulsanti */
+    padding: 0.4em 0.8em;
+    border-radius: 20px;
+    border: 2px solid rgba(255,96,0,1);
+    background-color: transparent;
+    color: rgba(255,96,0,1);
+    font-size: 0.9em; /* Ridotta la dimensione del testo */
+    cursor: pointer;
+    transition: all 0.4s ease;
+  }
+  
+  .custom-btn:hover {
+    background-color: rgba(255,96,0,1);
+    color: white;
+    border-color: rgba(0,145,255,1);
+  }
+  
+  .alert {
+    font-size: 0.85em; /* Ridotto il font dei messaggi */
+    text-align: center;
+  }
+  

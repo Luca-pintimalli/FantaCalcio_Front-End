@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 import { GiocatoriRoutingModule } from './giocatori-routing.module';
 import { GiocatoreComponent } from './giocatori.component';
@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GiocatoriEditComponent } from './Components/giocatori-edit/giocatori-edit.component';
 import { GiocatoriCreateComponent } from './Components/giocatori-create/giocatori-create.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { GiocatoriCreateComponent } from './Components/giocatori-create/giocator
     GiocatoriRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ]
 })
 export class GiocatoriModule { }

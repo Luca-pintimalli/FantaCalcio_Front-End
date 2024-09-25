@@ -1,75 +1,83 @@
 <div *ngIf="giocatore">
-    <h2>Modifica Giocatore: {{ giocatore.nome }} {{ giocatore.cognome }}</h2>
+  <div class="container-fluid h-100 d-flex justify-content-center align-items-center">
+    <div class="form-container">
+      <h2>Modifica Giocatore: {{ giocatore.nome }} {{ giocatore.cognome }}</h2>
   
-    <form (ngSubmit)="onSubmit()">
-      <!-- Nome -->
-      <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" [(ngModel)]="giocatore.nome" name="nome" class="form-control" required>
-      </div>
+      <form (ngSubmit)="onSubmit()">
+        <!-- Nome -->
+        <div class="form-group">
+          <label for="nome" class="form-label">Nome:</label>
+          <input type="text" id="nome" [(ngModel)]="giocatore.nome" name="nome" class="form-control" required>
+        </div>
   
-      <!-- Cognome -->
-      <div class="form-group">
-        <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" [(ngModel)]="giocatore.cognome" name="cognome" class="form-control" required>
-      </div>
+        <!-- Cognome -->
+        <div class="form-group">
+          <label for="cognome" class="form-label">Cognome:</label>
+          <input type="text" id="cognome" [(ngModel)]="giocatore.cognome" name="cognome" class="form-control" required>
+        </div>
   
-      <!-- Squadra Attuale -->
-      <div class="form-group">
-        <label for="squadraAttuale">Squadra Attuale:</label>
-        <input type="text" id="squadraAttuale" [(ngModel)]="giocatore.squadraAttuale" name="squadraAttuale" class="form-control" required>
-      </div>
+        <!-- Squadra Attuale -->
+        <div class="form-group">
+          <label for="squadraAttuale" class="form-label">Squadra Attuale:</label>
+          <input type="text" id="squadraAttuale" [(ngModel)]="giocatore.squadraAttuale" name="squadraAttuale" class="form-control" required>
+        </div>
   
-      <!-- Foto -->
-      <!-- Se la foto è disponibile, mostra l'immagine, altrimenti mostra un testo -->
-<div class="form-group">
-    <label for="foto">Foto (opzionale)</label>
-    <input type="file" id="foto" (change)="onFileSelected($event)" />
-    <img *ngIf="giocatore?.foto && giocatore.foto !== 'Nessuna foto disponibile'" [src]="giocatore.foto" alt="Foto del giocatore" width="150">
-    <div *ngIf="giocatore?.foto === 'Nessuna foto disponibile'">Nessuna foto disponibile</div>
+        <!-- Foto -->
+        <div class="form-group">
+          <label for="foto" class="form-label">Foto (opzionale)</label>
+          <input type="file" id="foto" (change)="onFileSelected($event)" />
+          <img *ngIf="giocatore?.foto && giocatore.foto !== 'Nessuna foto disponibile'" [src]="giocatore.foto" alt="Foto del giocatore" class="img-thumbnail mt-2" width="150">
+          <div *ngIf="giocatore?.foto === 'Nessuna foto disponibile'">Nessuna foto disponibile</div>
+        </div>
+  
+        <!-- Ruolo Classic -->
+        <div class="form-group">
+          <label for="ruoloClassic" class="form-label">Ruolo Classic:</label>
+          <select id="ruoloClassic" [(ngModel)]="giocatore.ruoloClassic" name="ruoloClassic" class="form-control" required>
+            <option *ngFor="let ruolo of ruoliClassic" [value]="ruolo">{{ ruolo }}</option>
+          </select>
+        </div>
+  
+        <!-- Goal Fatti -->
+        <div class="form-group">
+          <label for="goalFatti" class="form-label">Goal Fatti:</label>
+          <input type="number" id="goalFatti" [(ngModel)]="giocatore.goalFatti" name="goalFatti" class="form-control input-small" required>
+        </div>
+  
+        <!-- Goal Subiti -->
+        <div class="form-group">
+          <label for="goalSubiti" class="form-label">Goal Subiti:</label>
+          <input type="number" id="goalSubiti" [(ngModel)]="giocatore.goalSubiti" name="goalSubiti" class="form-control input-small" required>
+        </div>
+  
+        <!-- Assist -->
+        <div class="form-group">
+          <label for="assist" class="form-label">Assist:</label>
+          <input type="number" id="assist" [(ngModel)]="giocatore.assist" name="assist" class="form-control input-small" required>
+        </div>
+  
+        <!-- Partite Giocate -->
+        <div class="form-group">
+          <label for="partiteGiocate" class="form-label">Partite Giocate:</label>
+          <input type="number" id="partiteGiocate" [(ngModel)]="giocatore.partiteGiocate" name="partiteGiocate" class="form-control input-small" required>
+        </div>
+  
+        <!-- Button container -->
+        <div class="button-container mt-4">
+          <button type="submit" class="btn btn-primary custom-btn">
+            Salva
+          </button>
+          
+          <button type="button" class="btn btn-secondary custom-btn ml-2" (click)="goBack()">
+            Annulla
+          </button>
+        </div>
+  
+        <!-- Mostra un errore se presente -->
+        <div *ngIf="errore" class="alert alert-danger mt-3">{{ errore }}</div>
+      </form>
+    </div>
   </div>
   
-  
-      <!-- Ruolo Classic -->
-      <div class="form-group">
-        <label for="ruoloClassic">Ruolo Classic:</label>
-        <select id="ruoloClassic" [(ngModel)]="giocatore.ruoloClassic" name="ruoloClassic" class="form-control" required>
-          <option *ngFor="let ruolo of ruoliClassic" [value]="ruolo">{{ ruolo }}</option>
-        </select>
-      </div>
-  
-      <!-- Goal Fatti -->
-      <div class="form-group">
-        <label for="goalFatti">Goal Fatti:</label>
-        <input type="number" id="goalFatti" [(ngModel)]="giocatore.goalFatti" name="goalFatti" class="form-control" required>
-      </div>
-  
-      <!-- Goal Subiti -->
-      <div class="form-group">
-        <label for="goalSubiti">Goal Subiti:</label>
-        <input type="number" id="goalSubiti" [(ngModel)]="giocatore.goalSubiti" name="goalSubiti" class="form-control" required>
-      </div>
-  
-      <!-- Assist -->
-      <div class="form-group">
-        <label for="assist">Assist:</label>
-        <input type="number" id="assist" [(ngModel)]="giocatore.assist" name="assist" class="form-control" required>
-      </div>
-  
-      <!-- Partite Giocate -->
-      <div class="form-group">
-        <label for="partiteGiocate">Partite Giocate:</label>
-        <input type="number" id="partiteGiocate" [(ngModel)]="giocatore.partiteGiocate" name="partiteGiocate" class="form-control" required>
-      </div>
-  
-      <!-- Bottone per salvare -->
-      <button type="submit" class="btn btn-primary">Salva</button>
-  
-      <!-- Bottone per tornare indietro -->
-      <button type="button" class="btn btn-secondary" (click)="goBack()">Annulla</button>
-  
-      <!-- Mostra un errore se presente -->
-      <div *ngIf="errore" class="alert alert-danger">{{ errore }}</div>
-    </form>
   </div>
   
