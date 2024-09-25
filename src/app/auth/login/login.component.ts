@@ -29,7 +29,7 @@ export class LoginComponent {
     this.authSvc.login(this.authData).subscribe({
       next: (response) => {
         // Una volta effettuato il login con successo, reindirizza alla dashboard
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         // Se c'è un errore (come email/password errati), mostra il messaggio di errore

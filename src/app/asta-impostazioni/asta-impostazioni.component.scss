@@ -1,0 +1,105 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Disabilita lo scrolling */
+    background-color: aqua;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Fa sì che il contenitore prenda l'intera altezza della finestra */
+    margin: 0;
+  }
+  .form-container {
+    max-width: 500px; /* Larghezza moderata */
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12%; /* Arrotonda gli angoli */
+    border: 3px solid rgba(255,96,0,1); /* Colore del bordo uguale a quello del pulsante */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Ombra aumentata inizialmente */
+    transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease; /* Transizione per hover */
+  }
+  
+  .form-container:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); /* Aumenta ulteriormente l'ombra al passaggio del mouse */
+    transform: translateY(-5px); /* Leggero effetto di sollevamento */
+    border-color: rgba(0,145,255,1); /* Cambia il colore del bordo quando si passa sopra */
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 10px; /* Ridotto il margine inferiore */
+  }
+  
+  button {
+    width: 10em; /* Imposta la larghezza a 10em */
+    padding: 0.5em 1em; /* Imposta un'imbottitura interna per un aspetto migliore */
+    border-radius: 25px; /* Arrotonda gli angoli ma non crea un cerchio */
+    background-color: #007bff; /* Colore di sfondo (puoi cambiarlo) */
+    color: white; /* Colore del testo */
+    border: none; /* Rimuove il bordo */
+    cursor: pointer; /* Cambia il cursore quando si passa sul pulsante */
+    transition: background-color 0.3s ease; /* Aggiunge una transizione per gli hover */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Cambia il colore al passaggio del mouse */
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px; /* Aggiungo padding per dare spazio al div */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Transizione per l'hover */
+  }
+  .form-group:hover {
+    background-color: #f0f8ff; /* Aggiunge un colore di sfondo leggero quando si passa sopra */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra leggera */
+  }
+  .form-label {
+    flex: 0 0 120px; /* Larghezza fissa per i label */
+  }
+  
+  .form-select, .form-control {
+    flex-grow: 1; /* Fa crescere gli input e le select per riempire lo spazio */
+  }
+  .ms-2 {
+    margin-left: 0.5rem; /* Spazio tra il label e l'input/select */
+  }
+  
+  .input-small {
+    max-width: 120px; 
+  }
+  
+
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .custom-btn {
+    width: 10em; /* Imposta la larghezza a 10em */
+    padding: 0.5em 1em; /* Imposta l'imbottitura interna */
+    border-radius: 25px; /* Arrotonda gli angoli */
+    border: 3px solid rgba(255,96,0,1); /* Imposta un bordo con il colore dello sfondo della pagina */
+    background-color: transparent; /* Sfondo trasparente all'inizio */
+    color: rgba(255,96,0,1); /* Colore del testo uguale al bordo */
+    font-size: 1em; /* Regola la dimensione del testo */
+    cursor: pointer;
+    transition: all 0.4s ease; /* Transizione per l'effetto hover */
+  }
+  
+  .custom-btn:hover {
+    background-color: rgba(255,96,0,1); /* Cambia il colore di sfondo quando si passa sopra */
+    color: white; /* Cambia il colore del testo */
+    border-color: rgba(0,145,255,1); /* Cambia il colore del bordo (simile al gradiente) */
+  }
+  
+ 

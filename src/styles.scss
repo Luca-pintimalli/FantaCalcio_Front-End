@@ -1,4 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    background: linear-gradient(83deg, rgba(255,96,0,1) 9%, rgba(31,0,255,1) 80%, rgba(0,145,255,1) 100%);
+    background-size: 200% 200%; /* Allarga il background per consentire il movimento */
+    animation: gradientWave 6s ease-in-out infinite; /* Riduce il tempo dell'animazione e aggiunge ease-in-out per un effetto più fluido */
+  }
+  
+  @keyframes gradientWave {
+    0% {
+      background-position: 0% 50%; /* Inizio del movimento */
+    }
+    50% {
+      background-position: 100% 50%; /* Movimento a metà */
+    }
+    100% {
+      background-position: 0% 50%; /* Torna alla posizione iniziale */
+    }
+  }
+  

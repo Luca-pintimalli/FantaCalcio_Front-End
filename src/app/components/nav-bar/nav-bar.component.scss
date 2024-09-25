@@ -1,0 +1,434 @@
+.ngb-offcanvas-panel {
+    width: 100%; /* Larghezza del pannello offcanvas */
+  }
+  
+  .offcanvas-body {
+    display: flex;
+    flex-direction: column; /* Incolonna i blocchi */
+    align-items: center; /* Centra i blocchi orizzontalmente */
+    background-color: transparent; /* Sfondo trasparente */
+    padding: 1em;
+    height: 100vh;
+    padding-top: 0;
+}
+
+/* Quando l'utente è loggato, applica justify-content: center */
+.offcanvas-body.logged-in {
+    justify-content: center;
+}
+
+/* Quando l'utente non è loggato, applica justify-content: space-around */
+.offcanvas-body.logged-out {
+    justify-content: space-around;
+}
+
+
+
+  /* Stile per rendere trasparente il pulsante di chiusura */
+.btn-close {
+    background-color: transparent; /* Sfondo trasparente */
+    border: none; /* Rimuove il bordo */
+    font-size: 1.5rem; /* Dimensione della "X" */
+    color:#0056b3; /* Colore della "X" */
+    cursor: pointer; /* Cursore a mano */
+    padding: 0; /* Rimuove il padding */
+    outline: none; /* Rimuove qualsiasi bordo di focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+    margin-right: 1em;
+}
+
+.btn-close:hover{
+   
+    background-color: transparent;
+    
+}
+
+
+  ///////////////////////////////////////////////////////////
+ /* Stile base del pulsante 3D con bordo nero e sfumatura */
+.block {
+    width: 200px;
+    height: 60px;
+    padding: 15px 0;
+    background: linear-gradient(135deg, #0a63c4, #00d4ff);
+    color: white;
+    font-size: 1.4rem;
+    text-align: center;
+    text-decoration: none;
+    border-top: 5px solid #ffffff;
+    border-radius: 25px;
+    box-shadow: 0px 5px 0px #0000b3, 0px 10px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+}
+
+/* Hover per aumentare l'effetto cliccabile */
+.block:hover {
+    background: linear-gradient(135deg, #0056b3, #00aaff); /* Sfumatura più scura al passaggio del mouse */
+    box-shadow: 0px 3px 0px #003e7e, 0px 8px 10px rgba(0, 0, 0, 0.2); /* Ombra più piccola */
+    transform: translateY(-2px); /* Leggero sollevamento */
+}
+
+/* Stile per il testo nel pulsante */
+.block-link {
+    text-decoration: none; /* Rimuove la sottolineatura */
+    color: white; /* Colore del testo */
+    text-align: center; /* Allinea il testo al centro */
+    width: 100%; /* Larghezza massima */
+    height: 100%; /* Altezza massima */
+    display: flex; /* Flexbox per allineare */
+    justify-content: center; /* Allinea orizzontalmente */
+    align-items: center; /* Allinea verticalmente */
+    font-size: 1.2rem; /* Dimensione del testo */
+}
+
+/* Effetto di "pressione" quando il pulsante viene cliccato */
+.block:active {
+    background: linear-gradient(135deg, #004494, #0088cc); /* Sfumatura più scura durante la pressione */
+    box-shadow: 0px 1px 0px #003e7e, 0px 6px 10px rgba(0, 0, 0, 0.2); /* Ombra ancora più piccola */
+    transform: translateY(2px); /* Effetto pressione */
+}
+
+
+/////////////////////////////////////////////////
+
+/* Stile per il pulsante toggle */
+.toggle-btn {
+    position: fixed; /* Posiziona il pulsante in modo fisso */
+    top: 20px; /* Sposta il pulsante verso il bordo superiore */
+    left: 20px; /* Sposta il pulsante verso il bordo sinistro */
+    background-color: transparent; /* Sfondo completamente trasparente */
+    border: none; /* Nessun bordo */
+    padding: 0; /* Rimuove il padding */
+    cursor: pointer; /* Mostra il cursore a mano */
+    z-index: 1000; /* Assicura che il pulsante sia sopra gli altri elementi */
+    width: auto; /* Larghezza basata sull'immagine */
+    height: auto; /* Altezza basata sull'immagine */
+    outline: none; /* Rimuove qualsiasi bordo di focus */
+    transition: all 0.3s ease; /* Aggiunge una transizione per l'effetto hover */
+  }
+  
+  .toggle-btn:hover {
+    background-color: transparent;
+    animation: shake 0.8s ease; /* Scossa meno intensa e più lenta al passaggio del mouse */
+  }
+  
+  .toggle-icon {
+    width: 4em; /* Larghezza dell'immagine */
+    object-fit: cover; /* Adatta l'immagine al contenitore */
+    animation: rotate 15s linear infinite; /* Rotazione più lenta */
+  }
+  
+  /* Animazione lenta di rotazione */
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg); /* Inizio senza rotazione */
+    }
+    to {
+      transform: rotate(360deg); /* Rotazione completa a 360 gradi */
+    }
+  }
+  
+  /* Effetto di scossa meno forte */
+  @keyframes shake {
+    0% { transform: translate(0.5px, 0.5px) rotate(0deg); }
+    10% { transform: translate(-0.5px, -1px) rotate(-0.5deg); }
+    20% { transform: translate(-1.5px, 0px) rotate(0.5deg); }
+    30% { transform: translate(1.5px, 1px) rotate(0deg); }
+    40% { transform: translate(0.5px, -0.5px) rotate(0.5deg); }
+    50% { transform: translate(-0.5px, 1px) rotate(-0.5deg); }
+    60% { transform: translate(-1.5px, 0.5px) rotate(0deg); }
+    70% { transform: translate(1.5px, 0.5px) rotate(-0.5deg); }
+    80% { transform: translate(-0.5px, -0.5px) rotate(0.5deg); }
+    90% { transform: translate(0.5px, 1px) rotate(0deg); }
+    100% { transform: translate(0.5px, -1px) rotate(-0.5deg); }
+  }
+  
+  .offcanvas-header{
+    padding :0 em;
+     
+  }
+  .offcanvas-header h5 {
+    font-size: 1.5rem; /* Aumenta leggermente la dimensione usando rem */
+    font-weight: bold; /* Testo in grassetto */
+    color: #0056b3 ;/* Colore del testo bianco */
+    text-shadow: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.5); /* Ombra per un effetto più elegante */
+    text-align: center; /* Centra il testo */
+    padding: 1rem 0; /* Spaziatura verticale con rem */
+    border-radius: 0.5rem; /* Arrotondamento degli angoli */
+    margin-bottom: 1rem; /* Margine sotto il titolo */
+  }
+  
+  /* Contenitore centrale per il profilo utente */
+.container-fluid {
+    height: 100vh; /* Altezza della pagina */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: flex-start; /* Posiziona il contenuto in alto */
+    padding-top: 20px; /* Sposta il contenuto verso l'alto */
+  }
+  
+  /* Stile per il div del profilo utente */
+  .user-profile {
+    width: 500px; /* Rettangolare più largo */
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #333; /* Bordi scuri */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leggera ombra */
+    text-align: center;
+  }
+  
+  /* Stile per l'immagine dell'utente */
+  .user-photo {
+    width: 120px; /* Dimensione dell'immagine */
+    height: 120px;
+    border-radius: 50%; /* Rende l'immagine circolare */
+    border: 5px solid #333; /* Aggiunge un bordo scuro */
+    padding: 5px; /* Spaziatura tra immagine e bordo */
+    background-color: #fff; /* Colore di sfondo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effetto cornice con ombra */
+  }
+  
+ /* Stile per il pulsante trasparente Visualizza Profilo */
+.btn-transparent {
+    background-color: transparent; /* Sfondo trasparente */
+    border: none; /* Rimuove il bordo del pulsante */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease; /* Transizione morbida */
+    margin-bottom: 1rem; /* Spaziatura inferiore */
+    width: 17em;
+    margin-left: 1em;
+    margin-bottom: 0;
+}
+  
+/* Testo "Visualizza Profilo" */
+.btn-transparent span {
+    color: white; /* Colore del testo */
+    font-size: 1.2rem; /* Dimensione del testo */
+}
+
+/* Hover per far coincidere con lo stile del pulsante "block" */
+.btn-transparent:hover {
+    background: linear-gradient(135deg, #0056b3, #00aaff); /* Sfondo in gradiente al passaggio del mouse */
+    color: white; /* Colore del testo */
+    box-shadow: 0px 3px 0px #003e7e, 0px 8px 10px rgba(0, 0, 0, 0.2); /* Aggiunge un'ombra al passaggio del mouse */
+    border-radius: 25px; /* Arrotonda gli angoli per effetto pill */
+}
+
+.btn-transparent:hover span {
+    color: white; /* Colore del testo al passaggio del mouse */
+}
+
+.btn-transparent:hover .profile-img {
+    border-color: #003e7e; /* Cambia il colore del bordo dell'immagine al passaggio del mouse */
+}
+  ////////////////////////////////////////////////////
+/*MODALE PROFILO*/
+  .custom-modal-class .modal-dialog {
+    max-width: 400px; /* Mantiene il modale più compatto */
+    margin: 1.75rem auto;
+  }
+  
+  
+  
+  .custom-modal-class .modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    height: auto;
+    max-height: 40em;
+  }
+  
+  .user-profile {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .user-photo {
+    width: 100px; /* Dimensione dell'immagine */
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 5px 10px; /* Mantieni il bottone più piccolo */
+    margin-top: 10px;
+  }
+  
+  .modal-body p {
+    font-size: 0.9rem; /* Riduce la dimensione del testo */
+    color: #0056b3; 
+  }
+   
+  .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0056b3;
+    text-shadow: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.5);
+    text-align: center;
+    padding: 1rem 0;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    color: #0056b3; 
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .modal-btn {
+    flex: 1; /* Assegna uguale spazio a ciascun pulsante */
+    padding: 10px 20px; /* Stile uniforme per tutti i pulsanti */
+    max-width: 150px; /* Imposta una larghezza massima per i pulsanti */
+    text-align: center; /* Allinea il testo centralmente */
+  }
+  
+  #file-upload {
+    display: none; /* Nasconde l'input file */
+  }
+
+  
+  /* Stile per il pulsante trasparente */
+.btn-transparent {
+    background-color: transparent; /* Sfondo trasparente */
+    border: none; /* Rimuove il bordo del pulsante */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  /* Stile per l'immagine del profilo */
+  .profile-img {
+    width: 3em;
+    height: 3em;
+
+    border-radius: 50%; /* Rende l'immagine circolare */
+    object-fit: cover;
+    border: 2px solid rgba(0, 0, 0, 0.3); /* Bordo leggero attorno alla foto */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Effetto di ombra per far risaltare la cornice */
+  }
+  
+
+
+//* Stile base del pulsante 3D con bordo nero e sfumatura */
+.button-3d {
+    display: inline-block;
+    padding: 15px 40px; /* Dimensioni del pulsante */
+    background: linear-gradient(135deg, #007bff, #00d4ff); /* Sfumatura dal blu al ciano */
+    color: white; /* Colore del testo */
+    font-size: 1.4rem; /* Dimensione del testo */
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid black; /* Bordo nero */
+    border-radius: 25px; /* Arrotonda gli angoli per effetto "pill" */
+    box-shadow: 0px 5px 0px #0056b3, 0px 10px 10px rgba(0, 0, 0, 0.2); /* Ombra per effetto 3D */
+    transition: all 0.2s ease; /* Transizione morbida */
+    cursor: pointer; /* Mostra il cursore a mano */
+  }
+  
+  /* Effetto hover (sollevamento) */
+  .button-3d:hover {
+    background: linear-gradient(135deg, #0056b3, #00aaff); /* Sfumatura più scura al passaggio del mouse */
+    box-shadow: 0px 3px 0px #003e7e, 0px 8px 10px rgba(0, 0, 0, 0.2); /* Ombra più piccola */
+    transform: translateY(-2px); /* Leggero sollevamento */
+  }
+  
+  /* Effetto quando viene cliccato (pressione) */
+  .button-3d:active {
+    background: linear-gradient(135deg, #004494, #0088cc); /* Sfumatura più scura durante la pressione */
+    box-shadow: 0px 1px 0px #003e7e, 0px 6px 10px rgba(0, 0, 0, 0.2); /* Ombra ancora più piccola */
+    transform: translateY(2px); /* Effetto pressione */
+  }
+  
+
+  /* Stile per il pulsante Logout */
+.block-logout {
+    width: 200px;
+    height: 60px;
+    padding: 15px 0;
+    background: linear-gradient(135deg, #0a63c4, #00d4ff);
+    color: white;
+    font-size: 1.4rem;
+    text-align: center;
+    text-decoration: none;
+    border-top: 5px solid #ffffff;
+    border-radius: 25px;
+    box-shadow: 0px 5px 0px #0000b3, 0px 10px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    border: none; /* Rimuove il bordo del button */
+}
+
+.block-logout:hover {
+    background: linear-gradient(135deg, #0056b3, #00aaff); /* Sfumatura più scura al passaggio del mouse */
+    box-shadow: 0px 3px 0px #003e7e, 0px 8px 10px rgba(0, 0, 0, 0.2); /* Ombra più piccola */
+    transform: translateY(-2px); /* Leggero sollevamento */
+}
+
+.block-logout:active {
+    background: linear-gradient(135deg, #004494, #0088cc); /* Sfumatura più scura durante la pressione */
+    box-shadow: 0px 1px 0px #003e7e, 0px 6px 10px rgba(0, 0, 0, 0.2); /* Ombra ancora più piccola */
+    transform: translateY(2px); /* Effetto pressione */
+}
+
+
+/* Stile base del pulsante 3D con larghezza fissa */
+.modal-btn {
+    width: 200px; /* Larghezza fissa per tutti i pulsanti */
+    padding: 15px 0; /* Mantiene lo stesso padding verticale */
+    background: linear-gradient(135deg, #007bff, #00d4ff); /* Sfumatura dal blu al ciano */
+    color: white;
+    font-size: 1.2rem; /* Dimensione del testo coerente */
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 25px; /* Stesso arrotondamento */
+    box-shadow: 0px 5px 0px #0056b3, 0px 10px 10px rgba(0, 0, 0, 0.2); /* Ombra per effetto 3D */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.modal-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #00aaff); /* Sfumatura più scura al passaggio del mouse */
+    box-shadow: 0px 3px 0px #003e7e, 0px 8px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /* Sollevamento al passaggio del mouse */
+}
+
+.modal-btn:active {
+    background: linear-gradient(135deg, #004494, #0088cc); /* Sfumatura più scura durante la pressione */
+    box-shadow: 0px 1px 0px #003e7e, 0px 6px 10px rgba(0, 0, 0, 0.2); /* Ombra più piccola durante la pressione */
+    transform: translateY(2px); /* Effetto pressione */
+}

@@ -32,6 +32,9 @@ export class AstaImpostazioniComponent implements OnInit {
 
   modalitaList: iModalita[] = [];
   tipoAstaList: iTipoAsta[] = [];
+  
+  selectedModalita: iModalita | null = null;
+  selectedTipoAsta: iTipoAsta | null = null;
 
   constructor(
     private astaService: AstaService,
@@ -53,6 +56,7 @@ export class AstaImpostazioniComponent implements OnInit {
     }
   }
 
+  // Recupera la lista delle modalità
   getModalita(): void {
     this.modalitaService.getAllModalita().subscribe({
       next: (response) => {
@@ -64,6 +68,7 @@ export class AstaImpostazioniComponent implements OnInit {
     });
   }
 
+  // Recupera la lista dei tipi di asta
   getTipoAsta(): void {
     this.tipoAstaService.getAllTipoAsta().subscribe({
       next: (response) => {
@@ -74,36 +79,34 @@ export class AstaImpostazioniComponent implements OnInit {
       }
     });
   }
-;
-creaAsta(): void {
-  const astaData: iAstaCreate = {
-    iD_TipoAsta: this.asta.iD_TipoAsta,
-    numeroSquadre: this.asta.numeroSquadre,
-    creditiDisponibili: this.asta.creditiDisponibili,
-    iD_Modalita: this.asta.iD_Modalita,
-    maxPortieri: this.asta.maxPortieri,
-    maxDifensori: this.asta.maxDifensori,
-    maxCentrocampisti: this.asta.maxCentrocampisti,
-    maxAttaccanti: this.asta.maxAttaccanti
-  };
 
-  this.astaService.createAsta(astaData).subscribe({
-    next: (response: iAsta) => {
-      if (response && response.iD_Asta) {
-        console.log('Asta creata con ID:', response.iD_Asta);
-        // Emetti l'evento al componente genitore con l'ID dell'asta
-        this.impostazioniComplete.emit(response.iD_Asta);
-      } else {
-        console.error('Errore: Nessun ID Asta restituito');
+  // Funzione per creare un'asta
+  creaAsta(): void {
+    const astaData: iAstaCreate = {
+      iD_TipoAsta: this.asta.iD_TipoAsta,
+      numeroSquadre: this.asta.numeroSquadre,
+      creditiDisponibili: this.asta.creditiDisponibili,
+      iD_Modalita: this.asta.iD_Modalita,
+      maxPortieri: this.asta.maxPortieri,
+      maxDifensori: this.asta.maxDifensori,
+      maxCentrocampisti: this.asta.maxCentrocampisti,
+      maxAttaccanti: this.asta.maxAttaccanti
+    };
+
+    // Creazione dell'asta
+    this.astaService.createAsta(astaData).subscribe({
+      next: (response: iAsta) => {
+        if (response && response.iD_Asta) {
+          console.log('Asta creata con ID:', response.iD_Asta);
+          // Emetti l'evento al componente genitore con l'ID dell'asta
+          this.impostazioniComplete.emit(response.iD_Asta);
+        } else {
+          console.error('Errore: Nessun ID Asta restituito');
+        }
+      },
+      error: (error) => {
+        console.error('Errore nella creazione dell\'asta', error.message || error);
       }
-    },
-    error: (error) => {
-      console.error('Errore nella creazione dell\'asta', error.message || error);
-    }
-  });
+    });
+  }
 }
-
-
-}
-  
-

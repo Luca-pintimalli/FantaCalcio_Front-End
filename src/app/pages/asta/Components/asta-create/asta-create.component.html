@@ -1,64 +1,65 @@
-<div class="container">
-  <h2>Crea una nuova asta</h2>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-lg form-container">
+    <h2 class="text-center mb-4">Crea una nuova asta</h2>
 
-  <form (ngSubmit)="creaAsta()" #astaForm="ngForm">
-    
-    <!-- Menu a tendina per Modalita -->
-    <div class="form-group">
-      <label for="iD_Modalita">Modalità</label>
-      <select id="iD_Modalita" class="form-control" [(ngModel)]="asta.iD_Modalita" name="iD_Modalita" required>
-        <option *ngFor="let modalita of modalitaList" [value]="modalita.iD_Modalita">{{ modalita.tipoModalita }}</option>
-      </select>
-    </div>
+    <form (ngSubmit)="creaAsta()" #astaForm="ngForm">
+      <!-- Menu a tendina per Modalita -->
+      <div class="form-group">
+        <label for="iD_Modalita">Modalità</label>
+        <select id="iD_Modalita" class="form-control" [(ngModel)]="asta.iD_Modalita" name="iD_Modalita" required>
+          <option *ngFor="let modalita of modalitaList" [value]="modalita.iD_Modalita">{{ modalita.tipoModalita }}</option>
+        </select>
+      </div>
 
-    <!-- Menu a tendina per TipoAsta -->
-    <div class="form-group">
-      <label for="iD_TipoAsta">Tipo Asta</label>
-      <select id="iD_TipoAsta" class="form-control" [(ngModel)]="asta.iD_TipoAsta" name="iD_TipoAsta" required>
-        <option *ngFor="let tipoAsta of tipoAstaList" [value]="tipoAsta.iD_TipoAsta">{{ tipoAsta.nomeTipoAsta }}</option>
-      </select>
-    </div>
+      <!-- Menu a tendina per TipoAsta -->
+      <div class="form-group">
+        <label for="iD_TipoAsta">Tipo Asta</label>
+        <select id="iD_TipoAsta" class="form-control" [(ngModel)]="asta.iD_TipoAsta" name="iD_TipoAsta" required>
+          <option *ngFor="let tipoAsta of tipoAstaList" [value]="tipoAsta.iD_TipoAsta">{{ tipoAsta.nomeTipoAsta }}</option>
+        </select>
+      </div>
 
-    <!-- Numero Squadre -->
-    <div class="form-group">
-      <label for="numeroSquadre">Numero Squadre</label>
-      <input type="number" id="numeroSquadre" class="form-control" [(ngModel)]="asta.numeroSquadre" name="numeroSquadre" required>
-    </div>
+      <!-- Numero Squadre -->
+      <div class="form-group">
+        <label for="numeroSquadre">Numero Squadre</label>
+        <input type="number" id="numeroSquadre" class="form-control" [(ngModel)]="asta.numeroSquadre" name="numeroSquadre" required>
+      </div>
 
-    <!-- Crediti Disponibili -->
-    <div class="form-group">
-      <label for="creditiDisponibili">Crediti Disponibili</label>
-      <input type="number" id="creditiDisponibili" class="form-control" [(ngModel)]="asta.creditiDisponibili" name="creditiDisponibili" required>
-    </div>
+      <!-- Crediti Disponibili -->
+      <div class="form-group">
+        <label for="creditiDisponibili">Crediti Disponibili</label>
+        <input type="number" id="creditiDisponibili" class="form-control" [(ngModel)]="asta.creditiDisponibili" name="creditiDisponibili" required>
+      </div>
 
-    <!-- Limiti per ruolo -->
-    <h4>Limiti per Ruolo</h4>
-    
-    <!-- Max Portieri -->
-    <div class="form-group">
-      <label for="maxPortieri">Massimo Portieri</label>
-      <input type="number" id="maxPortieri" class="form-control" [(ngModel)]="asta.maxPortieri" name="maxPortieri" required>
-    </div>
+      <!-- Limiti per ruolo -->
+      <h4 class="mt-4">Limiti per Ruolo</h4>
+      
+      <!-- Max Portieri -->
+      <div class="form-group">
+        <label for="maxPortieri">Massimo Portieri</label>
+        <input type="number" id="maxPortieri" class="form-control" [(ngModel)]="asta.maxPortieri" name="maxPortieri" required>
+      </div>
 
-    <!-- Max Difensori -->
-    <div class="form-group">
-      <label for="maxDifensori">Massimo Difensori</label>
-      <input type="number" id="maxDifensori" class="form-control" [(ngModel)]="asta.maxDifensori" name="maxDifensori" required>
-    </div>
+      <!-- Max Difensori -->
+      <div class="form-group">
+        <label for="maxDifensori">Massimo Difensori</label>
+        <input type="number" id="maxDifensori" class="form-control" [(ngModel)]="asta.maxDifensori" name="maxDifensori" required>
+      </div>
 
-    <!-- Max Centrocampisti -->
-    <div class="form-group">
-      <label for="maxCentrocampisti">Massimo Centrocampisti</label>
-      <input type="number" id="maxCentrocampisti" class="form-control" [(ngModel)]="asta.maxCentrocampisti" name="maxCentrocampisti" required>
-    </div>
+      <!-- Max Centrocampisti -->
+      <div class="form-group">
+        <label for="maxCentrocampisti">Massimo Centrocampisti</label>
+        <input type="number" id="maxCentrocampisti" class="form-control" [(ngModel)]="asta.maxCentrocampisti" name="maxCentrocampisti" required>
+      </div>
 
-    <!-- Max Attaccanti -->
-    <div class="form-group">
-      <label for="maxAttaccanti">Massimo Attaccanti</label>
-      <input type="number" id="maxAttaccanti" class="form-control" [(ngModel)]="asta.maxAttaccanti" name="maxAttaccanti" required>
-    </div>
+      <!-- Max Attaccanti -->
+      <div class="form-group">
+        <label for="maxAttaccanti">Massimo Attaccanti</label>
+        <input type="number" id="maxAttaccanti" class="form-control" [(ngModel)]="asta.maxAttaccanti" name="maxAttaccanti" required>
+      </div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary">Crea Asta</button>
-  </form>
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100">Crea Asta</button>
+    </form>
+  </div>
 </div>

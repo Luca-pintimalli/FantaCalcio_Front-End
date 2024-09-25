@@ -1,1 +1,75 @@
-<p>home works!</p>
+<div class="container mt-5 text-center text-white">
+    <h1 class="display-4">Benvenuti su AstaGol</h1>
+    <p class="lead">
+      L'applicazione definitiva per la gestione delle aste di fantacalcio.
+    </p>
+  
+    <!-- Sezione pulsanti -->
+    <div class="my-5">
+      <!-- Mostra i pulsanti "Registrati o Accedi" se l'utente non è loggato -->
+      <div *ngIf="(isLoggedIn$ | async) === false">
+        <a routerLink="/auth" class="btn btn-outline-light btn-lg mx-2">Registrati o Accedi</a>
+        <a routerLink="/Regolamento" class="btn btn-outline-light btn-lg mx-2">Regolamento</a>
+      </div>
+  
+      <!-- Mostra il pulsante per avviare una nuova asta se l'utente è loggato -->
+      <div *ngIf="(isLoggedIn$ | async) === true">
+        <a routerLink="/Fantacalcio" class="btn btn-outline-light btn-lg mx-2">Avvia una nuova Asta</a>
+        <a routerLink="/Regolamento" class="btn btn-outline-light btn-lg mx-2">Regolamento</a>
+      </div>
+    </div>
+  
+    <!-- Sezione informazioni -->
+    <section class="py-5">
+      <h2 class="text-white">Cosa offre AstaGol?</h2>
+      <div class="row mt-4">
+        <div class="col-md-6 mb-4 d-flex">
+          <div class="p-4 bg-dark rounded shadow info-box flex-fill">
+            <h3>Modalità Personalizzabili</h3>
+            <p>Organizza aste random o a chiamata, scegliendo quella più adatta alle esigenze del tuo gruppo.</p>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4 d-flex">
+          <div class="p-4 bg-dark rounded shadow info-box flex-fill">
+            <h3>Monitoraggio Crediti</h3>
+            <p>Tieni sotto controllo i crediti di ogni squadra durante l'asta, in tempo reale e senza errori.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-6 mb-4 d-flex">
+          <div class="p-4 bg-dark rounded shadow info-box flex-fill">
+            <h3>Gestione Calciatori</h3>
+            <p>Accedi a una lista predefinita di calciatori, con la possibilità di aggiungere nuovi giocatori, modificarli e cambiarne il ruolo.</p>
+          </div>
+        </div>
+  
+        <div class="col-md-6 mb-4 d-flex">
+          <div class="p-4 bg-dark rounded shadow info-box flex-fill">
+            <h3>Gestione Operazioni</h3>
+            <p>Monitora le tue operazioni durante l'asta e gestisci le transazioni in tempo reale.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Footer -->
+ <footer class="mt-5">
+    <hr class="border-light" />
+    <p class="text-white">
+      &copy; 2024 AstaGol - Tutti i diritti riservati.
+      <!-- Icona LinkedIn -->
+      <a href="https://www.linkedin.com/in/luca-francesco-pintimalli-84b63318a/" target="_blank" class="text-white ms-3">
+        <i class="fab fa-linkedin"></i>
+
+
+
+
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+          </svg>
+    </a>
+    </p>
+  </footer>
+</div>

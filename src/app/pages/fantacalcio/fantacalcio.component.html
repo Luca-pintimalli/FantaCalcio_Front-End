@@ -1,6 +1,5 @@
 <!-- Fase delle impostazioni dell'asta -->
 <div *ngIf="isAstaImpostazioni && !astaInCorso">
-  <h2>Impostazioni Asta</h2>
   <app-asta-impostazioni (impostazioniComplete)="onImpostazioniComplete($event)"></app-asta-impostazioni>
 </div>
 
@@ -18,10 +17,8 @@
   <button (click)="terminaAsta()" class="btn btn-danger mt-3">Termina Asta</button>
 </div>
 
-<!-- Schermata per una nuova asta quando l'asta corrente è terminata -->
-<div *ngIf="!astaInCorso && isAstaImpostazioni">
+<!-- Schermata per una nuova asta solo se l'asta è terminata e non si stanno settando le impostazioni -->
+<div *ngIf="!astaInCorso && !isAstaImpostazioni">
   <h2>Asta Terminata</h2>
   <button (click)="iniziaNuovaAsta()" class="btn btn-primary">Inizia Nuova Asta</button>
 </div>
-
-

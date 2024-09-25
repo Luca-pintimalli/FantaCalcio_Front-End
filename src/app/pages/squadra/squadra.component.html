@@ -22,11 +22,15 @@
           <tr *ngFor="let squadra of squadre">
               <td>{{ squadra.nome }}</td>
               <td>
-                <img [src]="squadra.stemma ? 'https://localhost:7260' + squadra.stemma : 'https://localhost:7260/uploads/default-stemma.png'" 
-                     alt="{{ squadra.nome }}" 
-                     class="img-thumbnail" 
-                     width="50">
+                <img 
+                  [src]="squadra.stemma ? 'https://localhost:7260' + squadra.stemma : 'https://localhost:7260/uploads/default-stemma.jpg'" 
+                  alt="{{ squadra.nome }}" 
+                  class="img-thumbnail" 
+                  width="50"
+                  onerror="this.onerror=null; this.src='https://localhost:7260/uploads/default-stemma.jpg';"
+                >
               </td>
+              
               
               
               

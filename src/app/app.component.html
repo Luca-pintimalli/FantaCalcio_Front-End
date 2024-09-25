@@ -1,8 +1,15 @@
-<app-nav-bar></app-nav-bar>
-<div class="container">
 
-<router-outlet></router-outlet>
-
-
-
-</div>
+  <div class="container-fluid">
+    <div class="row">
+      
+      <!-- Sidebar Offcanvas -->
+      <app-nav-bar></app-nav-bar>
+  
+      <!-- Contenuto principale all'interno di un container per avere ordine e responsività -->
+      <div class="container">
+        <main role="main" class="col-md-12 col-lg-12 px-4">
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+    </div>
+  </div>

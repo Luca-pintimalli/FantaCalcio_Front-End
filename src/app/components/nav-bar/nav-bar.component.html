@@ -1,52 +1,88 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Il Mio Sito</a>
-  
-  <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" aria-controls="navbarSupportedContent" aria-expanded="!isCollapsed" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<!-- Pulsante per aprire/chiudere la sidebar -->
+<button class="toggle-btn" (click)="openOffcanvas(content)">
+  <img src="assets/images/PalloneLogo.png" alt="Apri Menu" class="toggle-icon">
+</button>
 
-  <div [ngClass]="{ 'collapse': isCollapsed }" class="navbar-collapse">
-    <ul class="navbar-nav ml-auto">
-      
-      <!-- Se l'utente è loggato, mostra il link alla Dashboard -->
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-      </li>
-      
-      <!-- Se l'utente non è loggato, mostra il link "Accedi" -->
-      <li class="nav-item" *ngIf="!isLoggedIn">
-        <a class="nav-link" routerLink="/auth">Accedi</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/giocatori">Calciatori</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/ruoli">Ruoli Mantra</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/modalita">Modalita</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/TipoAsta">Tipo Asta</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/Asta">Asta</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/Squadra">Squadra</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/operazioni">Operazioni</a>
-      </li>
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <a class="nav-link" routerLink="/Fantacalcio">Fantacalcio</a>
-      </li>
+<!-- Offcanvas Sidebar -->
+<ng-template #content let-offcanvas>
+  <div class="offcanvas-header d-flex justify-content-between align-items-center">
+    <h5 class="offcanvas-title">AstaGol</h5>
+    <button type="button" class="btn-close btn-close-custom" (click)="offcanvas.dismiss('Cross click')" aria-label="Close"></button>
 
-      <!-- Se l'utente è loggato, mostra il pulsante di logout -->
-      <li class="nav-item" *ngIf="isLoggedIn">
-        <button class="nav-link" (click)="logout()">Logout</button>
-      </li>
 
-    </ul>
   </div>
-</nav>
+
+  <div class="d-flex justify-content-between align-items-center mb-0">
+    <!-- Pulsante per aprire il modale del profilo, visibile solo se loggato -->
+    <button *ngIf="isLoggedIn" class="btn btn-transparent d-flex align-items-center" (click)="openModal(modalContent)">
+      <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" class="profile-img" />
+      <span>Visualizza Profilo</span>
+    </button>
+
+
+
+  </div>
+
+  <div class="offcanvas-body d-flex flex-column align-items-center">
+    <!-- Pulsante Accedi (visibile solo se non loggato) -->
+    <div *ngIf="!isLoggedIn" class="block">
+      <a class="block-link" routerLink="/auth">Accedi</a>
+    </div>
+
+    <!-- Home e pulsanti visibili per tutti -->
+    <div class="block">
+      <a class="block-link" routerLink="/">Home</a>
+    </div>
+
+    <div  *ngIf="isLoggedIn" class="block">
+      <a class="block-link" routerLink="/giocatori">Giocatori</a>
+    </div>
+
+    <div   class="block">
+      <a class="block-link" routerLink="/Regolamento">Regolamento</a>
+    </div>
+
+    <!-- Visibili solo se loggato -->
+    <div *ngIf="isLoggedIn" class="block">
+      <a class="block-link" routerLink="/Fantacalcio">Fantacalcio</a>
+    </div>
+
+    <div *ngIf="isLoggedIn" class="block">
+      <a class="block-link" routerLink="/operazioni">Operazioni</a>
+    </div>
+
+    <!-- Logout button, visibile solo se loggato -->
+    <div *ngIf="isLoggedIn" class="block">
+      <button class="block-logout" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</ng-template>
+
+
+<!-- Modale Profilo Utente -->
+<ng-template #modalContent let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ciao {{ user?.nome }} {{ user?.cognome }}!</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+    <!-- Visualizza l'immagine dell'utente -->
+    <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" class="user-photo" />
+
+
+    <!-- Altre informazioni dell'utente -->
+    <p class="mt-2">Email: {{ user?.email }}</p>
+    <p>Registrato il: {{ user?.dataRegistrazione | date }}</p>
+  </div>
+  <div class="modal-footer d-flex justify-content-between align-items-center">
+    <!-- Pulsante per caricare una nuova immagine -->
+    <input type="file" id="file-upload" (change)="onFileSelected($event)" hidden />
+    <button type="button" class="modal-btn button-3d" (click)="triggerFileInput()">Carica Nuova Immagine</button>
+
+    <!-- Pulsante per aggiornare la foto -->
+    <button type="button" class="modal-btn button-3d" (click)="onSubmit()">Aggiorna Immagine</button>
+</div>
+
+
+
+</ng-template>

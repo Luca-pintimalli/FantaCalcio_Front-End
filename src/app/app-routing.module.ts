@@ -66,6 +66,9 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   canActivateChild: [AuthGuard] 
 
+},
+  { path: 'Regolamento', loadChildren: () => import('./pages/regolamento/regolamento.module').then(m => m.RegolamentoModule),
+
 }
 ];
 

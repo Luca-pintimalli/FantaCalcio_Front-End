@@ -1,0 +1,98 @@
+/* Contenitore centrale per il profilo utente */
+.container-fluid {
+    height: 100vh; /* Altezza della pagina */
+    display: flex;
+    justify-content: center; /* Centra orizzontalmente */
+    align-items: flex-start; /* Posiziona il contenuto in alto */
+    padding-top: 20px; /* Sposta il contenuto verso l'alto */
+  }
+  
+  /* Stile per il div del profilo utente */
+  .user-profile {
+    width: 500px; /* Rettangolare più largo */
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #333; /* Bordi scuri */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Leggera ombra */
+    text-align: center;
+  }
+  
+  /* Stile per l'immagine dell'utente */
+  .user-photo {
+    width: 120px; /* Dimensione dell'immagine */
+    height: 120px;
+    border-radius: 50%; /* Rende l'immagine circolare */
+    border: 5px solid #333; /* Aggiunge un bordo scuro */
+    padding: 5px; /* Spaziatura tra immagine e bordo */
+    background-color: #fff; /* Colore di sfondo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Effetto cornice con ombra */
+  }
+  
+  /* Stile per il bottone */
+  button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+
+  .custom-modal-class .modal-dialog {
+    max-width: 400px; /* Mantiene il modale più compatto */
+    margin: 1.75rem auto;
+  }
+  
+  
+  
+  .custom-modal-class .modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    height: auto;
+    max-height: 40em;
+  }
+  
+  .user-profile {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    text-align: center;
+  }
+  
+  .user-photo {
+    width: 100px; /* Dimensione dell'immagine */
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  button {
+    padding: 5px 10px; /* Mantieni il bottone più piccolo */
+    margin-top: 10px;
+  }
+  
+  .modal-body p {
+    font-size: 0.9rem; /* Riduce la dimensione del testo */
+  }
+  
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .profile-img {
+    width: 30px; /* Dimensione della foto */
+    height: 30px;
+    border-radius: 50%; /* Rende l'immagine circolare */
+    object-fit: cover; /* Assicura che l'immagine sia ben centrata e ritagliata */
+  }
+  

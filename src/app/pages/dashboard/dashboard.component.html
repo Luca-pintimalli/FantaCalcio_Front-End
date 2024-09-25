@@ -1,16 +1,28 @@
-<div class="user-profile">
-  <h2>{{ user.nome }} {{ user.cognome }}</h2>
+<!-- Pulsante per aprire il modale -->
+<button class="btn btn-primary" (click)="open(content)">Visualizza Profilo</button>
 
-  <!-- Visualizza l'immagine dell'utente -->
-  <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" />
+<!-- Modale -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Ciao {{ user.nome }} {{ user.cognome }}!</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+    <!-- Visualizza l'immagine dell'utente -->
+    <img [src]="getUserPhotoUrl(user?.foto)" alt="Foto Utente" class="user-photo" />
 
-  <!-- Input per caricare una nuova immagine -->
-  <input type="file" (change)="onFileSelected($event)" />
+    <!-- Input per caricare una nuova immagine -->
+    <input type="file" (change)="onFileSelected($event)" class="mt-3"/>
 
-  <!-- Bottone per aggiornare l'immagine -->
-  <button (click)="onSubmit()">Aggiorna Immagine</button>
 
-  <!-- Altre informazioni dell'utente -->
-  <p>Email: {{ user.email }}</p>
-  <p>Registrato il: {{ user.dataRegistrazione | date }}</p>
-</div>
+    <!-- Altre informazioni dell'utente -->
+    <p class="mt-2">Email: {{ user.email }}</p>
+    <p>Registrato il: {{ user.dataRegistrazione | date }}</p>
+  </div>
+  <div class="modal-footer">
+<!-- Pulsante per chiudere il modale e aggiornare la foto -->
+<button type="button" class="btn btn-primary" (click)="onSubmit()">Aggiorna Immagine</button>
+<button type="button" class="btn btn-secondary" (click)="closeModal(modal)">Chiudi</button>
+
+  </div>
+</ng-template>

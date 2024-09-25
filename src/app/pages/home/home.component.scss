@@ -1,0 +1,21 @@
+/* Garantire che tutte le box abbiano la stessa altezza minima */
+.info-box {
+    min-height: 160px; /* Imposta una altezza minima ridotta per renderli più compatti */
+    transition: box-shadow 0.3s;
+  }
+  
+  /* Effetto hover per mettere in risalto senza cambiare la dimensione */
+  .info-box:hover {
+    box-shadow: 3px 8px 16px rgba(0, 0, 0, 0.6); /* Aumenta l'ombreggiatura */
+  }
+  
+  /* Flexbox per uniformare le altezze delle box */
+  .d-flex {
+    display: flex;
+    align-items: stretch;
+  }
+  
+  .flex-fill {
+    flex-grow: 1;
+  }
+  
