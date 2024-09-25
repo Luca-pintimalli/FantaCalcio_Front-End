@@ -1,38 +1,66 @@
-<div class="container">
-    <h2>Elenco delle Operazioni</h2>
-    <button class="btn btn-primary mb-3" (click)="navigateToCreate()">Crea Nuova Operazione</button>
-  
-    <table class="table table-striped">
-      <thead>
+<div class="container mt-5">
+  <h2 class="text-center text-white">Gestione Operazioni</h2>
+
+  <!-- Controllo se non ci sono operazioni -->
+  <div *ngIf="operazioni.length === 0" class="alert alert-warning text-center mt-4">
+    Nessuna operazione completata.
+  </div>
+
+  <!-- Tabella per visualizzare la lista delle operazioni -->
+  <div *ngIf="operazioni.length > 0" class="table-responsive bg-light p-3 rounded shadow mt-4">
+    <table class="table table-hover table-striped">
+      <thead class="thead-dark">
         <tr>
           <th>ID Operazione</th>
-          <th>ID Giocatore</th>
-          <th>ID Squadra</th>
+          <th>Giocatore</th>
+          <th>Squadra</th>
           <th>Crediti Spesi</th>
           <th>Stato Operazione</th>
           <th>Data Operazione</th>
-          <th>Azioni</th> <!-- Colonna per le azioni -->
+          <th>Azioni</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let operazione of operazioni">
           <td>{{ operazione.iD_Operazione }}</td>
-          <td>{{ operazione.iD_Giocatore }}</td>
-          <td>{{ operazione.iD_Squadra }}</td>
+          <td>{{ operazione.giocatoreCognome }}</td>
+          <td>{{ operazione.squadraNome }}</td>
           <td>{{ operazione.creditiSpesi }}</td>
           <td>{{ operazione.statoOperazione }}</td>
           <td>{{ operazione.dataOperazione | date: 'short' }}</td>
           <td>
-            <!-- Bottone Modifica -->
-            <button class="btn btn-secondary" (click)="navigateToEdit(operazione.iD_Operazione)">
-              Modifica
-            </button>
-            <!-- Bottone Elimina -->
-            <button class="btn btn-danger ml-2" (click)="deleteOperazione(operazione.iD_Operazione, operazione.iD_Squadra, operazione.creditiSpesi)">
-              Elimina
-            </button>
+            <div class="d-flex justify-content-start align-items-center">
+              <!-- Icona Modifica -->
+              <span class="icon-button mr-3" placement="top" ngbTooltip="Modifica Operazione" (click)="navigateToEdit(operazione.iD_Operazione)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                </svg>
+              </span>
+
+              <!-- Icona Elimina -->
+              <span class="icon-button mr-3" placement="top" ngbTooltip="Elimina Operazione" (click)="deleteOperazione(operazione.iD_Operazione, operazione.iD_Squadra, operazione.creditiSpesi)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                  <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5z"/>
+                </svg>
+              </span>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
 </div>
+
+<!-- Footer -->
+<footer class="mt-5">
+  <hr class="border-light" />
+  <p class="text-white text-center">
+    &copy; 2024 AstaGol
+    <a href="https://www.linkedin.com/in/luca-francesco-pintimalli-84b63318a/" target="_blank" class="text-white ms-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
+          <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+        </svg>
+  </a>
+  </p>
+</footer>

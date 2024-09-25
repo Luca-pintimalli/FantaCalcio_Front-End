@@ -1,0 +1,215 @@
+/* Imposta il container */
+.container {
+    margin-top: 30px;
+  }
+  
+  .operation-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Sfondo semi-trasparente */
+    border: 3px solid rgba(255,96,0,1); /* Bordo colorato */
+    padding: 20px;
+    border-radius: 10px; /* Bordi arrotondati */
+    position: relative; /* Necessario per posizionare "Giocatori disponibili" in basso a destra */
+  }
+  
+  .search-input {
+    border: 2px solid rgba(255,96,0,1); /* Colore del bordo come la pagina */
+    transition: border-color 0.3s ease;
+    margin-bottom: 0; /* Rimuove margine inferiore */
+    animation: rotateBorder 4s linear infinite; /* Animazione continua */
+  }
+  
+  .search-input:focus {
+    border-color: rgba(0,145,255,1); /* Cambia colore quando attivo */
+    box-shadow: 0 0 8px rgba(0,145,255,0.5); /* Aggiunge effetto di illuminazione */
+  }
+  
+  /* Animazione del bordo del campo di ricerca */
+  @keyframes rotateBorder {
+    0% {
+      border-color: rgba(255,96,0,1);
+    }
+    25% {
+      border-color: rgba(255,145,0,1);
+    }
+    50% {
+      border-color: rgba(0,145,255,1);
+    }
+    75% {
+      border-color: rgba(0,96,255,1);
+    }
+    100% {
+      border-color: rgba(255,96,0,1);
+    }
+  }
+  
+  .form-control {
+    border: 2px solid rgba(255,96,0,1); /* Colore di default */
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: rgba(0,145,255,1); /* Cambia colore quando attivo */
+    box-shadow: 0 0 8px rgba(0,145,255,0.5); /* Aggiunge effetto di illuminazione */
+  }
+  
+  /* Sezione di input e selezione giocatore */
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .player-selected {
+    background-color: rgba(255, 255, 255, 0.8); /* Sfondo semi-trasparente */
+    border: 2px solid rgba(255,96,0,1); /* Bordi colorati */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Lista giocatori */
+  .list-group-item {
+    cursor: pointer;
+  }
+  
+  .list-group-item:hover {
+    background-color: rgba(0,145,255,0.1); /* Colore di sfondo al passaggio del mouse */
+  }
+  
+  /* Stile per i pulsanti */
+  .custom-btn {
+    background-color: rgba(255,96,0,1); /* Colore del bottone di default */
+    color: white;
+    border: 2px solid rgba(255,96,0,1);
+    padding: 10px 20px;
+    transition: all 0.4s ease;
+    border-radius: 25px;
+    font-weight: bold;
+  }
+  
+  .custom-btn:hover {
+    background-color: rgba(0,145,255,1); /* Cambia colore al passaggio del mouse */
+    color: white;
+    border-color: rgba(0,145,255,1);
+  }
+  
+  /* Posizionamento per i giocatori disponibili */
+  .giocatori-disponibili {
+    position: absolute;
+    bottom: 10px; /* Spostato in basso */
+    right: 10px; /* Spostato a destra */
+    font-weight: bold;
+    background-color: rgba(255,255,255,0.7); /* Sfondo semi-trasparente per leggibilità */
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+
+
+  /* Bottone con vibrazione */
+.shake-button {
+    background-color: rgba(255,96,0,1); /* Colore del bottone di default */
+    color: white;
+    border: 2px solid rgba(255,96,0,1);
+    padding: 10px 20px;
+    transition: all 0.4s ease;
+    border-radius: 25px;
+    font-weight: bold;
+  }
+  
+  /* Animazione di vibrazione al passaggio del mouse */
+  .shake-button:hover {
+    background-color: rgba(0,145,255,1);
+    border-color: rgba(0,145,255,1);
+    color: white;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    box-shadow: 0 0 10px rgba(0,145,255,0.7);
+  }
+  
+  /* Definisce l'animazione shake (vibrazione) */
+  @keyframes shake {
+    10%, 90% {
+      transform: translate3d(-1px, 0, 0);
+    }
+    20%, 80% {
+      transform: translate3d(2px, 0, 0);
+    }
+    30%, 50%, 70% {
+      transform: translate3d(-4px, 0, 0);
+    }
+    40%, 60% {
+      transform: translate3d(4px, 0, 0);
+    }
+  }
+  
+  /* Stile dei pulsanti */
+  .custom-btn {
+    background-color: rgba(255,96,0,1); /* Colore del bottone di default */
+    color: white;
+    border: 2px solid rgba(255,96,0,1);
+    padding: 10px 20px;
+    transition: all 0.4s ease;
+    border-radius: 25px;
+    font-weight: bold;
+  }
+  
+  /* Colore e animazione dei pulsanti al passaggio del mouse */
+  .custom-btn:hover {
+    background-color: rgba(0,145,255,1); /* Cambia colore al passaggio del mouse */
+    color: white;
+    border-color: rgba(0,145,255,1);
+  }
+  
+  /* Posizionamento per i giocatori disponibili */
+  .giocatori-disponibili {
+    position: absolute;
+    bottom: 10px; /* Spostato in basso */
+    right: 10px; /* Spostato a destra */
+    font-weight: bold;
+    background-color: rgba(255,255,255,0.7); /* Sfondo semi-trasparente per leggibilità */
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  /* Posizionamento per la X in alto a destra */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: rgba(255,96,0,1);
+    transition: color 0.3s ease;
+  }
+  
+  .close-btn:hover {
+    color: rgba(0,145,255,1);
+  }
+  
+  /* Stile degli alert */
+  .alert {
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Bottoni personalizzati */
+  .custom-btn {
+    background-color: rgba(255,96,0,1);
+    color: white;
+    border: 2px solid rgba(255,96,0,1);
+    padding: 10px 20px;
+    transition: all 0.4s ease;
+    border-radius: 25px;
+  }
+  
+  .custom-btn:hover {
+    background-color: rgba(0,145,255,1);
+    border-color: rgba(0,145,255,1);
+  }
+  

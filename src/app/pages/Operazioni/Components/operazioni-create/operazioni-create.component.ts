@@ -20,6 +20,9 @@ import { NgForm } from '@angular/forms';
 export class OperazioniCreateComponent implements OnInit, OnDestroy {
   @Input() idAsta: number | null = null;
 
+  mostraCreditiInsufficienti: boolean = false;
+  mostraRuoloSaturato: boolean = false;
+
   operazione: iOperazione = {
     iD_Operazione: 0,
     iD_Giocatore: 0,
@@ -158,7 +161,7 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
   filterGiocatori(): void {
     if (this.searchText) {
       this.giocatoriFiltrati = this.giocatori.filter(giocatore =>
-        `${giocatore.nome} ${giocatore.cognome}`.toLowerCase().includes(this.searchText.toLowerCase())
+        (giocatore.nome + ' ' + giocatore.cognome).toLowerCase().includes(this.searchText.toLowerCase())
       );
     } else {
       this.giocatoriFiltrati = this.giocatori;
@@ -311,4 +314,28 @@ export class OperazioniCreateComponent implements OnInit, OnDestroy {
     this.searchText = '';
     this.giocatoriFiltrati = [];
   }
+
+// Simuliamo che questi siano i limiti di ruolo e crediti
+limiteRuoli = { portiere: 3, difensore: 6, centrocampista: 6, attaccante: 4 };
+creditiTotali = 500; // Crediti disponibili
+
+// Questa funzione verifica i crediti
+verificaCrediti(creditiSpesi: number): void {
+  if (creditiSpesi > this.creditiTotali) {
+    this.mostraCreditiInsufficienti = true;
+  } else {
+    this.mostraCreditiInsufficienti = false;
+  }
 }
+  // Funzione per terminare l'asta e reindirizzare alla home
+  terminaAsta(): void {
+    console.log("Asta terminata!");
+    this.router.navigate(['/']); // Reindirizza alla pagina home
+  }
+
+
+}
+
+
+
+

@@ -1,0 +1,228 @@
+/* Stile della card */
+.custom-card {
+    border: 3px solid rgba(255, 96, 0, 1);
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .custom-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 145, 255, 0.2);
+  }
+  
+  /* Stile per il titolo e lo stemma della squadra */
+  .card-header {
+    border-bottom: 2px solid rgba(0, 145, 255, 1);
+    padding: 10px 20px;
+  }
+  
+  .small-stemma {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: contain;
+  }
+  
+  /* Crediti con colore personalizzato */
+  .text-success {
+    color: green;
+  }
+  
+  .text-danger {
+    color: red;
+  }
+  
+  /* Stile per allineare il testo e le icone */
+  .d-flex {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ml-2 {
+    margin-left: 0.5rem;
+  }
+  
+  /* Colorazione leggera in base ai ruoli */
+  .bg-portiere {
+    background-color: rgba(173, 216, 230, 0.3); /* Azzurro leggero */
+  }
+  
+  .bg-difensore {
+    background-color: rgba(255, 255, 102, 0.3); /* Giallo leggero */
+  }
+  
+  .bg-centrocampista {
+    background-color: rgba(255, 165, 0, 0.3); /* Arancione leggero */
+  }
+  
+  .bg-attaccante {
+    background-color: rgba(255, 99, 71, 0.3); /* Rosso leggero */
+  }
+  
+  /* Stile per l'icona di modifica */
+  .icon-button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    padding: 5px;
+  }
+  
+  .icon-button svg {
+    pointer-events: none;
+  }
+  
+  .icon-button:hover {
+    transform: scale(1.1);
+    color: rgba(255, 96, 0, 1);
+  }
+  
+
+  /* Stile per l'header del modale */
+.custom-modal-header {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 3px solid rgba(255, 96, 0, 1);
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  
+  .custom-modal-header .close {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: rgba(255, 96, 0, 1);
+    transition: color 0.3s ease;
+  }
+  
+  .custom-modal-header .close:hover {
+    color: rgba(0, 145, 255, 1);
+  }
+  
+  /* Stile per il corpo del modale */
+  .custom-modal-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 20px;
+  }
+  
+  /* Stile per il form input */
+  .custom-input {
+    border: 2px solid rgba(255, 96, 0, 1);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .custom-input:focus {
+    border-color: rgba(0, 145, 255, 1);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 145, 255, 0.5);
+  }
+  
+  /* Stile per l'header del modale */
+.custom-modal-header {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 3px solid rgba(255, 96, 0, 1);
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  
+  .custom-modal-header .close {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: rgba(255, 96, 0, 1);
+    transition: color 0.3s ease;
+  }
+  
+  .custom-modal-header .close:hover {
+    color: rgba(0, 145, 255, 1);
+  }
+  
+  /* Stile per il corpo del modale */
+  .custom-modal-body {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 20px;
+  }
+  
+  /* Stile per il form input */
+  .custom-input {
+    border: 2px solid rgba(255, 96, 0, 1);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    margin-bottom: 15px; /* Aggiunto margine inferiore per distanziare gli elementi */
+  }
+  
+  .custom-input:focus {
+    border-color: rgba(0, 145, 255, 1);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 145, 255, 0.5);
+  }
+  
+  /* Stile per il bottone Salva Modifiche */
+  .custom-btn {
+    background-color: rgba(255, 96, 0, 1);
+    color: white;
+    border: 2px solid rgba(255, 96, 0, 1);
+    border-radius: 25px;
+    width: auto; /* Modificato da 100% ad auto */
+    padding: 8px 20px; /* Ridotta l'altezza del bottone */
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px; /* Aggiunto margine superiore per distanziare dal campo input */
+  }
+  
+  .custom-btn:hover {
+    background-color: rgba(0, 145, 255, 1);
+    border-color: rgba(0, 145, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 145, 255, 0.3);
+  }
+  
+  /* Stile per l'anteprima dell'immagine */
+  .custom-img-thumbnail {
+    border: 2px solid rgba(255, 96, 0, 1);
+    border-radius: 10px;
+    max-width: 150px;
+  }
+  
+  /* Aggiustamenti per il modale */
+  .modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 96, 0, 1);
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+
+ /* Stile per l'header del modale */
+.custom-modal-header {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 3px solid rgba(255, 96, 0, 1);
+    padding: 15px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: relative; /* Necessario per posizionare la X */
+  }
+  
+  /* Stile per la X di chiusura */
+  .custom-modal-header .close {
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: none;
+    color: rgba(255, 96, 0, 1);
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 10px;
+    right: 15px; /* Sposta la X più a destra */
+  }
+  
+  .custom-modal-header .close:hover {
+    color: rgba(0, 145, 255, 1);
+  }
+  

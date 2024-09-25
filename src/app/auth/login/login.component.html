@@ -1,10 +1,11 @@
-<div class="login-container">
-  <div class="login-box">
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center">
+  <div class="form-container">
     <h2>Login</h2>
 
     <form (ngSubmit)="onSubmit()">
+      <!-- Campo Email -->
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email" class="form-label">Email</label>
         <input 
           type="email" 
           class="form-control" 
@@ -15,8 +16,9 @@
           placeholder="Inserisci la tua email" />
       </div>
 
+      <!-- Campo Password -->
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password" class="form-label">Password</label>
         <input 
           type="password" 
           class="form-control" 
@@ -27,11 +29,21 @@
           placeholder="Inserisci la tua password" />
       </div>
 
+      <!-- Messaggio di errore -->
       <div *ngIf="errorMessage" class="alert alert-danger">
         {{ errorMessage }}
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block">Accedi</button>
+      <!-- Bottone per accedere -->
+      <div class="button-container mt-4">
+        <button type="submit" class="btn btn-primary custom-btn btn-block">Accedi</button>
+      </div>
     </form>
+
+    <!-- Bottone per la registrazione -->
+    <div class="register-link mt-3 text-center">
+      <p>Non sei ancora registrato?</p>
+      <a routerLink="/register" class="btn custom-btn">Registrati Subito!</a>
+    </div>
   </div>
 </div>

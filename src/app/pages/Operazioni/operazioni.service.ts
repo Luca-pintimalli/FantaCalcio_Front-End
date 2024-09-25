@@ -61,12 +61,13 @@ export class OperazioniService {
     );
   }
 
-// Metodo per svincolare un giocatore (con ID asta)
-svincolaGiocatore(idGiocatore: number, idAsta: number): Observable<any> {
-  return this.http.post<any>(`${this.apiUrl}/svincola/${idGiocatore}?idAsta=${idAsta}`, {}).pipe(
-    catchError(this.handleError)
-  );
-}
+  // Metodo per svincolare un giocatore (con ID asta)
+  svincolaGiocatore(idGiocatore: number, idAsta: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/svincola/${idGiocatore}?idAsta=${idAsta}`, {}).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Metodo per ripristinare un giocatore (con ID asta)
   ripristinaGiocatore(idGiocatore: number, idAsta: number): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/ripristina/${idGiocatore}`, { idAsta }).pipe(

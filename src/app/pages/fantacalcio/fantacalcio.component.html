@@ -5,13 +5,17 @@
 
 <!-- Fase di gestione dell'asta (operazioni e squadre) -->
 <div *ngIf="astaInCorso && !isAstaImpostazioni">
-  <h2>Gestione Asta</h2>
   
-  <!-- Componente Operazioni -->
+  
+<!-- Componente Operazioni -->
+<div class="mb-5"> <!-- Aggiunta di una classe margin-bottom -->
   <app-operazioni-create [idAsta]="idAstaCorrente"></app-operazioni-create>
+</div>
 
-  <!-- Componente SquadraAsta -->
+<!-- Componente SquadraAsta -->
+<div class="mt-5"> <!-- Aggiunta di una classe margin-top -->
   <app-squadra-asta *ngIf="idAstaCorrente !== null" [idAstaCorrente]="idAstaCorrente"></app-squadra-asta>
+</div>
 
   <!-- Pulsante per terminare l'asta -->
   <button (click)="terminaAsta()" class="btn btn-danger mt-3">Termina Asta</button>

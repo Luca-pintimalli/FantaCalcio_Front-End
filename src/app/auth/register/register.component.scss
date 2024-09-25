@@ -1,32 +1,76 @@
-.register-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Altezza al 100% della viewport */
-    background-color: #f7f9fc;
-  }
-  
-  .register-box {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-control,
-  .form-control-file {
-    margin-bottom: 1rem;
-  }
-  
-  .btn {
-    width: 100%;
-    margin-top: 1rem;
-  }
-  
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: aqua; /* Sfondo della pagina */
+}
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Imposta l'altezza al 100% della finestra */
+}
+
+.form-container {
+  max-width: 400px; /* Dimensione massima del form */
+  margin-top: 5em;
+  width: 100%;
+  padding: 20px;
+  background-color: #fff; /* Sfondo bianco per la form card */
+  border-radius: 12px;
+  border: 3px solid rgba(255,96,0,1); /* Bordo color arancione */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Ombra della form card */
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease; /* Transizione */
+}
+
+.form-container:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); /* Ombra al passaggio del mouse */
+  transform: translateY(-5px); /* Leggero movimento verso l'alto al passaggio del mouse */
+  border-color: rgba(0,145,255,1); /* Cambia il colore del bordo al passaggio del mouse */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.form-group {
+  padding: 10px;
+}
+
+.form-control, .form-label {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.custom-btn {
+  width: 10em;
+  padding: 0.5em 1em;
+  border-radius: 25px;
+  border: 3px solid rgba(255,96,0,1); /* Bordo color arancione */
+  background-color: transparent;
+  color: rgba(255,96,0,1); /* Testo color arancione */
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.4s ease; /* Transizione per hover */
+}
+
+.custom-btn:hover {
+  background-color: rgba(255,96,0,1); /* Sfondo arancione al passaggio del mouse */
+  color: white; /* Testo bianco al passaggio del mouse */
+  border-color: rgba(0,145,255,1); /* Cambia colore del bordo al passaggio del mouse */
+}
+
+.alert {
+  font-size: 0.9em;
+  text-align: center;
+}
